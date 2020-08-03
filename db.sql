@@ -6,9 +6,9 @@ USE `at`;
 # article 테이블 세팅
 CREATE TABLE article (
     id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-    regDate DATETIME NOT NULL,
-    updateDate DATETIME NOT NULL,
-    delDate DATETIME NOT NULL,
+    regDate DATETIME,
+    updateDate DATETIME,
+    delDate DATETIME,
 	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
 	displayStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
     title CHAR(200) NOT NULL,
