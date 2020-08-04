@@ -36,4 +36,19 @@ public class ArticleController {
 		
 		return "article/detail";
 	}
+	
+	@RequestMapping("/article/write")
+	public String showWrite() {
+		return "article/write";
+	}
+	
+	@RequestMapping("/article/doWrite")
+	public String doWrite(@RequestParam Map<String, Object> param) {
+		int newArticleId = articleService.write(param);
+		
+		String redirectUrl = (String)param.get("redirectUrl");
+		redirectUrl = redirectUrl.replace("#id", newArticleId + "");
+		
+		return "redirect:" + redirectUrl;
+	}
 }

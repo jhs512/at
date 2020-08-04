@@ -44,12 +44,26 @@ label[for] {
 	text-align: left;
 }
 
+/* 폼 관련 라이브러리 */
+.form1 .form-control-box>input, .form1 .form-control-box>textarea {
+	width: 100%;
+	padding: 0;
+	display: block;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
+.form1 .form-control-box>textarea {
+	min-height: 300px;
+	resize: none;
+}
+
 /* 커스텀 */
 .con {
 	max-width: 1200px;
 }
 
 .page-title-box {
-	margin-top:30px;
-	margin-bottom:30px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 }
