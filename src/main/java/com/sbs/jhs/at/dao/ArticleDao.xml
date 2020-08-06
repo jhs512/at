@@ -10,6 +10,17 @@
 		ORDER BY id DESC
 	</select>
 
+	<select id="getForPrintArticleReplies" resultType="ArticleReply">
+	    <![CDATA[
+		SELECT *
+		FROM articleReply
+		WHERE articleId = #{articleId}
+		AND displayStatus = 1
+		AND id >= #{from}
+		ORDER BY id ASC
+		]]>
+	</select>
+
 	<select id="getForPrintArticleById" resultType="Article">
 		SELECT *
 		FROM
