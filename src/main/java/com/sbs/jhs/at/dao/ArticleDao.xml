@@ -17,12 +17,24 @@
 		WHERE id = #{id}
 	</select>
 
-	<insert id="write" useGeneratedKeys="true"
-		keyProperty="id">
-		INSERT INTO article
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO article
 		SET regDate = NOW(),
 		updateDate = NOW(),
 		title = #{title},
 		body = #{body}
+	</insert>
+
+	<insert id="writeReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO articleReply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		body =
+		#{body},
+		memberId = #{memberId},
+		articleId = #{articleId},
+		displayStatus
+		= 1
 	</insert>
 </mapper>
