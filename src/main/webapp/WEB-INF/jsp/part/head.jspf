@@ -25,6 +25,10 @@
 <!-- 공통 JS -->
 <script src="/resource/common.js"></script>
 
+<script>
+var param = ${paramJson};
+</script>
+
 </head>
 <body>
 	<div class="outer-box">
