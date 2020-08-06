@@ -16,39 +16,39 @@ import com.sbs.jhs.at.service.ArticleService;
 public class ArticleController {
 	@Autowired
 	private ArticleService articleService;
-	
-	@RequestMapping("/article/list")
+
+	@RequestMapping("/usr/article/list")
 	public String showList(Model model) {
 		List<Article> articles = articleService.getForPrintArticles();
-		
+
 		model.addAttribute("articles", articles);
-		
+
 		return "article/list";
 	}
-	
-	@RequestMapping("/article/detail")
+
+	@RequestMapping("/usr/article/detail")
 	public String showDetail(Model model, @RequestParam Map<String, Object> param) {
-		int id = Integer.parseInt((String)param.get("id"));
-		
+		int id = Integer.parseInt((String) param.get("id"));
+
 		Article article = articleService.getForPrintArticleById(id);
-		
+
 		model.addAttribute("article", article);
-		
+
 		return "article/detail";
 	}
-	
-	@RequestMapping("/article/write")
+
+	@RequestMapping("/usr/article/write")
 	public String showWrite() {
 		return "article/write";
 	}
-	
-	@RequestMapping("/article/doWrite")
+
+	@RequestMapping("/usr/article/doWrite")
 	public String doWrite(@RequestParam Map<String, Object> param) {
 		int newArticleId = articleService.write(param);
-		
-		String redirectUrl = (String)param.get("redirectUrl");
+
+		String redirectUrl = (String) param.get("redirectUrl");
 		redirectUrl = redirectUrl.replace("#id", newArticleId + "");
-		
+
 		return "redirect:" + redirectUrl;
 	}
 }

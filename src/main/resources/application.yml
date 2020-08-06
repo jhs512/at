@@ -11,4 +11,5 @@ spring:
     password: sbs123414
 mybatis:
   type-aliases-package: com.sbs.jhs.at.dto
-  
+custom:
+  logoText: 오디션 트리
