@@ -20,4 +20,6 @@ public interface ArticleDao {
 	void writeReply(Map<String, Object> param);
 
 	List<ArticleReply> getForPrintArticleReplies(Map<String, Object> param);
+
+	void deleteReply(@Param("id") int id);
 }

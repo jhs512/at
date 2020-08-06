@@ -79,4 +79,12 @@ public class ArticleController {
 
 		return new ResultData("S-1", String.format("%d개의 댓글을 불러왔습니다.", articleReplies.size()), rsDataBody);
 	}
+	
+	@RequestMapping("/usr/article/doDeleteReplyAjax")
+	@ResponseBody
+	public ResultData doDeleteReplyAjax(int id) {
+		articleService.deleteReply(id);
+		
+		return new ResultData("S-1", String.format("%d번 댓글을 삭제하였습니다.", id));
+	}
 }

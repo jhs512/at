@@ -52,6 +52,13 @@
 		= 1
 	</insert>
 
+	<delete id="deleteReply">
+		<![CDATA[	
+		DELETE FROM articleReply
+		WHERE id = #{id}
+		]]>
+	</delete>
+
 	<resultMap type="ArticleReply" id="articleReply">
 		<id property="id" column="id" />
 		<id property="regDate" column="regDate" />

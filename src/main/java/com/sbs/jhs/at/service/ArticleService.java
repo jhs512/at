@@ -44,4 +44,8 @@ public class ArticleService {
 	public List<ArticleReply> getForPrintArticleReplies(@RequestParam Map<String, Object> param) {
 		return articleDao.getForPrintArticleReplies(param);
 	}
+
+	public void deleteReply(int id) {
+		articleDao.deleteReply(id);
+	}
 }
