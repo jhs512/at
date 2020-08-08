@@ -11,6 +11,7 @@ import com.sbs.jhs.at.dao.ArticleDao;
 import com.sbs.jhs.at.dto.Article;
 import com.sbs.jhs.at.dto.ArticleReply;
 import com.sbs.jhs.at.dto.Member;
+import com.sbs.jhs.at.dto.ResultData;
 import com.sbs.jhs.at.util.Util;
 
 @Service
@@ -57,20 +58,29 @@ public class ArticleService {
 
 	private void updateForPrintInfo(Member actor, ArticleReply articleReply) {
 		articleReply.getExtra().put("actorCanDelete", actorCanDelete(actor, articleReply));
-		articleReply.getExtra().put("actorCanUpdate", actorCanUpdate(actor, articleReply));
+		articleReply.getExtra().put("actorCanModify", actorCanModify(actor, articleReply));
 	}
 
 	// 액터가 해당 댓글을 수정할 수 있는지 알려준다.
-	private Object actorCanUpdate(Member actor, ArticleReply articleReply) {
+	public boolean actorCanModify(Member actor, ArticleReply articleReply) {
 		return actor != null && actor.getId() == articleReply.getMemberId() ? true : false;
 	}
 
 	// 액터가 해당 댓글을 삭제할 수 있는지 알려준다.
-	private Object actorCanDelete(Member actor, ArticleReply articleReply) {
-		return actorCanUpdate(actor, articleReply);
+	public boolean actorCanDelete(Member actor, ArticleReply articleReply) {
+		return actorCanModify(actor, articleReply);
 	}
 
 	public void deleteReply(int id) {
 		articleDao.deleteReply(id);
+	}
+
+	public ArticleReply getForPrintArticleReplyById(int id) {
+		return articleDao.getForPrintArticleReplyById(id);
+	}
+
+	public ResultData modfiyReply(Map<String, Object> param) {
+		articleDao.modifyReply(param);
+		return new ResultData("S-1", String.format("%d번 댓글을 수정하였습니다.", Util.getAsInt(param.get("id"))), param);
 	}
 }

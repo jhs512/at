@@ -31,6 +31,20 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="getForPrintArticleReplyById"
+		resultMap="articleReply">
+		SELECT AR.*,
+		M.nickname AS extra__writer
+		FROM articleReply AS
+		AR
+		INNER JOIN member AS M
+		ON AR.memberId = M.id
+		WHERE AR.id = #{id}
+		AND
+		AR.displayStatus = 1
+		AND AR.id = #{id}
+	</select>
+
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO article
@@ -53,11 +67,17 @@
 	</insert>
 
 	<delete id="deleteReply">
-		<![CDATA[	
 		DELETE FROM articleReply
 		WHERE id = #{id}
-		]]>
 	</delete>
+
+	<update id="modifyReply">
+		UPDATE articleReply
+		<set>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 
 	<resultMap type="ArticleReply" id="articleReply">
 		<id property="id" column="id" />
