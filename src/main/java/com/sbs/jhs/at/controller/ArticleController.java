@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.sbs.jhs.at.dto.Article;
-import com.sbs.jhs.at.dto.ArticleReply;
 import com.sbs.jhs.at.dto.Member;
+import com.sbs.jhs.at.dto.Reply;
 import com.sbs.jhs.at.dto.ResultData;
 import com.sbs.jhs.at.service.ArticleService;
 import com.sbs.jhs.at.util.Util;
@@ -64,33 +64,40 @@ public class ArticleController {
 	@ResponseBody
 	public ResultData doWriteReplyAjax(@RequestParam Map<String, Object> param, HttpServletRequest request) {
 		Map<String, Object> rsDataBody = new HashMap<>();
-		param.put("memberId", request.getAttribute("loginedMemberId"));
-		int newArticleReplyId = articleService.writeReply(param);
-		rsDataBody.put("articleReplyId", newArticleReplyId);
 
-		return new ResultData("S-1", String.format("%d번 댓글이 생성되었습니다.", newArticleReplyId), rsDataBody);
+		param.put("memberId", request.getAttribute("loginedMemberId"));
+		param.put("relTypeCode", "article");
+		Util.changeMapKey(param, "articleId", "relId");
+
+		int newReplyId = articleService.writeReply(param);
+		rsDataBody.put("replyId", newReplyId);
+
+		return new ResultData("S-1", String.format("%d번 댓글이 생성되었습니다.", newReplyId), rsDataBody);
 	}
 
-	@RequestMapping("/usr/article/getForPrintArticleReplies")
+	@RequestMapping("/usr/article/getForPrintReplies")
 	@ResponseBody
-	public ResultData getForPrintArticleReplies(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+	public ResultData getForPrintReplies(@RequestParam Map<String, Object> param, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		Map<String, Object> rsDataBody = new HashMap<>();
 
-		param.put("actor", loginedMember);
-		List<ArticleReply> articleReplies = articleService.getForPrintArticleReplies(param);
-		rsDataBody.put("articleReplies", articleReplies);
+		param.put("relTypeCode", "article");
+		Util.changeMapKey(param, "articleId", "relId");
 
-		return new ResultData("S-1", String.format("%d개의 댓글을 불러왔습니다.", articleReplies.size()), rsDataBody);
+		param.put("actor", loginedMember);
+		List<Reply> replies = articleService.getForPrintReplies(param);
+		rsDataBody.put("replies", replies);
+
+		return new ResultData("S-1", String.format("%d개의 댓글을 불러왔습니다.", replies.size()), rsDataBody);
 	}
 
 	@RequestMapping("/usr/article/doDeleteReplyAjax")
 	@ResponseBody
 	public ResultData doDeleteReplyAjax(int id, HttpServletRequest req) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		ArticleReply articleReply = articleService.getForPrintArticleReplyById(id);
+		Reply reply = articleService.getForPrintReplyById(id);
 
-		if (articleService.actorCanDelete(loginedMember, articleReply) == false) {
+		if (articleService.actorCanDelete(loginedMember, reply) == false) {
 			return new ResultData("F-1", String.format("%d번 댓글을 삭제할 권한이 없습니다.", id));
 		}
 
@@ -103,9 +110,9 @@ public class ArticleController {
 	@ResponseBody
 	public ResultData doModifyReplyAjax(@RequestParam Map<String, Object> param, HttpServletRequest req, int id) {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		ArticleReply articleReply = articleService.getForPrintArticleReplyById(id);
+		Reply reply = articleService.getForPrintReplyById(id);
 
-		if (articleService.actorCanModify(loginedMember, articleReply) == false) {
+		if (articleService.actorCanModify(loginedMember, reply) == false) {
 			return new ResultData("F-1", String.format("%d번 댓글을 수정할 권한이 없습니다.", id));
 		}
 

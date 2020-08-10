@@ -85,3 +85,13 @@ memberId = 1,
 articleId = 1,
 displayStatus = 1,
 `body` = '내용1';
+
+/* 게시물 댓글을 범용 댓글 테이블로 변경 */
+RENAME TABLE `articleReply` TO `reply`;
+
+ALTER TABLE `reply` ADD COLUMN `relTypeCode` CHAR(50) NOT NULL AFTER `memberId`,
+CHANGE `articleId` `relId` INT(10) UNSIGNED NOT NULL;
+ALTER TABLE `at`.`reply` ADD INDEX (`relId`, `relTypeCode`);
+UPDATE reply
+SET relTypeCode = 'article'
+WHERE relTypeCode = '';
