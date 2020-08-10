@@ -40,19 +40,52 @@
 				return;
 			}
 
-			$.post('./../reply/doWriteReplyAjax', {
-				relId : param.id,
-				relTypeCode : 'article',
-				body : form.body.value
-			}, function(data) {
+			var startUploadFiles = function(onSuccess) {
+				var fileUploadFormData = new FormData(form);
+				fileUploadFormData.delete("relTypeCode");
+				fileUploadFormData.delete("relId");
 
-			}, 'json');
-			form.body.value = '';
+				$.ajax({
+					url : './../file/doUploadAjax',
+					data : fileUploadFormData,
+					processData : false,
+					contentType : false,
+					dataType:"json",
+					type : 'POST',
+					success : onSuccess
+				});
+			}
+
+			alert('이제 fileIds(' + fileIdsStr + ')를 doWriteReplyAjax에서 처리해야 한다.');
+
+			var startWriteReply = function(fileIdsStr, onSuccess) {
+				$.ajax({
+					url : './../reply/doWriteReplyAjax',
+					data : {
+						fileIdsStr: fileIdsStr,
+						body: form.body.value,
+						relTypeCode: form.relTypeCode.value,
+						relId: form.relId.value
+					},
+					dataType:"json",
+					type : 'POST',
+					success : onSuccess
+				});
+			};
+
+			startUploadFiles(function(data) {
+				var idsStr = data.body.fileIdsStr;
+				startWriteReply(idsStr, function(data) {
+					form.body.value = '';
+				});
+			});
 		}
 	</script>
 
-	<form class="table-box con form1" action=""
+	<form class="table-box con form1"
 		onsubmit="ArticleWriteReplyForm__submit(this); return false;">
+		<input type="hidden" name="relTypeCode" value="article" /> <input
+			type="hidden" name="relId" value="${article.id}" />
 
 		<table>
 			<tbody>
@@ -62,6 +95,15 @@
 						<div class="form-control-box">
 							<textarea maxlength="300" name="body" placeholder="내용을 입력해주세요."
 								class="height-300"></textarea>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>첨부1</th>
+					<td>
+						<div class="form-control-box">
+							<input type="file" accept="video/*" capture
+								name="file__articleReply__0__common__attachment__1">
 						</div>
 					</td>
 				</tr>
@@ -112,8 +154,7 @@
 	display: none;
 }
 
-.reply-modify-form-modal-actived .reply-modify-form-modal
-	{
+.reply-modify-form-modal-actived .reply-modify-form-modal {
 	display: flex;
 }
 </style>
@@ -132,8 +173,7 @@
 			<div class="form-control-label">수정</div>
 			<div class="form-control-box">
 				<button type="submit">수정</button>
-				<button type="button"
-					onclick="ReplyList__hideModifyFormModal();">취소</button>
+				<button type="button" onclick="ReplyList__hideModifyFormModal();">취소</button>
 			</div>
 		</div>
 	</form>

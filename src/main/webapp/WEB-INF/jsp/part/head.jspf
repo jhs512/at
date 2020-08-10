@@ -25,9 +25,9 @@
 <!-- 공통 JS -->
 <script src="/resource/common.js"></script>
 
-<script>
+<%="<script>"%>
 var param = ${paramJson};
-</script>
+<%="</script>"%>
 
 </head>
 <body>

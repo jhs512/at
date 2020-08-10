@@ -95,3 +95,23 @@ ALTER TABLE `at`.`reply` ADD INDEX (`relId`, `relTypeCode`);
 UPDATE reply
 SET relTypeCode = 'article'
 WHERE relTypeCode = '';
+
+/* 파일 테이블 생성 */
+CREATE TABLE `file` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME,
+    updateDate DATETIME,
+    delDate DATETIME,
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+	relTypeCode CHAR(50) NOT NULL,
+	relId INT(10) UNSIGNED NOT NULL,
+    originFileName VARCHAR(100) NOT NULL,
+    fileExt CHAR(10) NOT NULL,
+    typeCode CHAR(20) NOT NULL,
+    type2Code CHAR(20) NOT NULL,
+    fileSize INT(10) UNSIGNED NOT NULL,
+    fileExtTypeCode CHAR(10) NOT NULL,
+    fileExtType2Code CHAR(10) NOT NULL,
+    fileNo TINYINT(2) UNSIGNED NOT NULL,
+    `body` LONGBLOB
+);
