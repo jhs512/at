@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbs.jhs.at.dao.ReplyDao">
+	<select id="getForPrintReplies" resultMap="reply">
+	    <![CDATA[
+		SELECT AR.*,
+		M.nickname AS extra__writer
+		FROM reply AS AR
+		INNER JOIN member AS M
+		ON AR.memberId = M.id
+		WHERE AR.relId = #{relId}
+		AND AR.relTypeCode = #{relTypeCode}
+		AND AR.displayStatus = 1
+		AND AR.id >= #{from}
+		ORDER BY AR.id ASC
+		]]>
+	</select>
+
+	<insert id="writeReply" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO reply
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		body =
+		#{body},
+		memberId = #{memberId},
+		relTypeCode = #{relTypeCode},
+		relId =
+		#{relId},
+		displayStatus
+		= 1
+	</insert>
+
+	<select id="getForPrintReplyById" resultMap="reply">
+		SELECT AR.*,
+		M.nickname AS extra__writer
+		FROM reply AS
+		AR
+		INNER JOIN member AS M
+		ON
+		AR.memberId = M.id
+		WHERE AR.id = #{id}
+		AND
+		AR.displayStatus = 1
+		AND AR.id
+		= #{id}
+	</select>
+
+	<delete id="deleteReply">
+		DELETE FROM reply
+		WHERE id = #{id}
+	</delete>
+
+	<update id="modifyReply">
+		UPDATE reply
+		<set>
+			updateDate = NOW(),
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<resultMap type="Reply" id="reply">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="updateDate" column="updateDate" />
+		<id property="delDate" column="delDate" />
+		<id property="delStatus" column="delStatus" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="relId" column="relId" />
+		<id property="relTypeCode" column="relTypeCode" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
+		</association>
+	</resultMap>
+</mapper>

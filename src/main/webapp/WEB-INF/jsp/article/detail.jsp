@@ -40,8 +40,9 @@
 				return;
 			}
 
-			$.post('./doWriteReplyAjax', {
-				articleId : param.id,
+			$.post('./../reply/doWriteReplyAjax', {
+				relId : param.id,
+				relTypeCode : 'article',
 				body : form.body.value
 			}, function(data) {
 
@@ -76,7 +77,7 @@
 
 <h2 class="con">댓글 리스트</h2>
 
-<div class="article-reply-list-box table-box con">
+<div class="reply-list-box table-box con">
 	<table>
 		<colgroup>
 			<col width="80">
@@ -101,7 +102,7 @@
 </div>
 
 <style>
-.article-reply-modify-form-modal {
+.reply-modify-form-modal {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -111,13 +112,13 @@
 	display: none;
 }
 
-.article-reply-modify-form-modal-actived .article-reply-modify-form-modal
+.reply-modify-form-modal-actived .reply-modify-form-modal
 	{
 	display: flex;
 }
 </style>
 
-<div class="article-reply-modify-form-modal flex flex-ai-c flex-jc-c">
+<div class="reply-modify-form-modal flex flex-ai-c flex-jc-c">
 	<form action="" class="form1 bg-white padding-10"
 		onsubmit="ReplyList__submitModifyForm(this); return false;">
 		<input type="hidden" name="id" />
@@ -139,7 +140,7 @@
 </div>
 
 <script>
-	var ReplyList__$box = $('.article-reply-list-box');
+	var ReplyList__$box = $('.reply-list-box');
 	var ReplyList__$tbody = ReplyList__$box.find('tbody');
 
 	var ReplyList__lastLodedId = 0;
@@ -165,14 +166,14 @@
 		var body = form.body.value;
 
 		ReplyList__submitModifyFormDone = true;
-		$.post('doModifyReplyAjax', {
+		$.post('../reply/doModifyReplyAjax', {
 			id : id,
 			body : body
 		}, function(data) {
 			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
 				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
-				var $tr = $('.article-reply-list-box tbody > tr[data-id="' + id
-						+ '"] .article-reply-body');
+				var $tr = $('.reply-list-box tbody > tr[data-id="' + id
+						+ '"] .reply-body');
 				$tr.empty().append(body);
 			}
 
@@ -182,20 +183,20 @@
 	}
 
 	function ReplyList__showModifyFormModal(el) {
-		$('html').addClass('article-reply-modify-form-modal-actived');
+		$('html').addClass('reply-modify-form-modal-actived');
 		var $tr = $(el).closest('tr');
 		var originBody = $tr.data('data-originBody');
 
 		var id = $tr.attr('data-id');
 
-		var form = $('.article-reply-modify-form-modal form').get(0);
+		var form = $('.reply-modify-form-modal form').get(0);
 
 		form.id.value = id;
 		form.body.value = originBody;
 	}
 
 	function ReplyList__hideModifyFormModal() {
-		$('html').removeClass('article-reply-modify-form-modal-actived');
+		$('html').removeClass('reply-modify-form-modal-actived');
 	}
 
 	function ReplyList__loadMoreCallback(data) {
@@ -209,7 +210,7 @@
 
 	function ReplyList__loadMore() {
 
-		$.get('getForPrintReplies', {
+		$.get('../reply/getForPrintReplies', {
 			articleId : param.id,
 			from : ReplyList__lastLodedId + 1
 		}, ReplyList__loadMoreCallback, 'json');
@@ -231,7 +232,7 @@
 
 		var id = $tr.attr('data-id');
 
-		$.post('./doDeleteReplyAjax', {
+		$.post('./../reply/doDeleteReplyAjax', {
 			id : id
 		}, function(data) {
 			$tr.remove();
@@ -244,7 +245,7 @@
 		html += '<td>' + reply.id + '</td>';
 		html += '<td>' + reply.regDate + '</td>';
 		html += '<td>' + reply.extra.writer + '</td>';
-		html += '<td class="article-reply-body">' + reply.body + '</td>';
+		html += '<td class="reply-body">' + reply.body + '</td>';
 		html += '<td>';
 		if (reply.extra.actorCanDelete) {
 			html += '<button type="button" onclick="ReplyList__delete(this);">삭제</button>';

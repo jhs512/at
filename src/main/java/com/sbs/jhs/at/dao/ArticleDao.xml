@@ -10,41 +10,11 @@
 		ORDER BY id DESC
 	</select>
 
-	<select id="getForPrintReplies" resultMap="reply">
-	    <![CDATA[
-		SELECT AR.*,
-		M.nickname AS extra__writer
-		FROM reply AS AR
-		INNER JOIN member AS M
-		ON AR.memberId = M.id
-		WHERE AR.relId = #{relId}
-		AND AR.relTypeCode = #{relTypeCode}
-		AND AR.displayStatus = 1
-		AND AR.id >= #{from}
-		ORDER BY AR.id ASC
-		]]>
-	</select>
-
 	<select id="getForPrintArticleById" resultType="Article">
 		SELECT *
 		FROM
 		article
 		WHERE id = #{id}
-	</select>
-
-	<select id="getForPrintReplyById" resultMap="reply">
-		SELECT AR.*,
-		M.nickname AS extra__writer
-		FROM reply AS
-		AR
-		INNER JOIN member AS M
-		ON
-		AR.memberId = M.id
-		WHERE AR.id = #{id}
-		AND
-		AR.displayStatus = 1
-		AND AR.id
-		= #{id}
 	</select>
 
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
@@ -56,45 +26,4 @@
 		body = #{body}
 	</insert>
 
-	<insert id="writeReply" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO reply
-		SET regDate = NOW(),
-		updateDate = NOW(),
-		body =
-		#{body},
-		memberId = #{memberId},
-		relTypeCode = #{relTypeCode},
-		relId =
-		#{relId},
-		displayStatus
-		= 1
-	</insert>
-
-	<delete id="deleteReply">
-		DELETE FROM reply
-		WHERE id = #{id}
-	</delete>
-
-	<update id="modifyReply">
-		UPDATE reply
-		<set>
-			<if test="body != null">body = #{body},</if>
-		</set>
-		WHERE id = #{id}
-	</update>
-
-	<resultMap type="Reply" id="reply">
-		<id property="id" column="id" />
-		<id property="regDate" column="regDate" />
-		<id property="updateDate" column="updateDate" />
-		<id property="delDate" column="delDate" />
-		<id property="delStatus" column="delStatus" />
-		<id property="body" column="body" />
-		<id property="memberId" column="memberId" />
-		<id property="relId" column="relId" />
-		<id property="relTypeCode" column="relTypeCode" />
-		<association property="extra" javaType="map">
-			<id property="writer" column="extra__writer" />
-		</association>
-	</resultMap>
 </mapper>
