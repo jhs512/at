@@ -56,8 +56,6 @@
 				});
 			}
 
-			alert('이제 fileIds(' + fileIdsStr + ')를 doWriteReplyAjax에서 처리해야 한다.');
-
 			var startWriteReply = function(fileIdsStr, onSuccess) {
 				$.ajax({
 					url : './../reply/doWriteReplyAjax',
@@ -99,11 +97,11 @@
 					</td>
 				</tr>
 				<tr>
-					<th>첨부1</th>
+					<th>첨부1 비디오</th>
 					<td>
 						<div class="form-control-box">
 							<input type="file" accept="video/*" capture
-								name="file__articleReply__0__common__attachment__1">
+								name="file__reply__0__common__attachment__1">
 						</div>
 					</td>
 				</tr>
@@ -145,17 +143,11 @@
 
 <style>
 .reply-modify-form-modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: rgba(0, 0, 0, 0.4);
-	display: none;
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); display: none;
 }
 
 .reply-modify-form-modal-actived .reply-modify-form-modal {
-	display: flex;
+    display: flex;
 }
 </style>
 
@@ -285,14 +277,24 @@
 		html += '<td>' + reply.id + '</td>';
 		html += '<td>' + reply.regDate + '</td>';
 		html += '<td>' + reply.extra.writer + '</td>';
-		html += '<td class="reply-body">' + reply.body + '</td>';
 		html += '<td>';
+		html += '<div class="reply-body">' + reply.body + '</div>';
+		if (reply.extra.file__common__attachment__1) {
+            var file = reply.extra.file__common__attachment__1;
+            html += '<video controls src="http://localhost:8085/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
+        }
+		
+		html += '</td>';
+		html += '<td>';
+
 		if (reply.extra.actorCanDelete) {
 			html += '<button type="button" onclick="ReplyList__delete(this);">삭제</button>';
 		}
+		
 		if (reply.extra.actorCanModify) {
 			html += '<button type="button" onclick="ReplyList__showModifyFormModal(this);">수정</button>';
 		}
+		
 		html += '</td>';
 		html += '</tr>';
 

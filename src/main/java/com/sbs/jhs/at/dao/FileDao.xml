@@ -5,10 +5,12 @@
 <mapper namespace="com.sbs.jhs.at.dao.FileDao">
 
 	<insert id="save" useGeneratedKeys="true" keyProperty="id">
-		INSERT INTO `file`
+		INSERT
+		INTO `file`
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		relTypeCode = #{relTypeCode},
+		relTypeCode =
+		#{relTypeCode},
 		relId = #{relId},
 		originFileName = #{originFileName},
 		fileExt = #{fileExt},
@@ -18,7 +20,53 @@
 		fileExtTypeCode = #{fileExtTypeCode},
 		fileExtType2Code = #{fileExtType2Code},
 		fileNo = #{fileNo},
-		`body` = #{body}
+		`body` =
+		#{body}
 	</insert>
+
+	<select id="getFiles" resultType="File">
+		SELECT id, regDate, updateDate, relTypeCode, relId, originFileName,
+		fileExt, typeCode, type2Code, fileExtTypeCode, fileExtType2Code,
+		fileNo, fileSize
+		FROM file
+		WHERE 1
+		AND relId IN
+		<foreach item="relId" index="index" collection="relIds"
+			open="(" separator="," close=")">
+			#{relId}
+		</foreach>
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND
+		type2Code = #{type2Code}
+		AND fileNo = #{fileNo}
+	</select>
+
+	<select id="getFileById" resultType="File">
+		SELECT id, regDate,
+		updateDate, relTypeCode, relId, originFileName, fileExt,
+		typeCode,
+		type2Code, fileExtTypeCode, fileExtType2Code, fileNo, body,
+		fileSize
+		FROM file
+		WHERE 1
+		AND id = #{id}
+	</select>
+
+	<update id="changeRelId">
+		UPDATE `file`
+		<set>
+			updateDate = NOW(),
+			relId = #{relId}
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<delete id="deleteFiles">
+		DELETE FROM file
+		WHERE relId = #{relId}
+		AND relTypeCode
+		= #{relTypeCode}
+	</delete>
 
 </mapper>

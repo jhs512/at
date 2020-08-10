@@ -5,9 +5,7 @@
 <mapper namespace="com.sbs.jhs.at.dao.MemberDao">
 	<select id="getMemberById" resultType="Member">
 		SELECT *
-		FROM
-		article
-		WHERE
-		id = #{id}
+		FROM member
+		WHERE id = #{id}
 	</select>
 </mapper>
