@@ -42,6 +42,12 @@
 
 			var startUploadFiles = function(onSuccess) {
 				var fileUploadFormData = new FormData(form);
+
+				if ( form.file__reply__0__common__attachment__1.value.length == 0 ) {
+					onSuccess();
+					return;
+				} 
+				
 				fileUploadFormData.delete("relTypeCode");
 				fileUploadFormData.delete("relId");
 
@@ -72,9 +78,17 @@
 			};
 
 			startUploadFiles(function(data) {
-				var idsStr = data.body.fileIdsStr;
+				var idsStr = '';
+				if ( data && data.body && data.body.fileIdsStr ) {
+					idsStr = data.body.fileIdsStr;
+				}
 				startWriteReply(idsStr, function(data) {
+					if ( data.msg ) {
+						alert(data.msg);
+					}
+					
 					form.body.value = '';
+					form.file__reply__0__common__attachment__1.value = '';
 				});
 			});
 		}
@@ -143,11 +157,17 @@
 
 <style>
 .reply-modify-form-modal {
-    position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.4); display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0, 0, 0, 0.4);
+	display: none;
 }
 
 .reply-modify-form-modal-actived .reply-modify-form-modal {
-    display: flex;
+	display: flex;
 }
 </style>
 
