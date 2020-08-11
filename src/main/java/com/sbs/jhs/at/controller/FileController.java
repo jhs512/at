@@ -1,13 +1,12 @@
 package com.sbs.jhs.at.controller;
 
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,16 +19,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import com.google.common.base.Joiner;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.sbs.jhs.at.dto.File;
 import com.sbs.jhs.at.dto.ResultData;
 import com.sbs.jhs.at.service.FileService;
 import com.sbs.jhs.at.service.VideoStreamService;
 import com.sbs.jhs.at.util.Util;
-
-import reactor.core.publisher.Mono;
 
 @Controller
 public class FileController {
@@ -38,13 +37,21 @@ public class FileController {
 	@Autowired
 	private VideoStreamService videoStreamService;
 
-	@RequestMapping("/usr/file/streamVideo")
-	public Mono<ResponseEntity<byte[]>> streamVideo(
-			@RequestHeader(value = "Range", required = false) String httpRangeList, int id) {
-		File file = fileService.getFileById(id);
-		final ByteArrayInputStream is = new ByteArrayInputStream(file.getBody());
+	private LoadingCache<Integer, File> fileCache = CacheBuilder.newBuilder().maximumSize(100)
+			.expireAfterAccess(2, TimeUnit.MINUTES).build(new CacheLoader<Integer, File>() {
+				@Override
+				public File load(Integer fileId) {
+					return fileService.getFileById(fileId);
+				}
+			});
 
-		return Mono.just(videoStreamService.prepareContent(is, file.getFileSize(), file.getFileExt(), httpRangeList));
+	@RequestMapping("/usr/file/streamVideo")
+	public ResponseEntity<byte[]> streamVideo(@RequestHeader(value = "Range", required = false) String httpRangeList,
+			int id) {
+		File file = Util.getCacheData(fileCache, id);
+
+		return videoStreamService.prepareContent(new ByteArrayInputStream(file.getBody()), file.getFileSize(),
+				file.getFileExt(), httpRangeList);
 	}
 
 	@RequestMapping("/usr/file/doUploadAjax")
