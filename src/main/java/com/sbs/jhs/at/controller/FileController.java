@@ -38,7 +38,7 @@ public class FileController {
 	private VideoStreamService videoStreamService;
 
 	private LoadingCache<Integer, File> fileCache = CacheBuilder.newBuilder().maximumSize(100)
-			.expireAfterAccess(2, TimeUnit.MINUTES).build(new CacheLoader<Integer, File>() {
+			.expireAfterAccess(10, TimeUnit.MINUTES).build(new CacheLoader<Integer, File>() {
 				@Override
 				public File load(Integer fileId) {
 					return fileService.getFileById(fileId);

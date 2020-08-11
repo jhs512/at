@@ -41,15 +41,16 @@
 			}
 
 			var startUploadFiles = function(onSuccess) {
-				var fileUploadFormData = new FormData(form);
-
-				if ( form.file__reply__0__common__attachment__1.value.length == 0 ) {
+				if ( form.file__reply__0__common__attachment__1.value.length == 0 && form.file__reply__0__common__attachment__2.value.length == 0 ) {
 					onSuccess();
 					return;
-				} 
+				}
+
+				var fileUploadFormData = new FormData(form); 
 				
 				fileUploadFormData.delete("relTypeCode");
 				fileUploadFormData.delete("relId");
+				fileUploadFormData.delete("body");
 
 				$.ajax({
 					url : './../file/doUploadAjax',
@@ -89,6 +90,7 @@
 					
 					form.body.value = '';
 					form.file__reply__0__common__attachment__1.value = '';
+					form.file__reply__0__common__attachment__2.value = '';
 				});
 			});
 		}
@@ -116,6 +118,15 @@
 						<div class="form-control-box">
 							<input type="file" accept="video/*" capture
 								name="file__reply__0__common__attachment__1">
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th>첨부2 비디오</th>
+					<td>
+						<div class="form-control-box">
+							<input type="file" accept="video/*" capture
+								name="file__reply__0__common__attachment__2">
 						</div>
 					</td>
 				</tr>
@@ -301,7 +312,12 @@
 		html += '<div class="reply-body">' + reply.body + '</div>';
 		if (reply.extra.file__common__attachment__1) {
             var file = reply.extra.file__common__attachment__1;
-            html += '<video controls src="http://localhost:8085/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
+            html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
+        }
+
+		if (reply.extra.file__common__attachment__2) {
+            var file = reply.extra.file__common__attachment__2;
+            html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
         }
 		
 		html += '</td>';

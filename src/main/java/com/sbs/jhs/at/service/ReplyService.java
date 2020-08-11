@@ -37,6 +37,16 @@ public class ReplyService {
 					reply.getExtra().put("file__common__attachment__1", file);
 				}
 			}
+			
+			filesMap = fileService.getFilesMapKeyRelId("reply", replyIds, "common", "attachment", 2);
+
+			for (Reply reply : replies) {
+				File file = filesMap.get(reply.getId());
+
+				if (file != null) {
+					reply.getExtra().put("file__common__attachment__2", file);
+				}
+			}
 		}
 
 		Member actor = (Member) param.get("actor");

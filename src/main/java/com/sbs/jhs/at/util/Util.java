@@ -144,9 +144,9 @@ public class Util {
 		return null;
 	}
 
-	public static <T extends Object> T getCacheData(LoadingCache cache, int id) {
+	public static <T extends Object> T getCacheData(LoadingCache cache, int key) {
 		try {
-			return (T)cache.get(id);
+			return (T)cache.get(key);
 		} catch (ExecutionException e) {
 			return null;
 		}
