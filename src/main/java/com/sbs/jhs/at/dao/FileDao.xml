@@ -24,7 +24,7 @@
 		#{body}
 	</insert>
 
-	<select id="getFiles" resultType="File">
+	<select id="getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo" resultType="File">
 		SELECT id, regDate, updateDate, relTypeCode, relId, originFileName,
 		fileExt, typeCode, type2Code, fileExtTypeCode, fileExtType2Code,
 		fileNo, fileSize
@@ -40,6 +40,25 @@
 		AND
 		type2Code = #{type2Code}
 		AND fileNo = #{fileNo}
+		ORDER BY relId
+	</select>
+	
+	<select id="getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code" resultType="File">
+		SELECT id, regDate, updateDate, relTypeCode, relId, originFileName,
+		fileExt, typeCode, type2Code, fileExtTypeCode, fileExtType2Code,
+		fileNo, fileSize
+		FROM file
+		WHERE 1
+		AND relId IN
+		<foreach item="relId" index="index" collection="relIds"
+			open="(" separator="," close=")">
+			#{relId}
+		</foreach>
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND
+		type2Code = #{type2Code}
+		ORDER BY relId, fileNo
 	</select>
 
 	<select id="getFileById" resultType="File">

@@ -1,6 +1,7 @@
 package com.sbs.jhs.at.service;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class FileService {
 
 	public Map<Integer, File> getFilesMapKeyRelId(String relTypeCode, List<Integer> relIds, String typeCode,
 			String type2Code, int fileNo) {
-		List<File> files = fileDao.getFiles(relTypeCode, relIds, typeCode, type2Code, fileNo);
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo(relTypeCode, relIds, typeCode, type2Code, fileNo);
 		Map<Integer, File> map = new HashMap<>();
 
 		for (File file : files) {
@@ -66,6 +67,24 @@ public class FileService {
 
 	public File getFileById(int id) {
 		return fileDao.getFileById(id);
+	}
+
+	public Map<Integer, Map<Integer, File>> getFilesMapKeyRelIdAndFileNo(String relTypeCode, List<Integer> relIds, String typeCode,
+			String type2Code) {
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode, relIds, typeCode, type2Code);
+		Map<Integer, File> map = new HashMap<>();
+		
+		Map<Integer, Map<Integer, File>> rs = new LinkedHashMap<>();
+
+		for (File file : files) {
+			if ( rs.containsKey(file.getRelId()) == false ) {
+				rs.put(file.getRelId(), new LinkedHashMap<>());
+			}
+			
+			rs.get(file.getRelId()).put(file.getFileNo(), file);
+		}
+
+		return rs;
 	}
 
 }

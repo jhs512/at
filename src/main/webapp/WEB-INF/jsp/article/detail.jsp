@@ -32,13 +32,19 @@
 	<h2 class="con">댓글 작성</h2>
 
 	<script>
+		var ArticleWriteReplyForm__submitDone = false;
 		function ArticleWriteReplyForm__submit(form) {
+			if ( ArticleWriteReplyForm__submitDone ) {
+				alert('처리중입니다.');
+			}
 			form.body.value = form.body.value.trim();
 			if (form.body.value.length == 0) {
 				alert('댓글을 입력해주세요.');
 				form.body.focus();
 				return;
 			}
+
+			ArticleWriteReplyForm__submitDone = true;
 
 			var startUploadFiles = function(onSuccess) {
 				if ( form.file__reply__0__common__attachment__1.value.length == 0 && form.file__reply__0__common__attachment__2.value.length == 0 ) {
@@ -64,6 +70,7 @@
 			}
 
 			var startWriteReply = function(fileIdsStr, onSuccess) {
+
 				$.ajax({
 					url : './../reply/doWriteReplyAjax',
 					data : {
@@ -79,11 +86,14 @@
 			};
 
 			startUploadFiles(function(data) {
+				
 				var idsStr = '';
 				if ( data && data.body && data.body.fileIdsStr ) {
 					idsStr = data.body.fileIdsStr;
 				}
+
 				startWriteReply(idsStr, function(data) {
+					
 					if ( data.msg ) {
 						alert(data.msg);
 					}
@@ -91,6 +101,7 @@
 					form.body.value = '';
 					form.file__reply__0__common__attachment__1.value = '';
 					form.file__reply__0__common__attachment__2.value = '';
+					ArticleWriteReplyForm__submitDone = false;
 				});
 			});
 		}
@@ -116,7 +127,7 @@
 					<th>첨부1 비디오</th>
 					<td>
 						<div class="form-control-box">
-							<input type="file" accept="video/*" capture
+							<input type="file" accept="video/*"
 								name="file__reply__0__common__attachment__1">
 						</div>
 					</td>
@@ -125,7 +136,7 @@
 					<th>첨부2 비디오</th>
 					<td>
 						<div class="form-control-box">
-							<input type="file" accept="video/*" capture
+							<input type="file" accept="video/*"
 								name="file__reply__0__common__attachment__2">
 						</div>
 					</td>
@@ -235,8 +246,7 @@
 		}, function(data) {
 			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
 				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
-				var $tr = $('.reply-list-box tbody > tr[data-id="' + id
-						+ '"] .reply-body');
+				var $tr = $('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body');
 				$tr.empty().append(body);
 			}
 
@@ -310,14 +320,13 @@
 		html += '<td>' + reply.extra.writer + '</td>';
 		html += '<td>';
 		html += '<div class="reply-body">' + reply.body + '</div>';
-		if (reply.extra.file__common__attachment__1) {
-            var file = reply.extra.file__common__attachment__1;
-            html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
-        }
 
-		if (reply.extra.file__common__attachment__2) {
-            var file = reply.extra.file__common__attachment__2;
-            html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video>';
+		if ( reply.extra.file__common__attachment ) {
+			for ( var no in reply.extra.file__common__attachment ) {
+				var file = reply.extra.file__common__attachment[no];
+	            html += '<div class="video-box"><video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video></div>';				
+			}
+            
         }
 		
 		html += '</td>';
