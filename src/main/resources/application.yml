@@ -1,6 +1,17 @@
 server:
   port: 8085
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jangka512@gmail.com
+    password: caslfrokflgzpwan
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   servlet:
     multipart:
       file-size-threshold: 1MB
@@ -18,4 +29,8 @@ spring:
 mybatis:
   type-aliases-package: com.sbs.jhs.at.dto
 custom:
+  siteName: 오디션 트리
+  siteMainUri: https://auditiontree.com/
   logoText: 오디션 트리
+  emailFrom: no-reply@audiotiontree.com
+  emailFromName: 오디션 트리
