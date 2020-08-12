@@ -54,4 +54,8 @@ public class MemberService {
 		return new ResultData("F-1", "이미 사용중인 로그인 아이디 입니다.", "loginId", loginId);
 	}
 
+	public Member getMemberByLoginId(String loginId) {
+		return memberDao.getMemberByLoginId(loginId);
+	}
+
 }

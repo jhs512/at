@@ -40,4 +40,13 @@ var param = ${paramJson};
 </head>
 <body>
 	<div class="outer-box">
+		<div class="top-bar con">
+			<c:if test="${isLogined}">
+				${loginedMember.nickname}님 환영합니다.
+			</c:if>
+			
+			<c:if test="${isLogined}">
+				<a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a>
+			</c:if>
+		</div>
 		<h1 class="page-title-box con">${pageTitle}</h1>

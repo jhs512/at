@@ -5,6 +5,8 @@
 <c:set var="pageTitle" value="로그인" />
 <%@ include file="../part/head.jspf"%>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
+
 <script>
 	var MemberLoginForm__submitDone = false;
 	function MemberLoginForm__submit(form) {
@@ -48,13 +50,17 @@
 			return;
 		}
 
+		form.loginPwReal.value = sha256(form.loginPw.value);
+		form.loginPw.value = '';
+
 		form.submit();
 		MemberLoginForm__submitDone = true;
 	}
 </script>
 <form method="POST" class="table-box con form1" action="doLogin"
 	onsubmit="MemberLoginForm__submit(this); return false;">
-	<input type="hidden" name="redirectUrl" value="???">
+	<input type="hidden" name="redirectUrl" value="/usr/home/main">
+	<input type="hidden" name="loginPwReal">
 
 	<table>
 		<colgroup>
