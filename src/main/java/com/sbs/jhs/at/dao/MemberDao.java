@@ -1,5 +1,7 @@
 package com.sbs.jhs.at.dao;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -10,4 +12,7 @@ public interface MemberDao {
 
 	Member getMemberById(@Param("id") int id);
 
+	void join(Map<String, Object> param);
+
+	int getLoginIdDupCount(@Param("loginId") String loginId);
 }

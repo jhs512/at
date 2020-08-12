@@ -6,6 +6,29 @@
 	<select id="getMemberById" resultType="Member">
 		SELECT *
 		FROM member
-		WHERE id = #{id}
+		WHERE
+		id = #{id}
 	</select>
+
+	<select id="getLoginIdDupCount" resultType="int">
+		SELECT COUNT(*) AS
+		cnt
+		FROM member
+		WHERE loginId = #{loginId}
+	</select>
+
+	<insert id="join" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO member
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		authStatus = 0,
+		loginId = #{loginId},
+		loginPw = #{loginPw},
+		`name` = #{name},
+		nickname =
+		#{nickname},
+		email = #{email},
+		cellphoneNo = #{cellphoneNo}
+	</insert>
 </mapper>

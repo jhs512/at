@@ -115,3 +115,6 @@ CREATE TABLE `file` (
     fileNo TINYINT(2) UNSIGNED NOT NULL,
     `body` LONGBLOB
 );
+
+# 멤버 테이블 칼럼명 변경
+ALTER TABLE `member` CHANGE `phoneNo` `cellphoneNo` CHAR(20) NOT NULL; 

@@ -155,4 +155,12 @@ public class Util {
 		}
 	}
 
+	public static String getAsStr(Object object) {
+		if ( object == null ) {
+			return "";
+		}
+		
+		return object.toString();
+	}
+
 }

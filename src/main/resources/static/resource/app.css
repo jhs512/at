@@ -1,0 +1,14 @@
+html {
+	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
+	font-family: "Roboto", "Noto Sans KR", sans-serif;
+}
+
+/* 커스텀 */
+.con {
+	max-width: 1200px;
+}
+
+.page-title-box {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}

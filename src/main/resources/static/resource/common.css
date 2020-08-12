@@ -1,8 +1,3 @@
-html {
-	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
-	font-family: "Roboto", "Noto Sans KR", sans-serif;
-}
-
 /* 노말라이즈 */
 body, ul, li, h1 {
 	margin: 0;
@@ -114,12 +109,33 @@ html>head+body:nth-child(2) .height-300 {
 	padding: 10px;
 }
 
-/* 커스텀 */
-.con {
-	max-width: 1200px;
+.form1 th {
+	/* `로그인 아이디` 문구가 줄 바꿈 될 때 공백기준으로 줄바꿈 되도록 */
+	word-break:keep-all;
 }
 
-.page-title-box {
-	margin-top: 30px;
-	margin-bottom: 30px;
+/* 버튼관련 */
+.btn {
+    padding:5px 15px;
+    display: inline-flex;
+    font-weight: bold;
+    border-radius: 10px;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    background-color: #3D94F6;
+    color: #FFFFFF;
+    text-shadow: 1px 1px 20px #000000;
+}
+
+.btn:hover {
+    background-color: #1E62D0;
+}
+
+.btn-success {
+    background-color: green;
+}
+
+.btn-danger {
+    background-color: red;
 }
