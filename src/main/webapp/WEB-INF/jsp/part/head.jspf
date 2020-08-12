@@ -44,7 +44,7 @@ var param = ${paramJson};
 			<c:if test="${isLogined}">
 				${loginedMember.nickname}님 환영합니다.
 			</c:if>
-			
+
 			<c:if test="${isLogined}">
 				<a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a>
 			</c:if>
