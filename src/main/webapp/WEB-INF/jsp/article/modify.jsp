@@ -15,6 +15,19 @@
 		var fileInput2 = form["file__article__" + param.id
 				+ "__common__attachment__2"];
 
+		var deleteFileInput1 = form["deleteFile__article__" + param.id
+				+ "__common__attachment__1"];
+		var deleteFileInput2 = form["deleteFile__article__" + param.id
+				+ "__common__attachment__2"];
+
+		if (deleteFileInput1.checked) {
+			fileInput1.value = '';
+		}
+
+		if (deleteFileInput2.checked) {
+			fileInput2.value = '';
+		}
+
 		if (ArticleModifyForm__submitDone) {
 			alert('처리중입니다.');
 			return;
@@ -57,8 +70,11 @@
 
 		var startUploadFiles = function(onSuccess) {
 			if (fileInput1.value.length == 0 && fileInput2.value.length == 0) {
-				onSuccess();
-				return;
+				if (deleteFileInput1.checked == false
+						&& deleteFileInput2.checked == false) {
+					onSuccess();
+					return;
+				}
 			}
 
 			var fileUploadFormData = new FormData(form);

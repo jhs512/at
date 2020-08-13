@@ -8,6 +8,11 @@ html {
 	max-width: 1200px;
 }
 
+.outer-box {
+    padding-top:30px;
+    padding-bottom:30px;
+}
+
 .page-title-box {
 	margin-top: 30px;
 	margin-bottom: 30px;

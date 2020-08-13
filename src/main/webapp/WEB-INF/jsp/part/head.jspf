@@ -40,7 +40,7 @@ var param = ${paramJson};
 </head>
 <body>
 	<div class="outer-box">
-		<div class="top-bar con flex flex-ai-c flex-jc-sb margin-top-30">
+		<div class="top-bar con flex flex-ai-c flex-jc-sb">
 			<a href="/usr/home/main" class="logo img-box"> <img
 				src="/resource/img/logo_1@3x.png" alt="" />
 			</a>

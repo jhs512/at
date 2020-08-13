@@ -109,7 +109,7 @@ public class FileController {
 		for (String inputName : param.keySet()) {
 			String[] inputNameBits = inputName.split("__");
 
-			if (inputNameBits[0].equals("fileDelete")) {
+			if (inputNameBits[0].equals("deleteFile")) {
 				String relTypeCode = inputNameBits[1];
 				int relId = Integer.parseInt(inputNameBits[2]);
 				String typeCode = inputNameBits[3];
