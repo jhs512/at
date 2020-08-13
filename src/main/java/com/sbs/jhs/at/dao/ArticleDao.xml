@@ -17,6 +17,14 @@
 		WHERE id = #{id}
 	</select>
 
+	<select id="getArticleById" resultType="Article">
+		SELECT *
+		FROM
+		article
+		WHERE
+		id = #{id}
+	</select>
+
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
 		INSERT
 		INTO article
@@ -27,4 +35,15 @@
 		memberId = #{memberId}
 	</insert>
 
+	<update id="modify">
+		UPDATE article
+		<set>
+			updateDate = NOW(),
+			<if test="title != null">title = #{title},</if>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
 </mapper>
+

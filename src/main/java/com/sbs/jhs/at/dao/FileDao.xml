@@ -24,6 +24,20 @@
 		#{body}
 	</insert>
 
+	<update id="update">
+		UPDATE `file`
+		<set>
+			updateDate = NOW(),
+			<if test="originFileName != null">originFileName = #{originFileName},</if>
+			<if test="fileExt != null">fileExt = #{fileExt},</if>
+			<if test="fileSize != null">fileSize = #{fileSize},</if>
+			<if test="fileExtTypeCode != null">fileExtTypeCode = #{fileExtTypeCode},</if>
+			<if test="fileExtType2Code != null">fileExtType2Code = #{fileExtType2Code},</if>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<select
 		id="getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo"
 		resultType="File">
@@ -108,4 +122,20 @@
 		= #{relTypeCode}
 	</delete>
 
+	<delete id="deleteFile">
+		DELETE FROM file
+		WHERE id = #{id}
+	</delete>
+
+	<select id="getFileId" resultType="int">
+		SELECT id
+		FROM file
+		WHERE
+		relTypeCode = #{relTypeCode}
+		AND relId = #{relId}
+		AND typeCode =
+		#{typeCode}
+		AND type2Code = #{type2Code}
+		AND fileNo = #{fileNo}
+	</select>
 </mapper>
