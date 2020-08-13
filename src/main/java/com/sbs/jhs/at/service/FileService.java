@@ -87,4 +87,9 @@ public class FileService {
 		return rs;
 	}
 
+	public List<File> getFilesMapKeyFileNo(String relTypeCode, int relId, String typeCode, String type2Code) {
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdAndTypeCodeAndType2Code(relTypeCode, relId, typeCode, type2Code);
+		return files;
+	}
+
 }
