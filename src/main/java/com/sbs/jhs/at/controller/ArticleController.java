@@ -3,6 +3,8 @@ package com.sbs.jhs.at.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.jhs.at.dto.Article;
+import com.sbs.jhs.at.dto.Member;
 import com.sbs.jhs.at.service.ArticleService;
 
 @Controller
@@ -27,10 +30,12 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/usr/article/detail")
-	public String showDetail(Model model, @RequestParam Map<String, Object> param) {
+	public String showDetail(Model model, @RequestParam Map<String, Object> param, HttpServletRequest req) {
 		int id = Integer.parseInt((String) param.get("id"));
+		
+		Member loginedMember = (Member)req.getAttribute("loginedMember");
 
-		Article article = articleService.getForPrintArticleById(id);
+		Article article = articleService.getForPrintArticleById(loginedMember, id);
 
 		model.addAttribute("article", article);
 
@@ -43,7 +48,9 @@ public class ArticleController {
 	}
 
 	@RequestMapping("/usr/article/doWrite")
-	public String doWrite(@RequestParam Map<String, Object> param) {
+	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req) {
+		int loginedMemberId = (int)req.getAttribute("loginedMemberId");
+		param.put("memberId", loginedMemberId);
 		int newArticleId = articleService.write(param);
 
 		String redirectUri = (String) param.get("redirectUri");

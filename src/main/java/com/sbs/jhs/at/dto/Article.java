@@ -18,5 +18,6 @@ public class Article {
 	private boolean displayStatus;
 	private String title;
 	private String body;
+	private int memberId;
 	private Map<String, Object> extra;
 }

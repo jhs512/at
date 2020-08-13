@@ -46,6 +46,34 @@ html>head+body:nth-child(2) .height-300 {
 	min-height: 100px;
 }
 
+.margin-top-20 {
+	margin-top: 20px;
+}
+
+.margin-top-30 {
+	margin-top: 30px;
+}
+
+.padding-0-10 {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.padding-0-20 {
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.padding-10-0 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.padding-20-0 {
+	padding-top: 20px;
+	padding-bottom: 20px;
+}
+
 .bg-white {
 	background-color: white;
 }
@@ -111,31 +139,31 @@ html>head+body:nth-child(2) .height-300 {
 
 .form1 th {
 	/* `로그인 아이디` 문구가 줄 바꿈 될 때 공백기준으로 줄바꿈 되도록 */
-	word-break:keep-all;
+	word-break: keep-all;
 }
 
 /* 버튼관련 */
 .btn {
-    padding:5px 15px;
-    display: inline-flex;
-    font-weight: bold;
-    border-radius: 10px;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    background-color: #3D94F6;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 20px #000000;
+	padding: 5px 15px;
+	display: inline-flex;
+	font-weight: bold;
+	border-radius: 10px;
+	outline: 0;
+	border: 0;
+	cursor: pointer;
+	background-color: #3D94F6;
+	color: #FFFFFF;
+	text-shadow: 1px 1px 20px #000000;
 }
 
 .btn:hover {
-    background-color: #1E62D0;
+	background-color: #1E62D0;
 }
 
 .btn-success {
-    background-color: green;
+	background-color: green;
 }
 
 .btn-danger {
-    background-color: red;
+	background-color: red;
 }

@@ -4,6 +4,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
@@ -350,7 +352,78 @@ public class Util {
 
 			param.put(paramName, paramValue);
 		}
-		
+
 		return param;
+	}
+
+	public static Object getExtraVal(Object obj, String key, Object elseValue) {
+		Class cls = obj.getClass();
+
+		try {
+			Method getExtraMethod = cls.getDeclaredMethod("getExtra");
+			Map<String, Object> extra = (Map<String, Object>) getExtraMethod.invoke(obj);
+
+			if (extra == null) {
+				return null;
+			} else {
+				if ( extra.get(key) == null ) {
+					return elseValue;
+				}
+				else {
+					return extra.get(key);
+				}
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	public static void putExtraVal(Object obj, String key, Object value) {
+		Class cls = obj.getClass();
+
+		try {
+			Method getExtraMethod = cls.getDeclaredMethod("getExtra");
+			Map<String, Object> extra = (Map<String, Object>) getExtraMethod.invoke(obj);
+
+			if (extra == null) {
+				extra = new HashMap<>();
+				extra.put(key, value);
+
+				Method setExtraMethod = cls.getDeclaredMethod("setExtra", Map.class);
+				setExtraMethod.invoke(obj, extra);
+			} else {
+				extra.put(key, value);
+			}
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

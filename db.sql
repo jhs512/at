@@ -118,3 +118,11 @@ CREATE TABLE `file` (
 
 # 멤버 테이블 칼럼명 변경
 ALTER TABLE `member` CHANGE `phoneNo` `cellphoneNo` CHAR(20) NOT NULL; 
+
+# 게시물 테이블에 작성자 정보 추가
+ALTER TABLE `article` ADD COLUMN `memberId` INT(10) UNSIGNED NOT NULL AFTER `delStatus`; 
+
+UPDATE article
+SET memberId = 1
+WHERE memberId = 0;
+
