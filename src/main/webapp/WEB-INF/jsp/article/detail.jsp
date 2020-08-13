@@ -30,7 +30,7 @@
 					<td>
 						<div class="video-box">
 							<video controls
-								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['1'].id}">video
+								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['1'].id}&updateDate=${article.extra.file__common__attachment['1'].updateDate}">video
 								not supported
 							</video>
 						</div>
@@ -363,9 +363,8 @@
 		if ( reply.extra.file__common__attachment ) {
 			for ( var no in reply.extra.file__common__attachment ) {
 				var file = reply.extra.file__common__attachment[no];
-	            html += '<div class="video-box"><video controls src="/usr/file/streamVideo?id=' + file.id + '">video not supported</video></div>';				
+	            html += '<div class="video-box"><video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video></div>';				
 			}
-            
         }
 		
 		html += '</td>';

@@ -40,24 +40,33 @@ var param = ${paramJson};
 </head>
 <body>
 	<div class="outer-box">
-		<div class="top-bar con">
-			<c:if test="${isLogined}">
-				${loginedMember.nickname}님 환영합니다.
-			</c:if>
+		<div class="top-bar con flex flex-ai-c flex-jc-sb margin-top-30">
+			<a href="/usr/home/main" class="logo img-box"> <img
+				src="/resource/img/logo_1@3x.png" alt="" />
+			</a>
 
-			<a href="/usr/home/main" class="btn btn-info">홈</a>
-			
-			<a class="btn btn-info" href="/usr/article/list">오디션 게시판</a>
-			<a class="btn btn-info" href="/usr/article/write">오디션 생성</a>
+			<nav class="menu-box-1">
+				<ul class="flex">
+					<li class="padding-0-10"><a href="/usr/home/main"
+						class="btn btn-info">홈</a></li>
+					<li class="padding-0-10"><a class="btn btn-info"
+						href="/usr/article/list">오디션 게시판</a></li>
+					<li class="padding-0-10"><a class="btn btn-info"
+						href="/usr/article/write">오디션 생성</a></li>
+					<c:if test="${isLogined}">
+						<li class="padding-0-10"><a class="btn btn-info"
+							href="/usr/member/doLogout">로그아웃</a></li>
+					</c:if>
+					<c:if test="${isLogined == false}">
+						<li class="padding-0-10"><a class="btn btn-info"
+							href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a></li>
 
-			<c:if test="${isLogined}">
-				<a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a>
-			</c:if>
+						<li class="padding-0-10"><a class="btn btn-info"
+							href="/usr/member/join">회원가입</a></li>
 
-			<c:if test="${isLogined == false}">
-				<a class="btn btn-info"
-					href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a>
-				<a class="btn btn-info" href="/usr/member/join">회원가입</a>
-			</c:if>
+					</c:if>
+
+				</ul>
+			</nav>
 		</div>
 		<h1 class="page-title-box con">${pageTitle}</h1>

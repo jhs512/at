@@ -95,6 +95,10 @@ html>head+body:nth-child(2) .height-300 {
 	justify-content: center;
 }
 
+.flex-jc-sb {
+    justify-content: space-between;
+}
+
 /* 테이블 관련 */
 .table-box>table {
 	width: 100%;

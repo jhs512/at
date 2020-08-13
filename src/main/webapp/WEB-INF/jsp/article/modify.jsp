@@ -132,7 +132,7 @@
 						test="${article.extra.file__common__attachment['1'] != null}">
 						<div class="video-box">
 							<video controls
-								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['1'].id}">video
+								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['1'].id}&updateDate=${article.extra.file__common__attachment['1'].updateDate}">video
 								not supported
 							</video>
 						</div>
@@ -159,7 +159,7 @@
 						test="${article.extra.file__common__attachment['2'] != null}">
 						<div class="video-box">
 							<video controls
-								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['2'].id}">video
+								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['2'].id}&updateDate=${article.extra.file__common__attachment['2'].updateDate}">video
 								not supported
 							</video>
 						</div>

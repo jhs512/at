@@ -12,3 +12,7 @@ html {
 	margin-top: 30px;
 	margin-bottom: 30px;
 }
+
+.top-bar .logo {
+    width:100px;
+}
