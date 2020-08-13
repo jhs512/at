@@ -30,7 +30,7 @@
 </script>
 <form method="POST" class="table-box con form1" action="doWrite"
 	onsubmit="ArticleWriteForm__submit(this); return false;">
-	<input type="hidden" name="redirectUrl" value="/article/detail?id=#id">
+	<input type="hidden" name="redirectUri" value="/article/detail?id=#id">
 
 	<table>
 		<tbody>

@@ -45,8 +45,19 @@ var param = ${paramJson};
 				${loginedMember.nickname}님 환영합니다.
 			</c:if>
 
+			<a href="/usr/home/main" class="btn btn-info">홈</a>
+			
+			<a class="btn btn-info" href="/usr/article/list">오디션 게시판</a>
+			<a class="btn btn-info" href="/usr/article/write">오디션 생성</a>
+
 			<c:if test="${isLogined}">
 				<a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a>
+			</c:if>
+
+			<c:if test="${isLogined == false}">
+				<a class="btn btn-info"
+					href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a>
+				<a class="btn btn-info" href="/usr/member/join">회원가입</a>
 			</c:if>
 		</div>
 		<h1 class="page-title-box con">${pageTitle}</h1>

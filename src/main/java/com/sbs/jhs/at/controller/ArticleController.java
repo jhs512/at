@@ -46,9 +46,9 @@ public class ArticleController {
 	public String doWrite(@RequestParam Map<String, Object> param) {
 		int newArticleId = articleService.write(param);
 
-		String redirectUrl = (String) param.get("redirectUrl");
-		redirectUrl = redirectUrl.replace("#id", newArticleId + "");
+		String redirectUri = (String) param.get("redirectUri");
+		redirectUri = redirectUri.replace("#id", newArticleId + "");
 
-		return "redirect:" + redirectUrl;
+		return "redirect:" + redirectUri;
 	}
 }
