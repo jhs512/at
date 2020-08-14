@@ -1,10 +1,10 @@
-# DB 사용자 생성
-GRANT ALL PRIVILEGES ON `at`.* TO `at`@`%` IDENTIFIED BY 'sbs123414';
-
 # DB 세팅
 DROP DATABASE IF EXISTS `at`;
 CREATE DATABASE `at`;
 USE `at`;
+
+# DB 사용자 생성
+GRANT ALL PRIVILEGES ON *.* TO `at`@`%` IDENTIFIED BY 'sbs123414';
 
 # article 테이블 세팅
 CREATE TABLE article (
@@ -131,3 +131,6 @@ WHERE memberId = 0;
 
 # 파일 테이블에 유니크 인덱스 추가
 ALTER TABLE `file` ADD UNIQUE INDEX (`relId`, `relTypeCode`, `typeCode`, `type2Code`, `fileNo`); 
+
+# 파일 테이블의 기존 인덱스에 유니크가 걸려 있어서 relId가 0 인 동안 충돌이 발생할 수 있다. 그래서 일반 인덱스로 바꾼다.
+ALTER TABLE `at`.`file` DROP INDEX `relId`, ADD INDEX (`relId` , `relTypeCode` , `typeCode` , `type2Code` , `fileNo`); 

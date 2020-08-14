@@ -84,16 +84,18 @@ public class FileController {
 				String fileExtType2Code = Util.getFileExtType2CodeFromFileName(multipartFile.getOriginalFilename());
 				String fileExt = Util.getFileExtFromFileName(multipartFile.getOriginalFilename()).toLowerCase();
 				int fileSize = (int) multipartFile.getSize();
-
-				int oldFileId = fileService.getFileId(relTypeCode, relId, typeCode, type2Code, fileNo);
-
-				boolean needToUpdate = oldFileId > 0;
+				
+				boolean needToUpdate = relId != 0;
 
 				if (needToUpdate) {
-					fileService.updateFile(oldFileId, originFileName, fileExtTypeCode, fileExtType2Code, fileExt,
-							fileBytes, fileSize);
+					int oldFileId = fileService.getFileId(relTypeCode, relId, typeCode, type2Code, fileNo);
+					
+					if ( oldFileId > 0 ) {
+						fileService.updateFile(oldFileId, originFileName, fileExtTypeCode, fileExtType2Code, fileExt,
+								fileBytes, fileSize);
 
-					fileCache.refresh(oldFileId);
+						fileCache.refresh(oldFileId);
+					}
 
 				} else {
 					int fileId = fileService.saveFile(relTypeCode, relId, typeCode, type2Code, fileNo, originFileName,
