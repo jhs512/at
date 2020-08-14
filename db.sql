@@ -1,5 +1,5 @@
 # DB 사용자 생성
-GRANT ALL PRIVILEGES ON at.* TO `at`@`localhost` IDENTIFIED BY 'sbs123414';
+GRANT ALL PRIVILEGES ON `at`.* TO `at`@`%` IDENTIFIED BY 'sbs123414';
 
 # DB 세팅
 DROP DATABASE IF EXISTS `at`;

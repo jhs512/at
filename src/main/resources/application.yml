@@ -1,4 +1,9 @@
 server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+    include-binding-errors: always
   port: 8085
 spring:
   mail:
@@ -15,15 +20,21 @@ spring:
   servlet:
     multipart:
       file-size-threshold: 1MB
-      location: C:/temp
+      location: C:\temp
       max-file-size: 100MB
       max-request-size: 100MB
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
-  datasource:    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+  datasource:
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+    # 개발용    # driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    # url: jdbc:log4jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
+    # 실전용
+    # driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
     username: at
     password: sbs123414
 mybatis:

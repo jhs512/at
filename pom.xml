@@ -39,6 +39,7 @@
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
 			<artifactId>tomcat-embed-jasper</artifactId>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- JSTL -->
@@ -116,7 +117,7 @@
 					<server>TomcatServer</server>
 					<path>/</path>
 					<username>deployer</username>
-					<password></password>
+					<password>sbsst24002424</password>
 				</configuration>
 			</plugin>
 			<plugin>
