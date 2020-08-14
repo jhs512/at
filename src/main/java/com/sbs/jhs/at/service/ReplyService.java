@@ -94,7 +94,7 @@ public class ReplyService {
 		Reply reply = replyDao.getForPrintReplyById(id);
 
 		Map<Integer, File> filesMap = fileService.getFilesMapKeyFileNo("reply", id, "common", "attachment");
-		Util.putExtraVal(reply, "file__comment__attachment", filesMap);
+		Util.putExtraVal(reply, "file__common__attachment", filesMap);
 
 		return reply;
 	}
@@ -118,7 +118,7 @@ public class ReplyService {
 		
 		Reply reply = getForPrintReplyById(id);
 		
-		param.put("file__comment__attachment", reply.getExtra().get("file__comment__attachment"));
+		param.put("file__common__attachment", reply.getExtra().get("file__common__attachment"));
 
 		return new ResultData("S-1", String.format("%d번 댓글을 수정하였습니다.", Util.getAsInt(param.get("id"))), param);
 	}
