@@ -99,6 +99,10 @@ html>head+body:nth-child(2) .height-300 {
     justify-content: space-between;
 }
 
+.flex-1-0-0 {
+	flex:1 0 0;
+}
+
 /* 테이블 관련 */
 .table-box>table {
 	width: 100%;
@@ -127,6 +131,7 @@ html>head+body:nth-child(2) .height-300 {
 
 .form1 .form-row {
 	display: flex;
+	flex-wrap: wrap;
 }
 
 .form1 .form-row>.form-control-label {

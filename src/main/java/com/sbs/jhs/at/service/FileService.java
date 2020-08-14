@@ -89,7 +89,7 @@ public class FileService {
 		return rs;
 	}
 
-	public List<File> getFilesMapKeyFileNo(String relTypeCode, int relId, String typeCode, String type2Code) {
+	public List<File> getFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
 		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdAndTypeCodeAndType2Code(relTypeCode, relId, typeCode,
 				type2Code);
 		return files;
@@ -123,6 +123,18 @@ public class FileService {
 
 	public void deleteFile(int id) {
 		fileDao.deleteFile(id);
+	}
+
+	public Map<Integer, File> getFilesMapKeyFileNo(String relTypeCode, int relId, String typeCode, String type2Code) {
+		List<File> files = getFiles(relTypeCode, relId, typeCode, type2Code);
+		
+		Map<Integer, File> filesMap = new HashMap<>();
+		
+		for ( File file : files ) {
+			filesMap.put(file.getFileNo(), file);			
+		}
+		
+		return filesMap;
 	}
 
 }

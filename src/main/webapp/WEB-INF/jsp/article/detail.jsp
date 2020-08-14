@@ -43,7 +43,7 @@
 					<td>
 						<div class="video-box">
 							<video controls
-								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['2'].id}">video
+								src="/usr/file/streamVideo?id=${article.extra.file__common__attachment['2'].id}&updateDate=${article.extra.file__common__attachment['2'].updateDate}">video
 								not supported
 							</video>
 						</div>
@@ -227,6 +227,18 @@
 .reply-modify-form-modal-actived .reply-modify-form-modal {
 	display: flex;
 }
+
+.reply-modify-form-modal .form-control-label {
+	width: 120px;
+}
+
+.reply-modify-form-modal .form-control-box {
+	flex: 1 0 0;
+}
+
+.reply-modify-form-modal .video-box {
+	width: 100px;
+}
 </style>
 
 <div class="reply-modify-form-modal flex flex-ai-c flex-jc-c">
@@ -237,6 +249,38 @@
 			<div class="form-control-label">내용</div>
 			<div class="form-control-box">
 				<textarea name="body" placeholder="내용을 입력해주세요."></textarea>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-control-label">첨부파일 1</div>
+			<div class="form-control-box">
+				<input type="file" accept="video/*"
+					data-name="file__reply__0__common__attachment__1" />
+			</div>
+			<div class="video-box video-box-file-1"></div>
+		</div>
+		<div class="form-row">
+			<div class="form-control-label">첨부파일 1 삭제</div>
+			<div class="form-control-box">
+				<label><input type="checkbox"
+					data-name="deleteFile__reply__0__common__attachment__1" value="Y" />
+					삭제 </label>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-control-label">첨부파일 2</div>
+			<div class="form-control-box">
+				<input type="file" accept="video/*"
+					data-name="file__reply__0__common__attachment__2" />
+			</div>
+			<div class="video-box video-box-file-2"></div>
+		</div>
+		<div class="form-row">
+			<div class="form-control-label">첨부파일 2 삭제</div>
+			<div class="form-control-box">
+				<label><input type="checkbox"
+					data-name="deleteFile__reply__0__common__attachment__2" value="Y" />
+					삭제 </label>
 			</div>
 		</div>
 		<div class="form-row">
@@ -275,20 +319,91 @@
 		var id = form.id.value;
 		var body = form.body.value;
 
+		var fileInput1 = form['file__reply__' + id + '__common__attachment__1'];
+		var fileInput2 = form['file__reply__' + id + '__common__attachment__2'];
+
+		var deleteFileInput1 = form["deleteFile__reply__" + id
+			+ "__common__attachment__1"];
+		var deleteFileInput2 = form["deleteFile__reply__" + id
+			+ "__common__attachment__2"];
+
+		if (deleteFileInput1.checked) {
+			fileInput1.value = '';
+		}
+
+		if (deleteFileInput2.checked) {
+			fileInput2.value = '';
+		}
+
 		ReplyList__submitModifyFormDone = true;
-		$.post('../reply/doModifyReplyAjax', {
-			id : id,
-			body : body
-		}, function(data) {
-			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
-				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
-				var $tr = $('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body');
-				$tr.empty().append(body);
+
+		var startUploadFiles = function(onSuccess) {
+			if (fileInput1.value.length == 0 && fileInput2.value.length == 0) {
+				if (deleteFileInput1.checked == false
+						&& deleteFileInput2.checked == false) {
+					onSuccess();
+					return;
+				}
 			}
 
-			ReplyList__hideModifyFormModal();
-			ReplyList__submitModifyFormDone = false;
-		}, 'json');
+			var fileUploadFormData = new FormData(form); 
+			
+			$.ajax({
+				url : './../file/doUploadAjax',
+				data : fileUploadFormData,
+				processData : false,
+				contentType : false,
+				dataType:"json",
+				type : 'POST',
+				success : onSuccess
+			});
+		}
+
+		var startModifyReply = function() {
+			$.post('../reply/doModifyReplyAjax', {
+				id : id,
+				body : body
+			}, function(data) {
+				if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
+					// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
+					var $tr = $('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body');
+					$tr.empty().append(body);
+
+					var $tr = $('.reply-list-box tbody > tr[data-id="' + id + '"] .video-box').empty();
+
+					if ( data && data.body && data.body.file__comment__attachment ) {
+						for ( var fileNo in data.body.file__comment__attachment ) {
+							var file = data.body.file__comment__attachment[fileNo];
+
+							var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+							$('.reply-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box').append(html);
+						}
+					}
+					
+				}
+
+				ReplyList__hideModifyFormModal();
+				ReplyList__submitModifyFormDone = false;
+			}, 'json');
+		};
+
+		startUploadFiles(function(data) {
+			
+			var idsStr = '';
+			if ( data && data.body && data.body.fileIdsStr ) {
+				idsStr = data.body.fileIdsStr;
+			}
+
+			startModifyReply(idsStr, function(data) {
+				if ( data.msg ) {
+					alert(data.msg);
+				}
+				
+				ReplyList__submitModifyFormDone = false;
+
+				ReplyList__hideModifyFormModal();
+			});
+		});
 	}
 
 	function ReplyList__showModifyFormModal(el) {
@@ -299,6 +414,33 @@
 		var id = $tr.attr('data-id');
 
 		var form = $('.reply-modify-form-modal form').get(0);
+
+		$(form).find('[data-name]').each(function(index, el) {
+			var $el = $(el);
+
+			var name = $el.attr('data-name');
+			name = name.replaceAll('__0__', '__' + id + '__');
+			$el.attr('name', name);
+
+			if ( $el.prop('type') == 'file' ) {
+				$el.val('');
+			}
+			else if ( $el.prop('type') == 'checkbox' ) {
+				$el.prop('checked', false);
+			}
+		});
+
+		for ( var fileNo = 1; fileNo <= 2; fileNo++ ) {
+			$('.reply-modify-form-modal .video-box-file-' + fileNo).empty();
+			
+			var videoName = 'reply__' + id + '__common__attachment__' + fileNo;
+
+			var $videoBox = $('.reply-list-box [data-video-name="' + videoName + '"]');
+			
+			if ( $videoBox.length > 0 ) {
+				$('.reply-modify-form-modal .video-box-file-' + fileNo).append($videoBox.html());
+			}
+		}
 
 		form.id.value = id;
 		form.body.value = originBody;
@@ -360,12 +502,19 @@
 		html += '<td>';
 		html += '<div class="reply-body">' + reply.body + '</div>';
 
-		if ( reply.extra.file__common__attachment ) {
-			for ( var no in reply.extra.file__common__attachment ) {
-				var file = reply.extra.file__common__attachment[no];
-	            html += '<div class="video-box"><video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video></div>';				
+		for ( var fileNo = 1; fileNo <= 2; fileNo++ ) {
+			html += '<div class="video-box" data-video-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+
+			if ( reply.extra.file__common__attachment && reply.extra.file__common__attachment[fileNo] ) {
+				var file = reply.extra.file__common__attachment[fileNo];
+
+				html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+	        }
+			else {
 			}
-        }
+
+			html += '</div>';
+		}
 		
 		html += '</td>';
 		html += '<td>';

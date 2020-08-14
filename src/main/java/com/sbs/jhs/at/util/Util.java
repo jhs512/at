@@ -207,19 +207,6 @@ public class Util {
 		}
 	}
 
-	public static void printEx(String errName, HttpServletResponse resp, Exception e) {
-		try {
-			resp.getWriter()
-					.append("<h1 style='color:red; font-weight:bold; text-align:left;'>[에러 : " + errName + "]</h1>");
-
-			resp.getWriter().append("<pre style='text-align:left; font-weight:bold; font-size:1.3rem;'>");
-			e.printStackTrace(resp.getWriter());
-			resp.getWriter().append("</pre>");
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-	}
-
 	public static String getString(HttpServletRequest req, String paramName) {
 		return req.getParameter(paramName);
 	}
