@@ -24,8 +24,8 @@ spring:
       suffix: .jsp
   datasource:    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
-    username: sbsst
-    password: 
+    username: at
+    password: sbs123414
 mybatis:
   type-aliases-package: com.sbs.jhs.at.dto
 custom:
