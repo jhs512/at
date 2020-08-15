@@ -1,11 +1,6 @@
-server:
-  error:
-    include-exception: true
-    include-stacktrace: always
-    include-message: always
-    include-binding-errors: always
-  port: 8085
 spring:
+  profiles:
+    active: local # 기본적으로 local이 선택된다는 뜻
   mail:
     host: smtp.gmail.com
     port: 587
@@ -30,18 +25,37 @@ spring:
   datasource:
     driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
     url: jdbc:log4jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
-    # 개발용    # driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    # url: jdbc:log4jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
-    # 실전용
-    # driver-class-name: com.mysql.cj.jdbc.Driver
-    # url: jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
     username: at
     password: sbs123414
 mybatis:
   type-aliases-package: com.sbs.jhs.at.dto
+server:
+  error:
+    include-exception: true
+    include-stacktrace: always
+    include-message: always
+    include-binding-errors: always
 custom:
   siteName: 오디션 트리
   siteMainUri: https://auditiontree.com/
   logoText: 오디션 트리
   emailFrom: no-reply@audiotiontree.com
   emailFromName: 오디션 트리
+
+---
+
+spring:
+  profiles: local
+server:
+  port: 8085
+
+---
+
+spring:
+  profiles: production
+  servlet:
+    multipart:
+      location: /tmp
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
