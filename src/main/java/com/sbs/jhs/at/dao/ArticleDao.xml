@@ -24,6 +24,14 @@
 		WHERE
 		id = #{id}
 	</select>
+	
+	<select id="getBoardByCode" resultType="Board">
+		SELECT *
+		FROM
+		board
+		WHERE
+		`code` = #{code}
+	</select>
 
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
 		INSERT
@@ -32,7 +40,8 @@
 		updateDate = NOW(),
 		title = #{title},
 		body = #{body},
-		memberId = #{memberId}
+		memberId = #{memberId},
+		boardId = #{boardId}
 	</insert>
 
 	<update id="modify">

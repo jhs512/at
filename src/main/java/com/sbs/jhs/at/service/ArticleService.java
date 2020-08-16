@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.sbs.jhs.at.dao.ArticleDao;
 import com.sbs.jhs.at.dto.Article;
+import com.sbs.jhs.at.dto.Board;
 import com.sbs.jhs.at.dto.File;
 import com.sbs.jhs.at.dto.Member;
 import com.sbs.jhs.at.dto.ResultData;
@@ -115,5 +116,9 @@ public class ArticleService {
 				fileService.changeRelId(fileId, id);
 			}
 		}
+	}
+
+	public Board getBoardByCode(String boardCode) {
+		return articleDao.getBoardByCode(boardCode);
 	}
 }

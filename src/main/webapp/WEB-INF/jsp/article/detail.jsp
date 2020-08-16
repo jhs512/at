@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="게시물 상세내용" />
+<c:set var="pageTitle" value="${board.name} 게시물 상세내용" />
 <%@ include file="../part/head.jspf"%>
 
 <div class="table-box con">
@@ -56,12 +56,14 @@
 
 <div class="btn-box con margin-top-20">
 	<c:if test="${article.extra.actorCanModify}">
-		<a class="btn btn-info" href="modify?id=${article.id}">수정</a>
+		<a class="btn btn-info" href="${board.code}-modify?id=${article.id}">수정</a>
 	</c:if>
 	<c:if test="${article.extra.actorCanDelete}">
-		<a class="btn btn-info" href="doDelete?id=${article.id}"
+		<a class="btn btn-info" href="${board.code}-doDelete?id=${article.id}"
 			onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
+	
+	<a href="${listUrl}" class="btn btn-info">리스트</a>
 </div>
 
 <c:if test="${isLogined}">
@@ -179,7 +181,9 @@
 				</tr>
 				<tr>
 					<th>작성</th>
-					<td><input type="submit" value="작성"></td>
+					<td>
+						<input type="submit" value="작성">
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -454,8 +458,8 @@
 		$('html').removeClass('reply-modify-form-modal-actived');
 	}
 
-	// 10초
-	ReplyList__loadMoreInterval = 10 * 1000;
+	// 1초
+	ReplyList__loadMoreInterval = 1 * 1000;
 
 	function ReplyList__loadMoreCallback(data) {
 		if (data.body.replies && data.body.replies.length > 0) {

@@ -53,9 +53,7 @@ var param = ${paramJson};
 					<li class="padding-0-10"><a href="/usr/home/main"
 						class="btn btn-info">홈</a></li>
 					<li class="padding-0-10"><a class="btn btn-info"
-						href="/usr/article/list">오디션 게시판</a></li>
-					<li class="padding-0-10"><a class="btn btn-info"
-						href="/usr/article/write">오디션 생성</a></li>
+						href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">
 						<li class="padding-0-10"><a class="btn btn-info"
 							href="/usr/member/doLogout">로그아웃</a></li>

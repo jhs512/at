@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="게시물 작성" />
+<c:set var="pageTitle" value="${board.name} 게시물 작성" />
 <%@ include file="../part/head.jspf"%>
 
 <script>
@@ -82,10 +82,10 @@
 		});
 	}
 </script>
-<form method="POST" class="table-box con form1" action="doWrite"
+<form method="POST" class="table-box con form1" action="${board.code}-doWrite"
 	onsubmit="ArticleWriteForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" />
-	<input type="hidden" name="redirectUri" value="/usr/article/detail?id=#id">
+	<input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=#id">
 
 	<table>
 		<colgroup>
@@ -131,6 +131,7 @@
 				<th>작성</th>
 				<td>
 					<button class="btn btn-primary" type="submit">작성</button>
+					<a class="btn btn-info" href="${listUrl}">리스트</a>
 				</td>
 			</tr>
 		</tbody>
