@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="${board.name} 게시물 작성" />
+<c:set var="pageTitle" value="${job.name} 모집 수정" />
 <%@ include file="../part/head.jspf"%>
 
 <script>
-	var ArticleWriteForm__submitDone = false;
-	function ArticleWriteForm__submit(form) {
-		if (ArticleWriteForm__submitDone) {
+	var RecruitmentWriteForm__submitDone = false;
+	function RecruitmentWriteForm__submit(form) {
+		if (RecruitmentWriteForm__submitDone) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -33,36 +33,36 @@
 		var maxSizeMb = 50;
 		var maxSize = maxSizeMb * 1024 * 1024 //50MB
 
-		if (form.file__article__0__common__attachment__1.value) {
-			if (form.file__article__0__common__attachment__1.files[0].size > maxSize) {
+		if (form.file__recruitment__0__common__attachment__1.value) {
+			if (form.file__recruitment__0__common__attachment__1.files[0].size > maxSize) {
 				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
 				return;
 			}
 		}
 
-		if (form.file__article__0__common__attachment__2.value) {
-			if (form.file__article__0__common__attachment__2.files[0].size > maxSize) {
+		if (form.file__recruitment__0__common__attachment__2.value) {
+			if (form.file__recruitment__0__common__attachment__2.files[0].size > maxSize) {
 				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
 				return;
 			}
 		}
 
-		if (form.file__article__0__common__attachment__3.value) {
-			if (form.file__article__0__common__attachment__3.files[0].size > maxSize) {
+		if (form.file__recruitment__0__common__attachment__3.value) {
+			if (form.file__recruitment__0__common__attachment__3.files[0].size > maxSize) {
 				alert(maxSizeMb + "MB 이하의 파일을 업로드 해주세요.");
 				return;
 			}
 		}
 
 		var startUploadFiles = function(onSuccess) {
-			var needToUpload = form.file__article__0__common__attachment__1.value.length > 0;
+			var needToUpload = form.file__recruitment__0__common__attachment__1.value.length > 0;
 
 			if (!needToUpload) {
-				needToUpload = form.file__article__0__common__attachment__2.value.length > 0;
+				needToUpload = form.file__recruitment__0__common__attachment__2.value.length > 0;
 			}
 
 			if (!needToUpload) {
-				needToUpload = form.file__article__0__common__attachment__3.value.length > 0;
+				needToUpload = form.file__recruitment__0__common__attachment__3.value.length > 0;
 			}
 
 			if (needToUpload == false) {
@@ -83,7 +83,7 @@
 			});
 		}
 
-		ArticleWriteForm__submitDone = true;
+		RecruitmentWriteForm__submitDone = true;
 		startUploadFiles(function(data) {
 			var fileIdsStr = '';
 
@@ -92,18 +92,18 @@
 			}
 
 			form.fileIdsStr.value = fileIdsStr;
-			form.file__article__0__common__attachment__1.value = '';
-			form.file__article__0__common__attachment__2.value = '';
+			form.file__recruitment__0__common__attachment__1.value = '';
+			form.file__recruitment__0__common__attachment__2.value = '';
 
 			form.submit();
 		});
 	}
 </script>
 <form method="POST" class="table-box con form1"
-	action="${board.code}-doWrite"
-	onsubmit="ArticleWriteForm__submit(this); return false;">
+	action="${job.code}-doWrite"
+	onsubmit="RecruitmentWriteForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
-		name="redirectUri" value="/usr/article/${board.code}-detail?id=#id">
+		name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id">
 
 	<table>
 		<colgroup>
@@ -130,15 +130,15 @@
 			<c:forEach var="i" begin="1" end="3" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
 				<c:set var="fileExtTypeCode"
-					value="${appConfig.getAttachmentFileExtTypeCode('article', i)}" />
+					value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
 				<tr>
 					<th>첨부${fileNo}
-						${appConfig.getAttachmentFileExtTypeDisplayName('article', i)}</th>
+						${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
 					<td>
 						<div class="form-control-box">
 							<input type="file"
-								accept="${appConfig.getAttachemntFileInputAccept('article', i)}"
-								name="file__article__0__common__attachment__${fileNo}">
+								accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
+								name="file__recruitment__0__common__attachment__${fileNo}">
 						</div>
 					</td>
 				</tr>

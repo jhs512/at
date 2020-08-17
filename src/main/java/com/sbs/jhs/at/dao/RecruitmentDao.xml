@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbs.jhs.at.dao.RecruitmentDao">
+    <select id="getForPrintRecruitments" resultMap="recruitment">
+        SELECT A.*,
+        M.nickname AS extra__writer
+        FROM recruitment AS A
+        INNER JOIN member AS M
+        ON A.memberId = M.id
+        WHERE A.displayStatus = 1
+        ORDER BY A.id DESC
+    </select>
+
+    <select id="getForPrintRecruitmentById" resultMap="recruitment">
+        SELECT A.*,
+        M.nickname AS extra__writer
+        FROM recruitment AS A
+        INNER JOIN member AS M
+        ON A.memberId = M.id
+        WHERE A.displayStatus = 1
+        AND A.id = #{id}
+    </select>
+
+    <select id="getRecruitmentById" resultType="Recruitment">
+        SELECT *
+        FROM
+        recruitment
+        WHERE
+        id = #{id}
+    </select>
+    
+    <select id="getJobByCode" resultType="Job">
+        SELECT *
+        FROM
+        board
+        WHERE
+        `code` = #{code}
+    </select>
+
+    <insert id="write" useGeneratedKeys="true" keyProperty="id">
+        INSERT
+        INTO recruitment
+        SET regDate = NOW(),
+        updateDate = NOW(),
+        title = #{title},
+        body = #{body},
+        memberId = #{memberId},
+        boardId = #{boardId},
+        displayStatus = 1
+    </insert>
+
+    <update id="modify">
+        UPDATE recruitment
+        <set>
+            updateDate = NOW(),
+            <if test="title != null">title = #{title},</if>
+            <if test="body != null">body = #{body},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+    
+    <resultMap type="Recruitment" id="recruitment">
+        <id property="id" column="id" />
+        <id property="regDate" column="regDate" />
+        <id property="updateDate" column="updateDate" />
+        <id property="delDate" column="delDate" />
+        <id property="delStatus" column="delStatus" />
+        <id property="title" column="title" />
+        <id property="body" column="body" />
+        <id property="memberId" column="memberId" />
+        <id property="boardId" column="boardId" />
+        <association property="extra" javaType="map">
+            <id property="writer" column="extra__writer" />
+        </association>
+    </resultMap>
+    
+</mapper>
+

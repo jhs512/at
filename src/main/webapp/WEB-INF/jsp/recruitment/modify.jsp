@@ -2,30 +2,30 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<c:set var="pageTitle" value="${board.name} 게시물 상세내용" />
+<c:set var="pageTitle" value="${job.name} 모집 수정" />
 <%@ include file="../part/head.jspf"%>
 
 
 <script>
-	var ArticleModifyForm__submitDone = false;
-	function ArticleModifyForm__submit(form) {
-		if (ArticleModifyForm__submitDone) {
+	var RecruitmentModifyForm__submitDone = false;
+	function RecruitmentModifyForm__submit(form) {
+		if (RecruitmentModifyForm__submitDone) {
 			alert('처리중입니다.');
 			return;
 		}
 
-		var fileInput1 = form["file__article__" + param.id
+		var fileInput1 = form["file__recruitment__" + param.id
 				+ "__common__attachment__1"];
-		var fileInput2 = form["file__article__" + param.id
+		var fileInput2 = form["file__recruitment__" + param.id
 				+ "__common__attachment__2"];
-		var fileInput3 = form["file__article__" + param.id
+		var fileInput3 = form["file__recruitment__" + param.id
 				+ "__common__attachment__3"];
 
-		var deleteFileInput1 = form["deleteFile__article__" + param.id
+		var deleteFileInput1 = form["deleteFile__recruitment__" + param.id
 				+ "__common__attachment__1"];
-		var deleteFileInput2 = form["deleteFile__article__" + param.id
+		var deleteFileInput2 = form["deleteFile__recruitment__" + param.id
 				+ "__common__attachment__2"];
-		var deleteFileInput3 = form["deleteFile__article__" + param.id
+		var deleteFileInput3 = form["deleteFile__recruitment__" + param.id
 				+ "__common__attachment__3"];
 
 		if (fileInput1 && deleteFileInput1) {
@@ -133,7 +133,7 @@
 			});
 		}
 
-		ArticleModifyForm__submitDone = true;
+		RecruitmentModifyForm__submitDone = true;
 		startUploadFiles(function(data) {
 			var fileIdsStr = '';
 
@@ -160,12 +160,12 @@
 	}
 </script>
 <form class="table-box con form1" method="POST"
-	action="${board.code}-doModify"
-	onsubmit="ArticleModifyForm__submit(this); return false;">
+	action="${job.code}-doModify"
+	onsubmit="RecruitmentModifyForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
 		name="redirectUri"
-		value="/usr/article/${board.code}-detail?id=${article.id}" /> <input
-		type="hidden" name="id" value="${article.id}" />
+		value="/usr/recruitment/${job.code}-detail?id=${recruitment.id}" /> <input
+		type="hidden" name="id" value="${recruitment.id}" />
 	<table>
 	   <colgroup>
             <col class="table-first-col">
@@ -173,17 +173,17 @@
 		<tbody>
 			<tr>
 				<th>번호</th>
-				<td>${article.id}</td>
+				<td>${recruitment.id}</td>
 			</tr>
 			<tr>
 				<th>날짜</th>
-				<td>${article.regDate}</td>
+				<td>${recruitment.regDate}</td>
 			</tr>
 			<tr>
 				<th>제목</th>
 				<td>
 					<div class="form-control-box">
-						<input type="text" value="${article.title}" name="title"
+						<input type="text" value="${recruitment.title}" name="title"
 							placeholder="제목을 입력해주세요." />
 					</div>
 				</td>
@@ -192,22 +192,22 @@
 				<th>내용</th>
 				<td>
 					<div class="form-control-box">
-						<textarea name="body" placeholder="내용을 입력해주세요.">${article.body}</textarea>
+						<textarea name="body" placeholder="내용을 입력해주세요.">${recruitment.body}</textarea>
 					</div>
 				</td>
 			</tr>
 			<c:forEach var="i" begin="1" end="3" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
 				<c:set var="file"
-					value="${article.extra.file__common__attachment[fileNo]}" />
+					value="${recruitment.extra.file__common__attachment[fileNo]}" />
 				<tr>
 					<th>첨부파일 ${fileNo}
-						${appConfig.getAttachmentFileExtTypeDisplayName('article', i)}</th>
+						${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
 					<td>
 						<div class="form-control-box">
 							<input type="file"
-								accept="${appConfig.getAttachemntFileInputAccept('article', i)}"
-								name="file__article__${article.id}__common__attachment__${fileNo}">
+								accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
+								name="file__recruitment__${recruitment.id}__common__attachment__${fileNo}">
 						</div> <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
 							<div class="video-box">
 								<video controls
@@ -228,7 +228,7 @@
 					<td>
 						<div class="form-control-box">
 							<label><input type="checkbox"
-								name="deleteFile__article__${article.id}__common__attachment__${fileNo}"
+								name="deleteFile__recruitment__${recruitment.id}__common__attachment__${fileNo}"
 								value="Y" /> 삭제 </label>
 						</div>
 					</td>

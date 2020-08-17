@@ -136,3 +136,21 @@ html, input, button, h1, h2, h3 {
 		padding-top: 60px;
 	}
 }
+
+
+.table-first-col {
+    width: 100px;
+}
+
+.table-first-col-tight {
+    width: 100px;
+}
+
+@media ( max-width :800px ) {
+    .table-first-col {
+        width: 65px;
+    }
+    .table-first-col-tight {
+        width: 30px;
+    }
+}
