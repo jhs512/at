@@ -105,10 +105,12 @@
 		});
 	}
 </script>
-<form class="table-box con form1" method="POST" action="${board.code}-doModify"
+<form class="table-box con form1" method="POST"
+	action="${board.code}-doModify"
 	onsubmit="ArticleModifyForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
-		name="redirectUri" value="/usr/article/${board.code}-detail?id=${article.id}" /> <input
+		name="redirectUri"
+		value="/usr/article/${board.code}-detail?id=${article.id}" /> <input
 		type="hidden" name="id" value="${article.id}" />
 	<table>
 		<tbody>
@@ -196,6 +198,7 @@
 
 	<div class="btn-box margin-top-20">
 		<button type="submit" class="btn btn-primary">수정</button>
+		<a class="btn btn-info" href="${listUrl}">리스트</a>
 	</div>
 </form>
 

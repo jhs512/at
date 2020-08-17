@@ -1,3 +1,4 @@
+<%@ page import="com.sbs.jhs.at.util.Util" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -56,7 +57,7 @@
 
 <div class="btn-box con margin-top-20">
 	<c:if test="${article.extra.actorCanModify}">
-		<a class="btn btn-info" href="${board.code}-modify?id=${article.id}">수정</a>
+		<a class="btn btn-info" href="${board.code}-modify?id=${article.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
 	</c:if>
 	<c:if test="${article.extra.actorCanDelete}">
 		<a class="btn btn-info" href="${board.code}-doDelete?id=${article.id}"

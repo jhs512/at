@@ -153,7 +153,9 @@ html>head+body:nth-child(2) .height-300 {
 
 /* 버튼관련 */
 .btn {
-	padding: 5px 15px;
+	font-size:1rem;
+	line-height:1rem;
+	padding: 10px 15px 7px 15px;
 	display: inline-flex;
 	font-weight: bold;
 	border-radius: 10px;
@@ -163,16 +165,21 @@ html>head+body:nth-child(2) .height-300 {
 	background-color: #3D94F6;
 	color: #FFFFFF;
 	text-shadow: 1px 1px 20px #000000;
-}
-
-.btn:hover {
-	background-color: #1E62D0;
+	text-decoration: none;
 }
 
 .btn-success {
-	background-color: green;
+	background-color: #28a745;
+}
+
+.btn-info {
+	background-color: #17a2b8;
 }
 
 .btn-danger {
-	background-color: red;
+	background-color: #dc354;
+}
+
+.btn-warning {
+	background-color: #ffc10;
 }

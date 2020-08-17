@@ -43,7 +43,35 @@ var param = ${paramJson};
 </head>
 <body>
 	<div class="outer-box">
-		<div class="top-bar con flex flex-ai-c flex-jc-sb">
+		<div class="mobile-top-bar visible-on-sm-down flex flex flex-ai-c">
+			<a href="/usr/home/main" class="logo img-box"> <img
+				src="/resource/img/logo_1@3x.png" alt="" />
+			</a>
+			<div class="flex-1-0-0"></div>
+			<a> <i class="fas fa-sign-out-alt"></i>
+			</a> <a class="btn-toggle-mobile-side-bar"> <i class="fas fa-times"></i>
+				<i class="fas fa-bars"></i>
+			</a>
+		</div>
+		<div class="mobile-side-bar flex flex-ai-c">
+			<nav class="menu-box-1 flex-1-0-0">
+				<ul>
+					<li><a href="/usr/home/main" class="flex flex-jc-c">모집</a></li>
+					<li><a class="flex flex-jc-c" href="/usr/article/free-list">자유
+							게시판</a></li>
+					<c:if test="${isLogined}">
+						<li><a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a></li>
+					</c:if>
+					<c:if test="${isLogined == false}">
+						<li><a class="flex flex-jc-c"
+							href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a></li>
+						<li><a class="flex flex-jc-c" href="/usr/member/join">회원가입</a></li>
+					</c:if>
+
+				</ul>
+			</nav>
+		</div>
+		<div class="top-bar con flex flex-ai-c flex-jc-sb visible-on-md-up">
 			<a href="/usr/home/main" class="logo img-box"> <img
 				src="/resource/img/logo_1@3x.png" alt="" />
 			</a>
@@ -51,7 +79,7 @@ var param = ${paramJson};
 			<nav class="menu-box-1">
 				<ul class="flex">
 					<li class="padding-0-10"><a href="/usr/home/main"
-						class="btn btn-info">홈</a></li>
+						class="btn btn-info">모집</a></li>
 					<li class="padding-0-10"><a class="btn btn-info"
 						href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">

@@ -3,18 +3,24 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sbs.jhs.at.dao.ArticleDao">
-	<select id="getForPrintArticles" resultType="Article">
-		SELECT *
-		FROM article
-		WHERE displayStatus = 1
-		ORDER BY id DESC
+	<select id="getForPrintArticles" resultMap="article">
+		SELECT A.*,
+		M.nickname AS extra__writer
+		FROM article AS A
+		INNER JOIN member AS M
+		ON A.memberId = M.id
+		WHERE A.displayStatus = 1
+		ORDER BY A.id DESC
 	</select>
 
-	<select id="getForPrintArticleById" resultType="Article">
-		SELECT *
-		FROM
-		article
-		WHERE id = #{id}
+	<select id="getForPrintArticleById" resultMap="article">
+		SELECT A.*,
+		M.nickname AS extra__writer
+		FROM article AS A
+		INNER JOIN member AS M
+		ON A.memberId = M.id
+		WHERE A.displayStatus = 1
+		WHERE A.id = #{id}
 	</select>
 
 	<select id="getArticleById" resultType="Article">
@@ -41,7 +47,8 @@
 		title = #{title},
 		body = #{body},
 		memberId = #{memberId},
-		boardId = #{boardId}
+		boardId = #{boardId},
+		displayStatus = 1
 	</insert>
 
 	<update id="modify">
@@ -53,6 +60,21 @@
 		</set>
 		WHERE id = #{id}
 	</update>
+	
+	<resultMap type="Article" id="article">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="updateDate" column="updateDate" />
+		<id property="delDate" column="delDate" />
+		<id property="delStatus" column="delStatus" />
+		<id property="title" column="title" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="boardId" column="boardId" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
+		</association>
+	</resultMap>
 	
 </mapper>
 

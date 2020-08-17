@@ -134,3 +134,27 @@ ALTER TABLE `file` ADD UNIQUE INDEX (`relId`, `relTypeCode`, `typeCode`, `type2C
 
 # 파일 테이블의 기존 인덱스에 유니크가 걸려 있어서 relId가 0 인 동안 충돌이 발생할 수 있다. 그래서 일반 인덱스로 바꾼다.
 ALTER TABLE `at`.`file` DROP INDEX `relId`, ADD INDEX (`relId` , `relTypeCode` , `typeCode` , `type2Code` , `fileNo`); 
+
+# 게시물 테이블에 게시판 정보 추가
+ALTER TABLE `article` ADD COLUMN `boardId` INT(10) UNSIGNED NOT NULL AFTER `delStatus`; 
+
+UPDATE article
+SET boardId = 1
+WHERE boardId = 0;
+
+# 게시판 테이블 추가
+CREATE TABLE `board` (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME,
+    updateDate DATETIME,
+    delDate DATETIME,
+	delStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+    `code` CHAR(20) NOT NULL UNIQUE,
+	`name` CHAR(20) NOT NULL UNIQUE
+);
+
+INSERT INTO `board`
+SET regDate = NOW(),
+updateDAte = NOW(),
+`code` = 'free',
+`name` = '자유';

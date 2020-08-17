@@ -58,7 +58,9 @@ public class ArticleController {
 	}
 	
 	@RequestMapping("/usr/article/{boardCode}-modify")
-	public String showModify(Model model, @RequestParam Map<String, Object> param, HttpServletRequest req, @PathVariable("boardCode") String boardCode) {
+	public String showModify(Model model, @RequestParam Map<String, Object> param, HttpServletRequest req, @PathVariable("boardCode") String boardCode, String listUrl) {
+		model.addAttribute("listUrl", listUrl);
+		
 		Board board = articleService.getBoardByCode(boardCode);
 		model.addAttribute("board", board);
 		

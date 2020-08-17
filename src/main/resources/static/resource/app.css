@@ -1,6 +1,7 @@
-html {
+html, input, button, h1, h2, h3 {
 	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
 	font-family: "Roboto", "Noto Sans KR", sans-serif;
+	letter-spacing: -.5px;
 }
 
 /* 커스텀 */
@@ -8,16 +9,119 @@ html {
 	max-width: 1200px;
 }
 
-.outer-box {
-    padding-top:30px;
-    padding-bottom:30px;
+@media ( min-width :801px ) {
+	.visible-on-sm-down {
+		display: none;
+	}
 }
 
-.page-title-box {
-	margin-top: 30px;
-	margin-bottom: 30px;
+@media ( max-width :800px ) {
+	.visible-on-md-up {
+		display: none;
+	}
 }
 
+@media ( min-width :801px ) {
+	.outer-box {
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
+	.page-title-box {
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+}
+
+@media ( max-width :800px ) {
+	.outer-box {
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.page-title-box {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+}
+
+}
 .top-bar .logo {
-    width:100px;
+	width: 100px;
+}
+
+.mobile-top-bar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	background-color: white;
+	box-shadow: 0 0 10px black;
+	padding: 0 10px;
+	height: 55px;
+	z-index: 10;
+}
+
+.mobile-top-bar .logo {
+	width: 50px;
+}
+
+.mobile-top-bar a:not(:last-child) {
+	margin-right: 10px;
+}
+
+.mobile-top-bar a>i {
+	font-size: 1.5rem;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar {
+	position: relative;
+}
+
+.mobile-top-bar .btn-toggle-mobile-side-bar>:first-child {
+	position: absolute;
+	background-color: white;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: none;
+	justify-content: center;
+	align-items: center;
+}
+
+.mobile-side-bar-actived .mobile-top-bar .btn-toggle-mobile-side-bar>:last-child {
+	visibility: hidden;
+}
+
+.mobile-side-bar-actived .mobile-top-bar .btn-toggle-mobile-side-bar>:first-child
+	{
+	display: flex;
+}
+
+.mobile-side-bar {
+	background-color: white;
+	position: fixed;
+	width: 100%;
+	left: 100%;
+	top: 55px;
+	bottom: 0;
+	transition: left .3s;
+	z-index: 9;
+}
+
+.mobile-side-bar-actived .mobile-side-bar {
+	left: 0;
+}
+
+.mobile-side-bar .menu-box-1>ul>li>a {
+	padding: 20px 0;
+	font-weight: bold;
+}
+
+@media ( max-width :800px ) {
+	.mobile-side-bar-actived, .mobile-side-bar-actived>body {
+		overflow: hidden;
+	}
+	body {
+		padding-top: 60px;
+	}
 }
