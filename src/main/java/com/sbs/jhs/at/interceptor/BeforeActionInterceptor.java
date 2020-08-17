@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.sbs.jhs.at.config.AppConfig;
 import com.sbs.jhs.at.dto.Member;
 import com.sbs.jhs.at.service.MemberService;
 import com.sbs.jhs.at.util.Util;
@@ -98,6 +99,8 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		request.setAttribute("loginedMember", loginedMember);
 
 		request.setAttribute("activeProfile", activeProfile);
+		
+		request.setAttribute("appConfig", new AppConfig());
 
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}

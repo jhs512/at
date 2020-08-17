@@ -127,33 +127,22 @@
 					</div>
 				</td>
 			</tr>
-			<tr>
-				<th>첨부1 비디오</th>
-				<td>
-					<div class="form-control-box">
-						<input type="file" accept="video/*"
-							name="file__article__0__common__attachment__1">
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>첨부2 비디오</th>
-				<td>
-					<div class="form-control-box">
-						<input type="file" accept="video/*"
-							name="file__article__0__common__attachment__2">
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>첨부3 이미지</th>
-				<td>
-					<div class="form-control-box">
-						<input type="file" accept="image/*"
-							name="file__article__0__common__attachment__3">
-					</div>
-				</td>
-			</tr>
+			<c:forEach var="i" begin="1" end="3" step="1">
+				<c:set var="fileNo" value="${String.valueOf(i)}" />
+				<c:set var="fileExtTypeCode"
+					value="${appConfig.getAttachmentFileExtTypeCode('article', i)}" />
+				<tr>
+					<th>첨부${fileNo}
+						${appConfig.getAttachmentFileExtTypeDisplayName('article', i)}</th>
+					<td>
+						<div class="form-control-box">
+							<input type="file"
+								accept="${appConfig.getAttachemntFileInputAccept('article', i)}"
+								name="file__article__0__common__attachment__${fileNo}">
+						</div>
+					</td>
+				</tr>
+			</c:forEach>
 			<tr>
 				<th>작성</th>
 				<td>

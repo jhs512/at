@@ -30,11 +30,11 @@ public class VideoStreamService {
 	 */
 
 	private String getContentTypeDetail(String fileExt) {
-		if (fileExt.equals("mov")) {
-			return "quicktime";
+		if (fileExt.equals("mp4")) {
+			return "mp4";
 		}
 
-		return fileExt;
+		return "quicktime";
 	}
 
 	public ResponseEntity<byte[]> prepareContent(ByteArrayInputStream is, int fileSize, String fileType, String range) {

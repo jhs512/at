@@ -17,6 +17,12 @@ label[for] {
 }
 
 /* 라이브러리 */
+.img-box.img-box-auto > img {
+	max-width:100%;
+	display:block;
+	width:auto;
+}
+
 .block {
 	display: block;
 }
@@ -161,7 +167,7 @@ html>head+body:nth-child(2) .height-300 {
 	padding: 10px;
 }
 
-.form1 th {
+.form1 th, .form-control-label {
 	/* `로그인 아이디` 문구가 줄 바꿈 될 때 공백기준으로 줄바꿈 되도록 */
 	word-break: keep-all;
 }
@@ -192,7 +198,7 @@ html>head+body:nth-child(2) .height-300 {
 }
 
 .btn-danger {
-	background-color: #dc354;
+	background-color: #dc3540;
 }
 
 .btn-warning {
