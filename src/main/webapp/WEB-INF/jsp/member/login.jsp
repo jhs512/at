@@ -64,7 +64,7 @@
 
 	<table>
 		<colgroup>
-			<col width="100">
+			<col width="70">
 		</colgroup>
 		<tbody>
 			<tr>
@@ -89,6 +89,7 @@
 				<th>로그인</th>
 				<td>
 					<button class="btn btn-primary" type="submit">로그인</button>
+					<button class="btn btn-info" onclick="history.back();" type="button">취소</button>
 				</td>
 			</tr>
 		</tbody>

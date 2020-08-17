@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 html, input, button, h1, h2, h3 {
 	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
 	font-family: "Roboto", "Noto Sans KR", sans-serif;
@@ -19,6 +21,10 @@ html, input, button, h1, h2, h3 {
 	.visible-on-md-up {
 		display: none;
 	}
+}
+
+.outer-box {
+	padding-bottom: 30px;
 }
 
 @media ( min-width :801px ) {
@@ -43,7 +49,7 @@ html, input, button, h1, h2, h3 {
 	}
 }
 
-}
+
 .top-bar .logo {
 	width: 100px;
 }
@@ -64,8 +70,12 @@ html, input, button, h1, h2, h3 {
 	width: 50px;
 }
 
-.mobile-top-bar a:not(:last-child) {
+.mobile-top-bar a {
 	margin-right: 10px;
+}
+
+.mobile-top-bar a:last-child {
+	margin-right: 0;
 }
 
 .mobile-top-bar a>i {
@@ -88,7 +98,8 @@ html, input, button, h1, h2, h3 {
 	align-items: center;
 }
 
-.mobile-side-bar-actived .mobile-top-bar .btn-toggle-mobile-side-bar>:last-child {
+.mobile-side-bar-actived .mobile-top-bar .btn-toggle-mobile-side-bar>:last-child
+	{
 	visibility: hidden;
 }
 

@@ -12,7 +12,7 @@
 <!-- 구글 폰트 불러오기 -->
 <!-- rotobo(400/700/900), notosanskr(400/600/900) -->
 <link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=Roboto:wght@400;700;900&display=swap"
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;700&display=swap"
 	rel="stylesheet">
 
 <!-- 폰트어썸 불러오기 -->
@@ -48,8 +48,13 @@ var param = ${paramJson};
 				src="/resource/img/logo_1@3x.png" alt="" />
 			</a>
 			<div class="flex-1-0-0"></div>
-			<a> <i class="fas fa-sign-out-alt"></i>
-			</a> <a class="btn-toggle-mobile-side-bar"> <i class="fas fa-times"></i>
+			<c:if test="${isLogined}">
+				<a href="/usr/member/doLogout"><i class="fas fa-sign-out-alt"></i></a>
+			</c:if>
+			<c:if test="${isLogined == false}">
+				<a href="/usr/member/login"><i class="fas fa-user"></i></a>
+			</c:if>
+			<a class="btn-toggle-mobile-side-bar"> <i class="fas fa-times"></i>
 				<i class="fas fa-bars"></i>
 			</a>
 		</div>
@@ -98,4 +103,6 @@ var param = ${paramJson};
 				</ul>
 			</nav>
 		</div>
-		<h1 class="page-title-box con">${pageTitle}</h1>
+		<c:if test="${pageTitle != null && pageTitle.length() != 0}">
+			<h1 class="page-title-box con">${pageTitle}</h1>
+		</c:if>

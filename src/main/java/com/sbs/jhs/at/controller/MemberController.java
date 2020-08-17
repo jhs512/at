@@ -28,6 +28,7 @@ public class MemberController {
 	@RequestMapping("/usr/member/doJoin")
 	public String doWrite(@RequestParam Map<String, Object> param, Model model) {
 		Util.changeMapKey(param, "loginPwReal", "loginPw");
+
 		ResultData checkLoginIdJoinableResultData = memberService
 				.checkLoginIdJoinable(Util.getAsStr(param.get("loginId")));
 
