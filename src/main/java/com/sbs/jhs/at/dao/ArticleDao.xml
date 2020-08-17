@@ -20,7 +20,7 @@
 		INNER JOIN member AS M
 		ON A.memberId = M.id
 		WHERE A.displayStatus = 1
-		WHERE A.id = #{id}
+		AND A.id = #{id}
 	</select>
 
 	<select id="getArticleById" resultType="Article">
