@@ -92,7 +92,7 @@
 			var needToUpload = false;
 
 			if (!needToUpload) {
-				needToUpload = fileInput1 && fileInput1.value.length;
+				needToUpload = fileInput1 && fileInput1.value.length > 0;
 			}
 
 			if (!needToUpload) {
@@ -100,7 +100,7 @@
 			}
 
 			if (!needToUpload) {
-				needToUpload = fileInput2 && fileInput2.value.length;
+				needToUpload = fileInput2 && fileInput2.value.length > 0;
 			}
 
 			if (!needToUpload) {
@@ -108,7 +108,7 @@
 			}
 
 			if (!needToUpload) {
-				needToUpload = fileInput3 && fileInput3.value.length;
+				needToUpload = fileInput3 && fileInput3.value.length > 0;
 			}
 
 			if (!needToUpload) {
@@ -204,7 +204,7 @@
 						<div class="form-control-box">
 							<input type="file"
 								accept="${appConfig.getAttachemntFileInputAccept('article', i)}"
-								name="file__article__0__common__attachment__${fileNo}">
+								name="file__article__${article.id}__common__attachment__${fileNo}">
 						</div> <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
 							<div class="video-box">
 								<video controls

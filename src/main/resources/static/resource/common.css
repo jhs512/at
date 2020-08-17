@@ -17,10 +17,10 @@ label[for] {
 }
 
 /* 라이브러리 */
-.img-box.img-box-auto > img {
-	max-width:100%;
-	display:block;
-	width:auto;
+.img-box.img-box-auto>img {
+	max-width: 100%;
+	display: block;
+	width: auto;
 }
 
 .block {
@@ -37,7 +37,7 @@ label[for] {
 }
 
 .text-align-center {
-	text-align:center;
+	text-align: center;
 }
 
 .video-box>video {
@@ -112,7 +112,7 @@ html>head+body:nth-child(2) .height-300 {
 }
 
 .flex-jc-sb {
-    justify-content: space-between;
+	justify-content: space-between;
 }
 
 .flex-column {
@@ -120,7 +120,7 @@ html>head+body:nth-child(2) .height-300 {
 }
 
 .flex-1-0-0 {
-	flex:1 0 0;
+	flex: 1 0 0;
 }
 
 /* 테이블 관련 */
@@ -158,7 +158,7 @@ html>head+body:nth-child(2) .height-300 {
 	display: flex;
 	align-items: center;
 	padding: 10px;
-	font-weight:bold;
+	font-weight: bold;
 }
 
 .form1 .form-row>.form-control-box {
@@ -174,8 +174,8 @@ html>head+body:nth-child(2) .height-300 {
 
 /* 버튼관련 */
 .btn {
-	font-size:1rem;
-	line-height:1rem;
+	font-size: 1rem;
+	line-height: 1rem;
 	padding: 10px 15px 7px 15px;
 	display: inline-flex;
 	font-weight: bold;
@@ -205,6 +205,6 @@ html>head+body:nth-child(2) .height-300 {
 	background-color: #ffc10;
 }
 
-.btn + .btn {
-	margin-left:10px;
+.btn+.btn {
+	margin-left: 10px;
 }

@@ -129,10 +129,6 @@
 
 				var fileUploadFormData = new FormData(form); 
 				
-				fileUploadFormData.delete("relTypeCode");
-				fileUploadFormData.delete("relId");
-				fileUploadFormData.delete("body");
-
 				$.ajax({
 					url : './../file/doUploadAjax',
 					data : fileUploadFormData,
