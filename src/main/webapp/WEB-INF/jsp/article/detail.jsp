@@ -74,6 +74,16 @@
 					</td>
 				</tr>
 			</c:if>
+			<c:if test="${article.extra.file__common__attachment['3'] != null}">
+				<tr>
+					<th>첨부 파일 3</th>
+					<td>
+						<div class="img-box">
+							<img src="/usr/file/showImg?id=${article.extra.file__common__attachment['3'].id}&updateDate=${article.extra.file__common__attachment['3'].updateDate}" alt="" />
+						</div>
+					</td>
+				</tr>
+			</c:if>
 		</tbody>
 	</table>
 </div>

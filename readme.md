@@ -37,3 +37,9 @@ spring:
 - 윈도우 키 + CMD
 - cd C:\work\sts-4.4.0.RELEASE-workspace\at
 - mvnw.cmd tomcat7:redeploy
+
+# 운영환경에서 만들어야 실행해야하는 초기 DB 세팅
+
+# DB 사용자 생성
+
+- GRANT ALL PRIVILEGES ON `at`.\* TO `at`@`localhost` IDENTIFIED BY 'sbs123414';
