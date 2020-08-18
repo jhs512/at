@@ -593,8 +593,9 @@
 				$tr.removeClass('hide');
 
 				ApplymentList__hiddenApplymentsCount--;
-				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
-				
+				$('.hidden-applyments-count').text(
+						'(' + ApplymentList__hiddenApplymentsCount + '건)');
+
 			}, 'json');
 		} else if ($tr.addClass('hide')) {
 			$.post('/usr/applyment/doSetVisible', {
@@ -604,7 +605,8 @@
 				$tr.addClass('hide');
 
 				ApplymentList__hiddenApplymentsCount++;
-				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+				$('.hidden-applyments-count').text(
+						'(' + ApplymentList__hiddenApplymentsCount + '건)');
 			}, 'json');
 		}
 	}
@@ -712,22 +714,25 @@
 			id : id
 		}, function(data) {
 			ApplymentList__applymentsCount--;
-			$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
+			$('.applyments-count').text(
+					'(' + ApplymentList__applymentsCount + '건)');
 			$tr.remove();
 		}, 'json');
 	}
 
 	function ApplymentList__drawApplyment(applyment) {
 		ApplymentList__applymentsCount++;
-		$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
-		
+		$('.applyments-count')
+				.text('(' + ApplymentList__applymentsCount + '건)');
+
 		var html = '';
 		var trClassStr = '';
 
 		if (applyment.hideStatus) {
 			trClassStr = 'hide';
 			ApplymentList__hiddenApplymentsCount++;
-			$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+			$('.hidden-applyments-count').text(
+					'(' + ApplymentList__hiddenApplymentsCount + '건)');
 		}
 		html += '<tr data-id="' + applyment.id + '" class="' + trClassStr + '">';
 		html += '<td>' + applyment.id + '</td>';
