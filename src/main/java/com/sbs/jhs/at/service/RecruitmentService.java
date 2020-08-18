@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.sbs.jhs.at.dao.RecruitmentDao;
+import com.sbs.jhs.at.dto.Applyment;
 import com.sbs.jhs.at.dto.File;
 import com.sbs.jhs.at.dto.Job;
 import com.sbs.jhs.at.dto.Member;
@@ -23,6 +24,8 @@ public class RecruitmentService {
 	private RecruitmentDao recruitmentDao;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private ApplymentService applymentService;
 
 	public List<Recruitment> getForPrintRecruitments() {
 		List<Recruitment> recruitments = recruitmentDao.getForPrintRecruitments();
@@ -99,6 +102,16 @@ public class RecruitmentService {
 		return new ResultData("F-1", "권한이 없습니다.", "id", id);
 	}
 
+	public boolean actorCanDelete(Member actor, int id) {
+		Recruitment recruitment = recruitmentDao.getRecruitmentById(id);
+
+		return actorCanModify(actor, recruitment);
+	}
+
+	public ResultData checkActorCanDelete(Member actor, int id) {
+		return checkActorCanModify(actor, id);
+	}
+
 	public void modify(Map<String, Object> param) {
 		recruitmentDao.modify(param);
 
@@ -120,5 +133,35 @@ public class RecruitmentService {
 
 	public Job getJobByCode(String jobCode) {
 		return recruitmentDao.getJobByCode(jobCode);
+	}
+
+	public ResultData delete(int id) {
+		applymentService.deleteApplymentsByRelId("recruitment", id);
+
+		recruitmentDao.delete(id);
+		fileService.deleteFiles("recruitment", id);
+
+		return new ResultData("S-1", "삭제되었습니다.", "id", id);
+	}
+
+	public boolean actorIsWriter(Member actor, int id) {
+		if (actor == null) {
+			return false;
+		}
+
+		Recruitment recruitment = getForPrintRecruitmentById(actor, id);
+
+		if (recruitment == null) {
+			return false;
+		}
+
+		return actor.getId() == recruitment.getMemberId();
+	}
+
+	public boolean actorCanToggle(Member actor, Applyment applyment) {
+		int id = applyment.getRelId();
+		Recruitment recruitment = getForPrintRecruitmentById(actor, id);
+		
+		return actor.getId() == recruitment.getMemberId();
 	}
 }

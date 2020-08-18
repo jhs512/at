@@ -6,6 +6,10 @@
 	<select id="getForPrintApplyments" resultMap="applyment">
 	    <![CDATA[
 		SELECT AM.*,
+		M.nickname AS extra__writer,
+		M.name AS extra__writerRealName,
+		M.cellphoneNo AS extra__writerCellphoneNo,
+		M.email AS extra__writerEmail,
 		M.nickname AS extra__writer
 		FROM applyment AS AM
 		INNER JOIN member AS M
@@ -18,14 +22,17 @@
 		]]>
 	</select>
 
-	<insert id="writeApplyment" useGeneratedKeys="true" keyProperty="id">
+	<insert id="writeApplyment" useGeneratedKeys="true"
+		keyProperty="id">
 		INSERT INTO applyment
 		SET regDate = NOW(),
-		updateDate = NOW(),
+		updateDate =
+		NOW(),
 		body =
 		#{body},
 		memberId = #{memberId},
-		relTypeCode = #{relTypeCode},
+		relTypeCode =
+		#{relTypeCode},
 		relId =
 		#{relId},
 		displayStatus
@@ -34,6 +41,11 @@
 
 	<select id="getForPrintApplymentById" resultMap="applyment">
 		SELECT AM.*,
+		M.nickname AS extra__writer,
+		M.name AS extra__writerRealName,
+		M.cellphoneNo AS extra__writerCellphoneNo,
+		M.email AS
+		extra__writerEmail,
 		M.nickname AS extra__writer
 		FROM applyment AS
 		AM
@@ -47,10 +59,38 @@
 		= #{id}
 	</select>
 
-	<delete id="deleteApplyment">
-		DELETE FROM applyment
+	<select id="getApplymentsByRelId" resultMap="applyment">
+		SELECT *
+		FROM
+		applyment AS AM
+		WHERE AM.relId = #{relId}
+		AND AM.relTypeCode =
+		#{relTypeCode}
+		AND AM.delStatus = 0
+		ORDER BY AM.id DESC
+	</select>
+
+	<select id="getApplymentByRelIdAndMemberId"
+		resultMap="applyment">
+		SELECT *
+		FROM applyment AS AM
+		WHERE AM.relId = #{relId}
+		AND
+		AM.relTypeCode = #{relTypeCode}
+		AND AM.memberId = #{memberId}
+		AND
+		AM.delStatus = 0
+	</select>
+
+
+
+	<update id="deleteApplyment">
+		UPDATE applyment
+		SET delStatus = 1,
+		delDate = NOW(),
+		displayStatus = 0
 		WHERE id = #{id}
-	</delete>
+	</update>
 
 	<update id="modifyApplyment">
 		UPDATE applyment
@@ -61,18 +101,31 @@
 		WHERE id = #{id}
 	</update>
 
+	<update id="changeHideStatus">
+		UPDATE applyment
+		<set>
+			hideStatus = #{hideStatus}
+		</set>
+		WHERE id = #{id}
+	</update>
+
 	<resultMap type="Applyment" id="applyment">
 		<id property="id" column="id" />
 		<id property="regDate" column="regDate" />
 		<id property="updateDate" column="updateDate" />
 		<id property="delDate" column="delDate" />
 		<id property="delStatus" column="delStatus" />
+		<id property="displayStatus" column="displayStatus" />
+		<id property="hideStatus" column="hideStatus" />
 		<id property="body" column="body" />
 		<id property="memberId" column="memberId" />
 		<id property="relId" column="relId" />
 		<id property="relTypeCode" column="relTypeCode" />
 		<association property="extra" javaType="map">
 			<id property="writer" column="extra__writer" />
+			<id property="writerCellphoneNo" column="extra__writerCellphoneNo" />
+			<id property="writerEmail" column="extra__writerEmail" />
+			<id property="writerRealName" column="extra__writerRealName" />
 		</association>
 	</resultMap>
 </mapper>

@@ -84,7 +84,7 @@ var param = ${paramJson};
 			<nav class="menu-box-1">
 				<ul class="flex">
 					<li class="padding-0-10"><a href="/usr/recruitment/actor-list"
-						class="btn btn-info">모집</a></li>
+						class="btn btn-primary">모집</a></li>
 					<li class="padding-0-10"><a class="btn btn-info"
 						href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">

@@ -223,3 +223,34 @@ ALTER TABLE `attr` ADD UNIQUE INDEX (`relTypeCode`, `relId`, `typeCode`, `type2C
 
 ## 특정 조건을 만족하는 회원 또는 게시물(기타 데이터)를 빠르게 찾기 위해서
 ALTER TABLE `attr` ADD INDEX (`relTypeCode`, `typeCode`, `type2Code`);
+
+# member 테이블에 테스트 데이터 삽입
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user1',
+loginPw = SHA2('user1', 256),
+`name` = '김성훈',
+`nickname` = '하정우',
+`email` = '',
+`cellphoneNo` = '';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user1',
+loginPw = SHA2('user1', 256),
+`name` = '캐스팅디렉터',
+`nickname` = '캐스팅디렉터',
+`email` = '',
+`cellphoneNo` = '';
+
+INSERT INTO `member`
+SET regDate = NOW(),
+updateDate = NOW(),
+loginId = 'user2',
+loginPw = SHA2('user2', 256),
+`name` = '김성훈',
+`nickname` = '하정우',
+`email` = '',
+`cellphoneNo` = '';

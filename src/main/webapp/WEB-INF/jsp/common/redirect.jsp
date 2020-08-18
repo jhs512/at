@@ -4,9 +4,9 @@
 
 <script>
 	var historyBack = '${historyBack}' == 'true';
-	var alertMsg = '${alertMsg}'.trim();
-	if (alertMsg) {
-		alert(alertMsg);
+	var msg = '${msg}'.trim();
+	if (msg) {
+		alert(msg);
 	}
 	if (historyBack) {
 		history.back();

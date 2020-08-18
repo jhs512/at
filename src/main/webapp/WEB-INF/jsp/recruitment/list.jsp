@@ -24,8 +24,7 @@
 				<tr>
 					<td>${recruitment.id}</td>
 					<td>${recruitment.regDate}</td>
-					<td>
-						<a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
+					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -46,21 +45,25 @@
 			<c:forEach items="${recruitments}" var="recruitment">
 				<tr>
 					<td>${recruitment.id}</td>
-					<td>
-						<a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
-						<br />
-						날짜 : ${recruitment.regDate}
-						<br />
-						작성 : ${recruitment.extra.writer}
-					</td>
+					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
+						<br /> 날짜 : ${recruitment.regDate} <br /> 작성 :
+						${recruitment.extra.writer}</td>
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 </div>
 
+<style>
+.btn-box:empty {
+	display: none;
+}
+</style>
+
 <div class="btn-box con margin-top-20">
-	<a class="btn btn-primary" href="./${job.code}-write">글쓰기</a>
+	<c:if test="${actorCanWrite}">
+		<a class="btn btn-primary" href="./${job.code}-write">새 모집공고</a>
+	</c:if>
 </div>
 
 <%@ include file="../part/foot.jspf"%>

@@ -11,13 +11,15 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -353,10 +355,9 @@ public class Util {
 			if (extra == null) {
 				return null;
 			} else {
-				if ( extra.get(key) == null ) {
+				if (extra.get(key) == null) {
 					return elseValue;
-				}
-				else {
+				} else {
 					return extra.get(key);
 				}
 			}
@@ -376,7 +377,7 @@ public class Util {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
@@ -412,5 +413,17 @@ public class Util {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public static int getPassedSecondsFrom(String from) {
+		SimpleDateFormat fDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date n;
+		try {
+			n = fDate.parse(from);
+		} catch (ParseException e) {
+			return -1;
+		}
+
+		return (int) ((new Date().getTime() - n.getTime()) / 1000);
 	}
 }

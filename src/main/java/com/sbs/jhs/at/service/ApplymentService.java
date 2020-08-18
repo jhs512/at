@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sbs.jhs.at.config.AppConfig;
 import com.sbs.jhs.at.dao.ApplymentDao;
 import com.sbs.jhs.at.dto.Applyment;
 import com.sbs.jhs.at.dto.File;
@@ -22,6 +23,10 @@ public class ApplymentService {
 	private ApplymentDao applymentDao;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private AppConfig appConfig;
+	@Autowired
+	private RecruitmentService recruitmentService;
 
 	public List<Applyment> getForPrintApplyments(@RequestParam Map<String, Object> param) {
 		List<Applyment> applyments = applymentDao.getForPrintApplyments(param);
@@ -54,11 +59,39 @@ public class ApplymentService {
 	private void updateForPrintInfo(Member actor, Applyment applyment) {
 		applyment.getExtra().put("actorCanDelete", actorCanDelete(actor, applyment));
 		applyment.getExtra().put("actorCanModify", actorCanModify(actor, applyment));
+		applyment.getExtra().put("actorCanToggle", actorCanToggle(actor, applyment));
 	}
 
 	// 액터가 해당 댓글을 수정할 수 있는지 알려준다.
 	public boolean actorCanModify(Member actor, Applyment applyment) {
-		return actor != null && actor.getId() == applyment.getMemberId() ? true : false;
+		if (actor == null) {
+			return false;
+		}
+
+		if (applyment == null) {
+			return false;
+		}
+
+		int passedSeconds = Util.getPassedSecondsFrom(applyment.getRegDate());
+
+		if (passedSeconds > appConfig.getModifyAvailablePeriodSeconds()) {
+			return false;
+		}
+
+		return actor.getId() == applyment.getMemberId();
+	}
+
+	// 액터가 해당 댓글을 수정할 수 있는지 알려준다.
+	public boolean actorCanToggle(Member actor, Applyment applyment) {
+		if (actor == null) {
+			return false;
+		}
+
+		if (applyment == null) {
+			return false;
+		}
+
+		return recruitmentService.actorCanToggle(actor, applyment);
 	}
 
 	// 액터가 해당 댓글을 삭제할 수 있는지 알려준다.
@@ -122,5 +155,33 @@ public class ApplymentService {
 		param.put("file__common__attachment", applyment.getExtra().get("file__common__attachment"));
 
 		return new ResultData("S-1", String.format("%d번 댓글을 수정하였습니다.", Util.getAsInt(param.get("id"))), param);
+	}
+
+	public void deleteApplymentsByRelId(String relTypeCode, int relId) {
+		List<Applyment> applyments = getApplymentsByRelId(relTypeCode, relId);
+
+		for (Applyment applyment : applyments) {
+			deleteApplyment(applyment.getId());
+		}
+	}
+
+	private List<Applyment> getApplymentsByRelId(String relTypeCode, int relId) {
+		return applymentDao.getApplymentsByRelId(relTypeCode, relId);
+	}
+
+	public ResultData checkActorCanWriteApplyment(Member actor, String relTypeCode, int relId) {
+		Applyment applyment = applymentDao.getApplymentByRelIdAndMemberId(relTypeCode, relId, actor.getId());
+
+		if (applyment != null) {
+			return new ResultData("F-1", "이미 신청하셨습니다. 기존 신청내용을 수정해주세요.");
+		}
+
+		return new ResultData("S-1", "가능합니다.");
+	}
+
+	public ResultData changeHideStatus(int id, boolean hideStatus) {
+		applymentDao.changeHideStatus(id, hideStatus);
+		
+		return new ResultData("S-1", "변경되었습니다.");
 	}
 }

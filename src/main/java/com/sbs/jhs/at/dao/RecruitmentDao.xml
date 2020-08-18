@@ -34,7 +34,7 @@
     <select id="getJobByCode" resultType="Job">
         SELECT *
         FROM
-        board
+        job
         WHERE
         `code` = #{code}
     </select>
@@ -47,7 +47,7 @@
         title = #{title},
         body = #{body},
         memberId = #{memberId},
-        boardId = #{boardId},
+        jobId = #{jobId},
         displayStatus = 1
     </insert>
 
@@ -61,6 +61,14 @@
         WHERE id = #{id}
     </update>
     
+    <update id="delete">
+    	UPDATE recruitment
+    	SET delStatus = 1,
+    	delDate = NOW(),
+    	displayStatus = 0
+    	WHERE id = #{id}
+    </update>
+    
     <resultMap type="Recruitment" id="recruitment">
         <id property="id" column="id" />
         <id property="regDate" column="regDate" />
@@ -70,7 +78,7 @@
         <id property="title" column="title" />
         <id property="body" column="body" />
         <id property="memberId" column="memberId" />
-        <id property="boardId" column="boardId" />
+        <id property="jobId" column="jobId" />
         <association property="extra" javaType="map">
             <id property="writer" column="extra__writer" />
         </association>

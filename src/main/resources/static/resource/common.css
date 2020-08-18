@@ -18,9 +18,13 @@ label[for] {
 
 /* 라이브러리 */
 .img-box.img-box-auto>img {
-	max-width: 100%;
 	display: block;
+	max-width: 100%;
 	width: auto;
+}
+
+.none {
+	display: none !important;
 }
 
 .block {

@@ -22,4 +22,6 @@ public interface RecruitmentDao {
 	void modify(Map<String, Object> param);
 
 	Job getJobByCode(String jobCode);
+
+	void delete(int id);
 }

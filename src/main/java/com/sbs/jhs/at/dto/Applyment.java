@@ -16,6 +16,7 @@ public class Applyment {
 	private boolean delStatus;
 	private String delDate;
 	private boolean displayStatus;
+	private boolean hideStatus;
 	private int relId;
 	private String relTypeCode;
 	private int memberId;

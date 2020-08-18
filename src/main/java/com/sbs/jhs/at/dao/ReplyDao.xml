@@ -47,10 +47,13 @@
 		= #{id}
 	</select>
 
-	<delete id="deleteReply">
-		DELETE FROM reply
+	<update id="deleteReply">
+		UPDATE reply
+		SET delStatus = 1,
+		delDate = NOW(),
+		displayStatus = 0
 		WHERE id = #{id}
-	</delete>
+	</update>
 
 	<update id="modifyReply">
 		UPDATE reply

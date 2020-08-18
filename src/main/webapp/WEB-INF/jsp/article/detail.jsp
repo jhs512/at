@@ -62,7 +62,7 @@
 			href="${board.code}-modify?id=${article.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
 	</c:if>
 	<c:if test="${article.extra.actorCanDelete}">
-		<a class="btn btn-info" href="${board.code}-doDelete?id=${article.id}"
+		<a class="btn btn-danger" href="${board.code}-doDelete?id=${article.id}"
 			onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
 
@@ -73,9 +73,9 @@
 	<h2 class="con">댓글 작성</h2>
 
 	<script>
-		var ArticleWriteReplyForm__submitDone = false;
-		function ArticleWriteReplyForm__submit(form) {
-			if ( ArticleWriteReplyForm__submitDone ) {
+		var WriteReplyForm__submitDone = false;
+		function WriteReplyForm__submit(form) {
+			if ( WriteReplyForm__submitDone ) {
 				alert('처리중입니다.');
 			}
 			
@@ -86,21 +86,21 @@
 				return;
 			}
 
-			ArticleWriteReplyForm__submitDone = true;
+			WriteReplyForm__submitDone = true;
 
 			var startUploadFiles = function(onSuccess) {
 				var needToUpload = false;
 
 				if ( needToUpload == false ) {
-					needToUpload = form.file__reply__0__common__attachment__1.value.length > 0;
+					needToUpload = form.file__reply__0__common__attachment__1 && form.file__reply__0__common__attachment__1.value.length > 0;
 				}
 				
 				if ( needToUpload == false ) {
-					needToUpload = form.file__reply__0__common__attachment__2.value.length > 0;
+					needToUpload = form.file__reply__0__common__attachment__2 && form.file__reply__0__common__attachment__2.value.length > 0;
 				}
 
 				if ( needToUpload == false ) {
-					needToUpload = form.file__reply__0__common__attachment__3.value.length > 0;
+					needToUpload = form.file__reply__0__common__attachment__3 && form.file__reply__0__common__attachment__3.value.length > 0;
 				}
 				
 				if ( needToUpload == false ) {
@@ -164,14 +164,14 @@
 						form.file__reply__0__common__attachment__3.value = '';
 					}
 					
-					ArticleWriteReplyForm__submitDone = false;
+					WriteReplyForm__submitDone = false;
 				});
 			});
 		}
 	</script>
 
 	<form class="table-box con form1"
-		onsubmit="ArticleWriteReplyForm__submit(this); return false;">
+		onsubmit="WriteReplyForm__submit(this); return false;">
 		<input type="hidden" name="relTypeCode" value="article" /> <input
 			type="hidden" name="relId" value="${article.id}" />
 
