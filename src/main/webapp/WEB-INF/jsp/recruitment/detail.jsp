@@ -243,8 +243,8 @@
 					</tr>
 				</c:forEach>
 				<tr>
-					<th>작성</th>
-					<td><input class="btn btn-primary" type="submit" value="작성">
+					<th>신청</th>
+					<td><input class="btn btn-primary" type="submit" value="신청">
 					</td>
 				</tr>
 			</tbody>
@@ -272,13 +272,13 @@
 
 <h2 class="con">
 	<span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span
-		class="visible-actor-is-writer applymentsCount">(0건)</span>
+		class="visible-actor-is-writer applyments-count">(0건)</span>
 </h2>
 
 <div class="con">
 	<label class="visible-actor-is-writer"> <input type="checkbox"
 		onchange="$('.applyment-list-box').toggleClass('show-hide-items');" />
-		숨김처리한 내용 보기
+		숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
 	</label>
 </div>
 
@@ -591,6 +591,10 @@
 				value : 'show'
 			}, function(data) {
 				$tr.removeClass('hide');
+
+				ApplymentList__hiddenApplymentsCount--;
+				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+				
 			}, 'json');
 		} else if ($tr.addClass('hide')) {
 			$.post('/usr/applyment/doSetVisible', {
@@ -598,6 +602,9 @@
 				value : 'hide'
 			}, function(data) {
 				$tr.addClass('hide');
+
+				ApplymentList__hiddenApplymentsCount++;
+				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
 			}, 'json');
 		}
 	}
@@ -662,8 +669,9 @@
 	}
 
 	// 1초
-	ApplymentList__loadMoreInterval = 1 * 1000;
-	ApplymentList__applymentsCount = 0;
+	var ApplymentList__loadMoreInterval = 1 * 1000;
+	var ApplymentList__applymentsCount = 0;
+	var ApplymentList__hiddenApplymentsCount = 0;
 
 	function ApplymentList__loadMoreCallback(data) {
 		if (data.body.applyments && data.body.applyments.length > 0) {
@@ -685,9 +693,6 @@
 	}
 
 	function ApplymentList__drawApplyments(applyments) {
-		ApplymentList__applymentsCount++;
-		$('.applymentsCount').text('(' + ApplymentList__applymentsCount + '건)');
-
 		for (var i = 0; i < applyments.length; i++) {
 			var applyment = applyments[i];
 			ApplymentList__drawApplyment(applyment);
@@ -706,16 +711,23 @@
 		$.post('./../applyment/doDeleteApplymentAjax', {
 			id : id
 		}, function(data) {
+			ApplymentList__applymentsCount--;
+			$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
 			$tr.remove();
 		}, 'json');
 	}
 
 	function ApplymentList__drawApplyment(applyment) {
+		ApplymentList__applymentsCount++;
+		$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
+		
 		var html = '';
 		var trClassStr = '';
 
 		if (applyment.hideStatus) {
 			trClassStr = 'hide';
+			ApplymentList__hiddenApplymentsCount++;
+			$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
 		}
 		html += '<tr data-id="' + applyment.id + '" class="' + trClassStr + '">';
 		html += '<td>' + applyment.id + '</td>';
