@@ -130,7 +130,7 @@ WHERE memberId = 0;
 ALTER TABLE `file` ADD UNIQUE INDEX (`relId`, `relTypeCode`, `typeCode`, `type2Code`, `fileNo`); 
 
 # 파일 테이블의 기존 인덱스에 유니크가 걸려 있어서 relId가 0 인 동안 충돌이 발생할 수 있다. 그래서 일반 인덱스로 바꾼다.
-ALTER TABLE `at`.`file` DROP INDEX `relId`, ADD INDEX (`relId` , `relTypeCode` , `typeCode` , `type2Code` , `fileNo`); 
+ALTER TABLE `file` DROP INDEX `relId`, ADD INDEX (`relId` , `relTypeCode` , `typeCode` , `type2Code` , `fileNo`); 
 
 # 게시물 테이블에 게시판 정보 추가
 ALTER TABLE `article` ADD COLUMN `boardId` INT(10) UNSIGNED NOT NULL AFTER `delStatus`; 
@@ -254,3 +254,6 @@ loginPw = SHA2('user2', 256),
 `nickname` = '하정우',
 `email` = '',
 `cellphoneNo` = '';
+
+# 신청테이블에 숨김여부 칼럼을 추가한다.
+ALTER TABLE `applyment` ADD COLUMN `hideStatus` TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL AFTER `delStatus`; 
