@@ -36,6 +36,19 @@ public class RecruitmentService {
 	private void updateForPrintInfo(Member actor, Recruitment recruitment) {
 		Util.putExtraVal(recruitment, "actorCanDelete", actorCanDelete(actor, recruitment));
 		Util.putExtraVal(recruitment, "actorCanModify", actorCanModify(actor, recruitment));
+		Util.putExtraVal(recruitment, "actorCanSetComplete", actorCanSetComplete(actor, recruitment));
+	}
+
+	private Object actorCanSetComplete(Member actor, Recruitment recruitment) {
+		if ( actorCanModify(actor, recruitment) == false ) {
+			return false;
+		}
+		
+		if ( recruitment.isCompleteStatus() ) {
+			return false;
+		}
+
+		return true;
 	}
 
 	// 액터가 해당 댓글을 수정할 수 있는지 알려준다.
@@ -163,5 +176,13 @@ public class RecruitmentService {
 		Recruitment recruitment = getForPrintRecruitmentById(actor, id);
 		
 		return actor.getId() == recruitment.getMemberId();
+	}
+
+	public void setComplete(int id) {
+		recruitmentDao.setComplete(id);
+	}
+
+	public Recruitment getRecruitmentById(int id) {
+		return recruitmentDao.getRecruitmentById(id);
 	}
 }

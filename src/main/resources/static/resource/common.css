@@ -153,6 +153,14 @@ html>head+body:nth-child(2) .height-300 {
 	resize: none;
 }
 
+.form1 .form-control-box > select {
+	width: 100%;
+	padding: 0;
+	display: block;
+	box-sizing: border-box;
+	padding: 10px;
+}
+
 .form1 .form-row {
 	display: flex;
 	flex-wrap: wrap;

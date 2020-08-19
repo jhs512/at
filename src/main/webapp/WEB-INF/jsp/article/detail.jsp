@@ -22,11 +22,11 @@
 			</tr>
 			<tr>
 				<th>제목</th>
-				<td>${article.title}</td>
+				<td>${article.forPrintTitle}</td>
 			</tr>
 			<tr>
 				<th>내용</th>
-				<td>${article.body}</td>
+				<td>${article.forPrintBody}</td>
 			</tr>
 			<c:forEach var="i" begin="1" end="3" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
@@ -460,7 +460,7 @@
 			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
 				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
 				$('.reply-list-box tbody > tr[data-id="' + id + '"]').data('data-originBody', body);
-				$('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body').empty().append(body);
+				$('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body').empty().append(body.replaceAll('\n', '<br>'));
 
 				$('.reply-list-box tbody > tr[data-id="' + id + '"] .video-box').empty();
 				$('.reply-list-box tbody > tr[data-id="' + id + '"] .img-box').empty();
@@ -596,7 +596,7 @@
 		html += '<td class="visible-on-md-up">' + reply.regDate + '</td>';
 		html += '<td class="visible-on-md-up">' + reply.extra.writer + '</td>';
 		html += '<td>';
-		html += '<div class="reply-body">' + reply.body + '</div>';
+		html += '<div class="reply-body">' + reply.forPrintBody + '</div>';
 		html += '<div class="visible-on-sm-down">날짜 : ' + reply.regDate + '</div>';
 		html += '<div class="visible-on-sm-down">작성 : ' + reply.extra.writer + '</div>';
 

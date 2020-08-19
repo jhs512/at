@@ -230,16 +230,6 @@ SET regDate = NOW(),
 updateDate = NOW(),
 loginId = 'user1',
 loginPw = SHA2('user1', 256),
-`name` = '김성훈',
-`nickname` = '하정우',
-`email` = '',
-`cellphoneNo` = '';
-
-INSERT INTO `member`
-SET regDate = NOW(),
-updateDate = NOW(),
-loginId = 'user1',
-loginPw = SHA2('user1', 256),
 `name` = '캐스팅디렉터',
 `nickname` = '캐스팅디렉터',
 `email` = '',
@@ -257,3 +247,61 @@ loginPw = SHA2('user2', 256),
 
 # 신청테이블에 숨김여부 칼럼을 추가한다.
 ALTER TABLE `applyment` ADD COLUMN `hideStatus` TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL AFTER `delStatus`; 
+
+# 작품 테이블 만들기
+CREATE TABLE artwork (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    `name` CHAR(50) NOT NULL,
+    `productionName` CHAR(50) NOT NULL,
+    `directorName` CHAR(50) NOT NULL,
+    etc TEXT
+);
+
+INSERT INTO artwork
+SET regDate = NOW(),
+`name` = '균',
+`directorName` = '조용선',
+productionName = '마스터원엔터테인먼트';
+
+# 배역 테이블 만들기
+CREATE TABLE actingRole (
+    id INT(10) UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    regDate DATETIME NOT NULL,
+    updateDate DATETIME NOT NULL,
+    artworkId INT(10) UNSIGNED NOT NULL,
+    realName CHAR(50) NOT NULL,
+    `name` CHAR(50) NOT NULL,
+    pay CHAR(50) NOT NULL,
+    age CHAR(50) NOT NULL,
+    job CHAR(100) NOT NULL,
+    scriptStatus TINYINT(1) UNSIGNED NOT NULL DEFAULT 0,
+    gender CHAR(5) NOT NULL,
+    scenesCount TINYINT(2) UNSIGNED NOT NULL DEFAULT 0,
+    shootingsCount TINYINT(2) UNSIGNED NOT NULL DEFAULT 0,
+    `character` TEXT,
+    etc TEXT
+);
+
+INSERT INTO actingRole
+SET regDate = NOW(),
+updateDate = NOW(),
+artworkId = 1,
+realName = '',
+`name` = '조대표',
+`job` = '오투 CEO',
+pay = '',
+age = '',
+scriptStatus = 1,
+gender = '',
+scenesCount = '14',
+shootingsCount = '8',
+`character` = '오투 한국지사 CEO. 영국국적을 가지고 있고 가습기 살균제 사건을 막기 위해 우식을 TFI 부서 로 복직시킨다. 자신의 이익만을 생각한다.',
+etc = '';
+
+ALTER TABLE `recruitment` ADD COLUMN `completeStatus` TINYINT(1) UNSIGNED DEFAULT 0 NOT NULL AFTER `addi`, ADD COLUMN `completeDate` DATETIME AFTER `completeStatus`;
+
+ALTER TABLE `recruitment` ADD COLUMN `roleTypeCode` CHAR(50) NOT NULL AFTER `completeDate`, ADD COLUMN `roleId` INT(10) UNSIGNED NOT NULL AFTER `roleTypeCode`; 
+
+

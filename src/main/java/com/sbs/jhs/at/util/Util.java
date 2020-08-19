@@ -426,4 +426,20 @@ public class Util {
 
 		return (int) ((new Date().getTime() - n.getTime()) / 1000);
 	}
+
+	public static Object ifNull(Object value, Object elseValue) {
+		if (value == null) {
+			return elseValue;
+		}
+
+		return value;
+	}
+
+	public static String ifNull(Object value, String elseValue) {
+		if (value == null || ((String)value).length() == 0 ) {
+			return elseValue;
+		}
+
+		return (String)value;
+	}
 }

@@ -21,7 +21,9 @@ public interface RecruitmentDao {
 
 	void modify(Map<String, Object> param);
 
-	Job getJobByCode(String jobCode);
+	Job getJobByCode(@Param("code") String code);
 
-	void delete(int id);
+	void delete(@Param("id") int id);
+
+	void setComplete(@Param("id") int id);
 }

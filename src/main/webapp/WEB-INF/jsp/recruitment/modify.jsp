@@ -47,19 +47,12 @@
 		}
 
 		form.title.value = form.title.value.trim();
-
-		if (form.title.value.length == 0) {
-			form.title.focus();
-			alert('제목을 입력해주세요.');
-
-			return;
-		}
-
+		
 		form.body.value = form.body.value.trim();
 
 		if (form.body.value.length == 0) {
 			form.body.focus();
-			alert('내용을 입력해주세요.');
+			alert('특이사항을 입력해주세요.');
 
 			return;
 		}
@@ -180,6 +173,50 @@
 				<td>${recruitment.regDate}</td>
 			</tr>
 			<tr>
+				<th>모집상태</th>
+				<td>${recruitment.forPrintCompleteStatusHanName}</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>${recruitment.forPrintTitle}</td>
+			</tr>
+			<tr>
+				<th>작품명</th>
+				<td>${recruitment.extra.artworkName}</td>
+			</tr>
+			<tr>
+				<th>제작사</th>
+				<td>${recruitment.extra.productionName}</td>
+			</tr>
+			<tr>
+				<th>배역명</th>
+				<td>${recruitment.extra.actingRoleName}</td>
+			</tr>
+			<tr>
+				<th>배역성별</th>
+				<td>${recruitment.extra.actingRoleGender}</td>
+			</tr>
+			<tr>
+				<th>배역나이</th>
+				<td>${recruitment.extra.actingRoleAge}</td>
+			</tr>
+			<tr>
+				<th>배역직업</th>
+				<td>${recruitment.extra.actingRoleJob}</td>
+			</tr>
+			<tr>
+				<th>배역씬수</th>
+				<td>${recruitment.extra.actingRoleScenesCount}</td>
+			</tr>
+			<tr>
+				<th>배역촬영수</th>
+				<td>${recruitment.extra.actingRoleShootingsCount}</td>
+			</tr>
+			<tr>
+				<th>출연료</th>
+				<td>${recruitment.extra.actingRolePay}</td>
+			</tr>
+			<tr class="none">
 				<th>제목</th>
 				<td>
 					<div class="form-control-box">
@@ -189,10 +226,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th>특이 사항</th>
 				<td>
 					<div class="form-control-box">
-						<textarea name="body" placeholder="내용을 입력해주세요.">${recruitment.body}</textarea>
+						<textarea name="body" placeholder="특이 사항을 입력해주세요.">${recruitment.body}</textarea>
 					</div>
 				</td>
 			</tr>

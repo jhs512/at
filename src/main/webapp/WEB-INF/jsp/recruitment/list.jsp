@@ -16,7 +16,7 @@
 			<tr>
 				<th>번호</th>
 				<th>날짜</th>
-				<th>제목</th>
+				<th>배역</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -24,8 +24,7 @@
 				<tr>
 					<td>${recruitment.id}</td>
 					<td>${recruitment.regDate}</td>
-					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
-					</td>
+					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.forPrintTitle}</a></td>
 				</tr>
 			</c:forEach>
 		</tbody>
@@ -45,7 +44,7 @@
 			<c:forEach items="${recruitments}" var="recruitment">
 				<tr>
 					<td>${recruitment.id}</td>
-					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.title}</a>
+					<td><a href="${recruitment.getDetailLink(job.code)}">${recruitment.forPrintTitle}</a>
 						<br /> 날짜 : ${recruitment.regDate} <br /> 작성 :
 						${recruitment.extra.writer}</td>
 				</tr>

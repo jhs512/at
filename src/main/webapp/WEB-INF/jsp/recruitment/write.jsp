@@ -5,6 +5,17 @@
 <c:set var="pageTitle" value="${job.name} 모집 수정" />
 <%@ include file="../part/head.jspf"%>
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+
+<script>
+	$(function() {
+		$('.select2').select2();
+	});
+</script>
+
 <script>
 	var RecruitmentWriteForm__submitDone = false;
 	function RecruitmentWriteForm__submit(form) {
@@ -12,20 +23,14 @@
 			alert('처리중입니다.');
 			return;
 		}
+
 		form.title.value = form.title.value.trim();
-
-		if (form.title.value.length == 0) {
-			form.title.focus();
-			alert('제목을 입력해주세요.');
-
-			return;
-		}
 
 		form.body.value = form.body.value.trim();
 
 		if (form.body.value.length == 0) {
 			form.body.focus();
-			alert('내용을 입력해주세요.');
+			alert('특이사항을 입력해주세요.');
 
 			return;
 		}
@@ -104,13 +109,26 @@
 	onsubmit="RecruitmentWriteForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
 		name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id">
+	<input type="hidden" name="roleTypeCode" value="actingRole" />
 
 	<table>
 		<colgroup>
-            <col class="table-first-col">
-        </colgroup>
+			<col class="table-first-col">
+		</colgroup>
 		<tbody>
 			<tr>
+				<th>배역</th>
+				<td>
+					<div class="form-control-box">
+						<select name="roleId" class="select2">
+							<c:forEach items="${roles}" var="role">
+								<option value="${role.id}">${role.getTitle()}</option>
+							</c:forEach>
+						</select>
+					</div>
+				</td>
+			</tr>
+			<tr class="none">
 				<th>제목</th>
 				<td>
 					<div class="form-control-box">
@@ -120,10 +138,10 @@
 				</td>
 			</tr>
 			<tr>
-				<th>내용</th>
+				<th>특이 사항</th>
 				<td>
 					<div class="form-control-box">
-						<textarea placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
+						<textarea placeholder="특이사항을 입력해주세요." name="body" maxlength="2000"></textarea>
 					</div>
 				</td>
 			</tr>

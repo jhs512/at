@@ -25,7 +25,7 @@
 					<td>${article.id}</td>
 					<td>${article.regDate}</td>
 					<td>
-						<a href="${article.getDetailLink(board.code)}">${article.title}</a>
+						<a href="${article.getDetailLink(board.code)}">${article.forPrintTitle}</a>
 					</td>
 				</tr>
 			</c:forEach>
@@ -47,7 +47,7 @@
 				<tr>
 					<td>${article.id}</td>
 					<td>
-						<a href="${article.getDetailLink(board.code)}">${article.title}</a>
+						<a href="${article.getDetailLink(board.code)}">${article.forPrintTitle}</a>
 						<br />
 						날짜 : ${article.regDate}
 						<br />

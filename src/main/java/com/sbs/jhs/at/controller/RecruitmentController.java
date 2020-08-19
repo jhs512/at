@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sbs.jhs.at.config.AppConfig;
+import com.sbs.jhs.at.dto.ActingRole;
 import com.sbs.jhs.at.dto.Job;
 import com.sbs.jhs.at.dto.Member;
 import com.sbs.jhs.at.dto.Recruitment;
 import com.sbs.jhs.at.dto.ResultData;
+import com.sbs.jhs.at.service.ActingRoleService;
 import com.sbs.jhs.at.service.RecruitmentService;
 import com.sbs.jhs.at.util.Util;
 
@@ -26,13 +28,15 @@ public class RecruitmentController {
 	private RecruitmentService recruitmentService;
 	@Autowired
 	private AppConfig appConfig;
+	@Autowired
+	private ActingRoleService actingRoleService;
 
 	@RequestMapping("/usr/recruitment/{jobCode}-list")
 	public String showList(Model model, @PathVariable("jobCode") String jobCode, HttpServletRequest req) {
 		Job job = recruitmentService.getJobByCode(jobCode);
 		model.addAttribute("job", job);
-		
-		Member loginedMember = (Member)req.getAttribute("loginedMember");
+
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		model.addAttribute("actorCanWrite", appConfig.actorCanWrite("recruitment", loginedMember));
 
 		List<Recruitment> recruitments = recruitmentService.getForPrintRecruitments();
@@ -77,6 +81,9 @@ public class RecruitmentController {
 		Job job = recruitmentService.getJobByCode(jobCode);
 		model.addAttribute("job", job);
 
+		List<ActingRole> roles = actingRoleService.getRoles();
+		model.addAttribute("roles", roles);
+
 		int id = Integer.parseInt((String) param.get("id"));
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
@@ -92,6 +99,10 @@ public class RecruitmentController {
 		if (listUrl == null) {
 			listUrl = "./" + jobCode + "-list";
 		}
+
+		List<ActingRole> roles = actingRoleService.getRoles();
+		model.addAttribute("roles", roles);
+
 		model.addAttribute("listUrl", listUrl);
 		Job job = recruitmentService.getJobByCode(jobCode);
 		model.addAttribute("job", job);
@@ -102,8 +113,6 @@ public class RecruitmentController {
 	@RequestMapping("/usr/recruitment/{jobCode}-doModify")
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, int id,
 			@PathVariable("jobCode") String jobCode, Model model) {
-		Job job = recruitmentService.getJobByCode(jobCode);
-		model.addAttribute("job", job);
 		Map<String, Object> newParam = Util.getNewMapOf(param, "title", "body", "fileIdsStr", "recruitmentId", "id");
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
@@ -123,13 +132,30 @@ public class RecruitmentController {
 		return "redirect:" + redirectUri;
 	}
 
+	@RequestMapping("/usr/recruitment/{jobCode}-doSetComplete")
+	public String doSetComplete(String redirectUri, int id, HttpServletRequest req,
+			@PathVariable("jobCode") String jobCode, Model model) {
+		Member loginedMember = (Member) req.getAttribute("loginedMember");
+		ResultData checkActorCanModifyResultData = recruitmentService.checkActorCanModify(loginedMember, id);
+
+		if (checkActorCanModifyResultData.isFail()) {
+			model.addAttribute("historyBack", true);
+			model.addAttribute("msg", checkActorCanModifyResultData.getMsg());
+
+			return "common/redirect";
+		}
+
+		recruitmentService.setComplete(id);
+
+		return "redirect:" + redirectUri;
+	}
+
 	@RequestMapping("/usr/recruitment/{jobCode}-doWrite")
 	public String doWrite(@RequestParam Map<String, Object> param, HttpServletRequest req,
 			@PathVariable("jobCode") String jobCode, Model model) {
 		Job job = recruitmentService.getJobByCode(jobCode);
-		model.addAttribute("job", job);
 
-		Map<String, Object> newParam = Util.getNewMapOf(param, "title", "body", "fileIdsStr");
+		Map<String, Object> newParam = Util.getNewMapOf(param, "title", "body", "fileIdsStr", "roleTypeCode", "roleId");
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
 		newParam.put("jobId", job.getId());
 		newParam.put("memberId", loginedMemberId);
@@ -144,8 +170,6 @@ public class RecruitmentController {
 	@RequestMapping("/usr/recruitment/{jobCode}-doDelete")
 	public String doDelete(@RequestParam Map<String, Object> param, @RequestParam("id") int id, HttpServletRequest req,
 			@PathVariable("jobCode") String jobCode, Model model) {
-		Job job = recruitmentService.getJobByCode(jobCode);
-
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		ResultData checkActorCanDeleteResultData = recruitmentService.checkActorCanDelete(loginedMember, id);

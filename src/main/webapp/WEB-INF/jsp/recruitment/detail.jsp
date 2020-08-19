@@ -18,6 +18,10 @@
 .visible-actor-is-not-writer {
 	display: <%=(boolean) request.getAttribute("actorIsWriter") ? "none" : "inline"%>;
 }
+
+.recruitment-detail-box td:empty {
+	background-color: #afafaf;
+}
 </style>
 
 <div class="recruitment-detail-box table-box con">
@@ -35,12 +39,52 @@
 				<td>${recruitment.regDate}</td>
 			</tr>
 			<tr>
-				<th>제목</th>
-				<td>${recruitment.title}</td>
+				<th>모집상태</th>
+				<td>${recruitment.forPrintCompleteStatusHanName}</td>
 			</tr>
 			<tr>
-				<th>내용</th>
-				<td>${recruitment.body}</td>
+				<th>제목</th>
+				<td>${recruitment.forPrintTitle}</td>
+			</tr>
+			<tr>
+				<th>작품명</th>
+				<td>${recruitment.extra.artworkName}</td>
+			</tr>
+			<tr>
+				<th>제작사</th>
+				<td>${recruitment.extra.productionName}</td>
+			</tr>
+			<tr>
+				<th>배역명</th>
+				<td>${recruitment.extra.actingRoleName}</td>
+			</tr>
+			<tr>
+				<th>배역성별</th>
+				<td>${recruitment.extra.actingRoleGender}</td>
+			</tr>
+			<tr>
+				<th>배역나이</th>
+				<td>${recruitment.extra.actingRoleAge}</td>
+			</tr>
+			<tr>
+				<th>배역직업</th>
+				<td>${recruitment.extra.actingRoleJob}</td>
+			</tr>
+			<tr>
+				<th>배역씬수</th>
+				<td>${recruitment.extra.actingRoleScenesCount}</td>
+			</tr>
+			<tr>
+				<th>배역촬영수</th>
+				<td>${recruitment.extra.actingRoleShootingsCount}</td>
+			</tr>
+			<tr>
+				<th>출연료</th>
+				<td>${recruitment.extra.actingRolePay}</td>
+			</tr>
+			<tr>
+				<th>특이 사항</th>
+				<td>${recruitment.forPrintBody}</td>
 			</tr>
 			<c:forEach var="i" begin="1"
 				end="${appConfig.getMaxAttachmentFileNo('recruitment')}" step="1">
@@ -72,13 +116,18 @@
 </div>
 
 <div class="btn-box con margin-top-20">
+	<c:if test="${recruitment.extra.actorCanSetComplete}">
+		<a class="btn btn-danger"
+			href="${job.code}-doSetComplete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}"
+			onclick="if ( confirm('모집완료처리 하시겠습니까?\n더 이상 지원할 수 없습니다.') == false ) return false;">모집완료</a>
+	</c:if>
 	<c:if test="${recruitment.extra.actorCanModify}">
 		<a class="btn btn-info"
 			href="${job.code}-modify?id=${recruitment.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
 	</c:if>
 	<c:if test="${recruitment.extra.actorCanDelete}">
 		<a class="btn btn-danger"
-			href="${job.code}-doDelete?id=${recruitment.id}"
+			href="${job.code}-doDelete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}"
 			onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
 
@@ -91,7 +140,7 @@
 	<div class="con">작성자는 신청할 수 없습니다.</div>
 </c:if>
 
-<c:if test="${needToShowApplymentWriteForm}">
+<c:if test="${needToShowApplymentWriteForm && recruitment.completeStatus == false}">
 	<h2 class="con">해당 배역 신청</h2>
 
 	<script>
