@@ -71,6 +71,10 @@
 				<td>${recruitment.extra.actingRoleJob}</td>
 			</tr>
 			<tr>
+				<th>배역캐릭터</th>
+				<td>${Util.safeHtmlNl2Br(recruitment.extra.actingRoleCharacter)}</td>
+			</tr>
+			<tr>
 				<th>배역씬수</th>
 				<td>${recruitment.extra.actingRoleScenesCount}</td>
 			</tr>

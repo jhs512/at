@@ -22,12 +22,20 @@ import java.util.concurrent.ExecutionException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.HtmlUtils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.cache.LoadingCache;
 
 public class Util {
+	public static String safeHtmlNl2Br(String html) {
+		String htmlForPrint = HtmlUtils.htmlEscape(html);
+		htmlForPrint = htmlForPrint.replace("\n", "<br>");
+		
+		return htmlForPrint;
+	}
+	
 	public static int getAsInt(Object object) {
 		if (object instanceof BigInteger) {
 			return ((BigInteger) object).intValue();

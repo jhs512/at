@@ -3,141 +3,147 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sbs.jhs.at.dao.RecruitmentDao">
-    <select id="getForPrintRecruitments" resultMap="recruitment">
-        SELECT REC.*,
-        M.nickname AS extra__writer,
-        ACR.name AS extra__actingRoleName,
-        ACR.gender AS extra__actingRoleGender,
-        ACR.age AS extra__actingRoleAge,
-        ACR.job AS extra__actingRoleJob,
-        ACR.scriptStatus AS extra__actingScriptStatus,
-        ACR.scenesCount AS extra__actingRoleScenesCount,
-        ACR.shootingsCount AS extra__actingRoleShootingsCount,
-        ACR.pay AS extra__actingRolePay,
-        ARW.name AS extra__artworkName,
-        ARW.directorName AS extra__directorName,
-        ARW.productionName AS extra__productionName
-        FROM recruitment AS REC
-        INNER JOIN member AS M
-        ON REC.memberId = M.id
-        INNER JOIN actingRole AS ACR
-        ON REC.roleTypeCode = 'actingRole'
-        AND REC.roleId = ACR.id
-        INNER JOIN artwork AS ARW
-        ON ACR.artworkId = ARW.id
-        WHERE REC.displayStatus = 1
-        ORDER BY REC.id DESC
-    </select>
+	<select id="getForPrintRecruitments" resultMap="recruitment">
+		SELECT REC.*,
+		M.nickname AS extra__writer,
+		ACR.name AS extra__actingRoleName,
+		ACR.gender AS extra__actingRoleGender,
+		ACR.age AS extra__actingRoleAge,
+		ACR.job AS extra__actingRoleJob,
+		ACR.scriptStatus AS extra__actingScriptStatus,
+		ACR.scenesCount AS extra__actingRoleScenesCount,
+		ACR.shootingsCount AS extra__actingRoleShootingsCount,
+		ACR.character AS extra__actingRoleCharacter,
+		ACR.pay AS extra__actingRolePay,
+		ARW.name AS extra__artworkName,
+		ARW.directorName AS extra__directorName,
+		ARW.productionName AS extra__productionName
+		FROM recruitment AS REC
+		INNER JOIN member AS M
+		ON REC.memberId = M.id
+		INNER JOIN actingRole AS ACR
+		ON REC.roleTypeCode = 'actingRole'
+		AND REC.roleId = ACR.id
+		INNER JOIN artwork AS ARW
+		ON ACR.artworkId = ARW.id
+		WHERE REC.displayStatus = 1
+		ORDER BY REC.id DESC
+	</select>
 
-    <select id="getForPrintRecruitmentById" resultMap="recruitment">
-        SELECT REC.*,
-        M.nickname AS extra__writer,
-        ACR.name AS extra__actingRoleName,
-        ACR.gender AS extra__actingRoleGender,
-        ACR.age AS extra__actingRoleAge,
-        ACR.job AS extra__actingRoleJob,
-        ACR.scriptStatus AS extra__actingScriptStatus,
-        ACR.scenesCount AS extra__actingRoleScenesCount,
-        ACR.shootingsCount AS extra__actingRoleShootingsCount,
-        ACR.pay AS extra__actingRolePay,
-        ARW.name AS extra__artworkName,
-        ARW.directorName AS extra__directorName,
-        ARW.productionName AS extra__productionName
-        FROM recruitment AS REC
-        INNER JOIN member AS M
-        ON REC.memberId = M.id
-        INNER JOIN actingRole AS ACR
-        ON REC.roleTypeCode = 'actingRole'
-        AND REC.roleId = ACR.id
-        INNER JOIN artwork AS ARW
-        ON ACR.artworkId = ARW.id
-        WHERE REC.displayStatus = 1
-        AND REC.id = #{id}
-    </select>
+	<select id="getForPrintRecruitmentById" resultMap="recruitment">
+		SELECT REC.*,
+		M.nickname AS extra__writer,
+		ACR.name AS extra__actingRoleName,
+		ACR.gender AS extra__actingRoleGender,
+		ACR.age AS extra__actingRoleAge,
+		ACR.job AS extra__actingRoleJob,
+		ACR.scriptStatus AS extra__actingScriptStatus,
+		ACR.scenesCount AS extra__actingRoleScenesCount,
+		ACR.shootingsCount AS extra__actingRoleShootingsCount,
+		ACR.character AS extra__actingRoleCharacter,
+		ACR.pay AS extra__actingRolePay,
+		ARW.name AS extra__artworkName,
+		ARW.directorName AS extra__directorName,
+		ARW.productionName AS extra__productionName
+		FROM recruitment AS REC
+		INNER JOIN member AS M
+		ON REC.memberId = M.id
+		INNER JOIN actingRole AS ACR
+		ON REC.roleTypeCode = 'actingRole'
+		AND REC.roleId = ACR.id
+		INNER JOIN artwork AS ARW
+		ON ACR.artworkId = ARW.id
+		WHERE REC.displayStatus = 1
+		AND REC.id = #{id}
+	</select>
 
-    <select id="getRecruitmentById" resultType="Recruitment">
-        SELECT *
-        FROM
-        recruitment
-        WHERE
-        id = #{id}
-    </select>
-    
-    <select id="getJobByCode" resultType="Job">
-        SELECT *
-        FROM
-        job
-        WHERE
-        `code` = #{code}
-    </select>
+	<select id="getRecruitmentById" resultType="Recruitment">
+		SELECT *
+		FROM
+		recruitment
+		WHERE
+		id = #{id}
+	</select>
 
-    <insert id="write" useGeneratedKeys="true" keyProperty="id">
-        INSERT
-        INTO recruitment
-        SET regDate = NOW(),
-        updateDate = NOW(),
-        title = #{title},
-        body = #{body},
-        roleTypeCode = #{roleTypeCode},
-        roleId = #{roleId},
-        memberId = #{memberId},
-        jobId = #{jobId},
-        displayStatus = 1
-    </insert>
+	<select id="getJobByCode" resultType="Job">
+		SELECT *
+		FROM
+		job
+		WHERE
+		`code` = #{code}
+	</select>
 
-    <update id="modify">
-        UPDATE recruitment
-        <set>
-            updateDate = NOW(),
-            <if test="title != null">title = #{title},</if>
-            <if test="body != null">body = #{body},</if>
-        </set>
-        WHERE id = #{id}
-    </update>
-    
-    <update id="delete">
-    	UPDATE recruitment
-    	SET delStatus = 1,
-    	delDate = NOW(),
-    	displayStatus = 0
-    	WHERE id = #{id}
-    </update>
-    
-    <update id="setComplete">
-    	UPDATE recruitment
-    	SET completeStatus = 1,
-    	completeDate = NOW()
-    	WHERE id = #{id}
-    </update>
-    
-    <resultMap type="Recruitment" id="recruitment">
-        <id property="id" column="id" />
-        <id property="regDate" column="regDate" />
-        <id property="updateDate" column="updateDate" />
-        <id property="delDate" column="delDate" />
-        <id property="delStatus" column="delStatus" />
-        <id property="title" column="title" />
-        <id property="body" column="body" />
-        <id property="memberId" column="memberId" />
-        <id property="jobId" column="jobId" />
-        <id property="completeStatus" column="completeStatus" />
-        <id property="completeDate" column="completeDate" />
-        <id property="roleId" column="roleId" />
-        <id property="roleTypeCode" column="roleTypeCode" />
-        <association property="extra" javaType="map">
-            <id property="writer" column="extra__writer" />
-            <id property="artworkName" column="extra__artworkName" />
-            <id property="directorName" column="extra__directorName" />
-            <id property="actingRoleName" column="extra__actingRoleName" />
-            <id property="actingRoleGender" column="extra__actingRoleGender" />
-            <id property="actingRoleAge" column="extra__actingRoleAge" />
-            <id property="actingRoleJob" column="extra__actingRoleJob" />
-            <id property="actingRoleScenesCount" column="extra__actingRoleScenesCount" />
-            <id property="actingRoleShootingsCount" column="extra__actingRoleShootingsCount" />
-            <id property="actingRolePay" column="extra__actingRolePay" />
-            <id property="productionName" column="extra__productionName" />
-        </association>
-    </resultMap>
-    
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO recruitment
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		title = #{title},
+		body = #{body},
+		roleTypeCode = #{roleTypeCode},
+		roleId = #{roleId},
+		memberId = #{memberId},
+		jobId = #{jobId},
+		displayStatus = 1
+	</insert>
+
+	<update id="modify">
+		UPDATE recruitment
+		<set>
+			updateDate = NOW(),
+			<if test="title != null">title = #{title},</if>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<update id="delete">
+		UPDATE recruitment
+		SET delStatus = 1,
+		delDate = NOW(),
+		displayStatus = 0
+		WHERE id = #{id}
+	</update>
+
+	<update id="setComplete">
+		UPDATE recruitment
+		SET completeStatus = 1,
+		completeDate = NOW()
+		WHERE id = #{id}
+	</update>
+
+	<resultMap type="Recruitment" id="recruitment">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="updateDate" column="updateDate" />
+		<id property="delDate" column="delDate" />
+		<id property="delStatus" column="delStatus" />
+		<id property="title" column="title" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="jobId" column="jobId" />
+		<id property="completeStatus" column="completeStatus" />
+		<id property="completeDate" column="completeDate" />
+		<id property="roleId" column="roleId" />
+		<id property="roleTypeCode" column="roleTypeCode" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
+			<id property="artworkName" column="extra__artworkName" />
+			<id property="directorName" column="extra__directorName" />
+			<id property="actingRoleName" column="extra__actingRoleName" />
+			<id property="actingRoleGender" column="extra__actingRoleGender" />
+			<id property="actingRoleAge" column="extra__actingRoleAge" />
+			<id property="actingRoleJob" column="extra__actingRoleJob" />
+			<id property="actingRoleScenesCount"
+				column="extra__actingRoleScenesCount" />
+			<id property="actingRoleShootingsCount"
+				column="extra__actingRoleShootingsCount" />
+			<id property="actingRolePay" column="extra__actingRolePay" />
+			<id property="productionName" column="extra__productionName" />
+			<id property="actingRoleCharacter"
+				column="extra__actingRoleCharacter" />
+		</association>
+	</resultMap>
+
 </mapper>
 
