@@ -21,14 +21,14 @@ public class TestController {
 	@Autowired
 	private FileService fileService;
 
-	@RequestMapping(value = "/usr/test/showImg", method = RequestMethod.GET)
+	@RequestMapping(value = "/usr/test/img", method = RequestMethod.GET)
 	public void showImg(HttpServletResponse response) throws IOException {
 		InputStream in = getClass().getResourceAsStream("/test-file/1.jpg");
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		IOUtils.copy(in, response.getOutputStream());
 	}
 
-	@RequestMapping(value = "/usr/test/showImg2", method = RequestMethod.GET)
+	@RequestMapping(value = "/usr/test/img2", method = RequestMethod.GET)
 	public void showImg2(HttpServletResponse response) throws IOException {
 		InputStream in = new ByteArrayInputStream(fileService.getFileBodyById(1));
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);

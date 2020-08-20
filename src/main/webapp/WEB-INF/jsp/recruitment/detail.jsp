@@ -1,6 +1,5 @@
 <%@ page import="com.sbs.jhs.at.util.Util"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="${job.name} 모집 상세내용" />
@@ -90,26 +89,20 @@
 				<th>특이 사항</th>
 				<td>${recruitment.forPrintBody}</td>
 			</tr>
-			<c:forEach var="i" begin="1"
-				end="${appConfig.getMaxAttachmentFileNo('recruitment')}" step="1">
+			<c:forEach var="i" begin="1" end="${appConfig.getMaxAttachmentFileNo('recruitment')}" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="file"
-					value="${recruitment.extra.file__common__attachment[fileNo]}" />
+				<c:set var="file" value="${recruitment.extra.file__common__attachment[fileNo]}" />
 				<c:if test="${file != null}">
 					<tr>
 						<th>첨부 파일 ${fileNo}</th>
 						<td><c:if test="${file.fileExtTypeCode == 'video'}">
 								<div class="video-box">
-									<video controls
-										src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}">video
-										not supported
+									<video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}">video not supported
 									</video>
 								</div>
 							</c:if> <c:if test="${file.fileExtTypeCode == 'img'}">
 								<div class="img-box img-box-auto">
-									<img
-										src="/usr/file/showImg?id=${file.id}&updateDate=${file.updateDate}"
-										alt="" />
+									<img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}" alt="" />
 								</div>
 							</c:if></td>
 					</tr>
@@ -121,18 +114,13 @@
 
 <div class="btn-box con margin-top-20">
 	<c:if test="${recruitment.extra.actorCanSetComplete}">
-		<a class="btn btn-danger"
-			href="${job.code}-doSetComplete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}"
-			onclick="if ( confirm('모집완료처리 하시겠습니까?\n더 이상 지원할 수 없습니다.') == false ) return false;">모집완료</a>
+		<a class="btn btn-danger" href="${job.code}-doSetComplete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('모집완료처리 하시겠습니까?\n더 이상 지원할 수 없습니다.') == false ) return false;">모집완료</a>
 	</c:if>
 	<c:if test="${recruitment.extra.actorCanModify}">
-		<a class="btn btn-info"
-			href="${job.code}-modify?id=${recruitment.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
+		<a class="btn btn-info" href="${job.code}-modify?id=${recruitment.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
 	</c:if>
 	<c:if test="${recruitment.extra.actorCanDelete}">
-		<a class="btn btn-danger"
-			href="${job.code}-doDelete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}"
-			onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
+		<a class="btn btn-danger" href="${job.code}-doDelete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
 
 	<a href="${listUrl}" class="btn btn-info">리스트</a>
@@ -156,8 +144,7 @@
 
 			form.body.value = form.body.value.trim();
 
-			if (form.file__applyment__0__common__attachment__1
-					&& form.file__applyment__0__common__attachment__1.value == '') {
+			if (form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value == '') {
 				form.file__applyment__0__common__attachment__1.focus();
 				alert('파일을 업로드 해주세요.');
 
@@ -170,18 +157,15 @@
 				var needToUpload = false;
 
 				if (needToUpload == false) {
-					needToUpload = form.file__applyment__0__common__attachment__1
-							&& form.file__applyment__0__common__attachment__1.value.length > 0;
+					needToUpload = form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value.length > 0;
 				}
 
 				if (needToUpload == false) {
-					needToUpload = form.file__applyment__0__common__attachment__2
-							&& form.file__applyment__0__common__attachment__2.value.length > 0;
+					needToUpload = form.file__applyment__0__common__attachment__2 && form.file__applyment__0__common__attachment__2.value.length > 0;
 				}
 
 				if (needToUpload == false) {
-					needToUpload = form.file__applyment__0__common__attachment__3
-							&& form.file__applyment__0__common__attachment__3.value.length > 0;
+					needToUpload = form.file__applyment__0__common__attachment__3 && form.file__applyment__0__common__attachment__3.value.length > 0;
 				}
 
 				if (needToUpload == false) {
@@ -225,43 +209,39 @@
 					idsStr = data.body.fileIdsStr;
 				}
 
-				startWriteApplyment(
-						idsStr,
-						function(data) {
+				startWriteApplyment(idsStr, function(data) {
 
-							if (data.msg) {
-								alert(data.msg);
-							}
+					if (data.msg) {
+						alert(data.msg);
+					}
 
-							form.body.value = '';
+					form.body.value = '';
 
-							if (form.file__applyment__0__common__attachment__1) {
-								form.file__applyment__0__common__attachment__1.value = '';
-							}
+					if (form.file__applyment__0__common__attachment__1) {
+						form.file__applyment__0__common__attachment__1.value = '';
+					}
 
-							if (form.file__applyment__0__common__attachment__2) {
-								form.file__applyment__0__common__attachment__2.value = '';
-							}
+					if (form.file__applyment__0__common__attachment__2) {
+						form.file__applyment__0__common__attachment__2.value = '';
+					}
 
-							if (form.file__applyment__0__common__attachment__3) {
-								form.file__applyment__0__common__attachment__3.value = '';
-							}
+					if (form.file__applyment__0__common__attachment__3) {
+						form.file__applyment__0__common__attachment__3.value = '';
+					}
 
-							WriteApplymentForm__submitDone = false;
+					WriteApplymentForm__submitDone = false;
 
-							// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
-							if (ApplymentList__needToLoadMore == false) {
-								ApplymentList__loadMore();
-							}
-						});
+					// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
+					if (ApplymentList__needToLoadMore == false) {
+						ApplymentList__loadMore();
+					}
+				});
 			});
 		}
 	</script>
 
-	<form class="table-box con form1 write-applyment-form"
-		onsubmit="WriteApplymentForm__submit(this); return false;">
-		<input type="hidden" name="relTypeCode" value="recruitment" /> <input
-			type="hidden" name="relId" value="${recruitment.id}" />
+	<form class="table-box con form1 write-applyment-form" onsubmit="WriteApplymentForm__submit(this); return false;">
+		<input type="hidden" name="relTypeCode" value="recruitment" /> <input type="hidden" name="relId" value="${recruitment.id}" />
 
 		<table>
 			<colgroup>
@@ -272,33 +252,25 @@
 					<th>내용</th>
 					<td>
 						<div class="form-control-box">
-							<textarea maxlength="300" name="body" placeholder="내용을 입력해주세요."
-								class="height-300"></textarea>
+							<textarea maxlength="300" name="body" placeholder="내용을 입력해주세요." class="height-300"></textarea>
 						</div>
 					</td>
 				</tr>
-				<c:forEach var="i" begin="1"
-					end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}"
-					step="1">
+				<c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
 					<c:set var="fileNo" value="${String.valueOf(i)}" />
-					<c:set var="fileExtTypeCode"
-						value="${appConfig.getAttachmentFileExtTypeCode('applyment', i)}" />
+					<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('applyment', i)}" />
 					<tr>
-						<th>
-							${appConfig.getAttachmentFileInputDisplayName('applyment', i)}</th>
+						<th>${appConfig.getAttachmentFileInputDisplayName('applyment', i)}</th>
 						<td>
 							<div class="form-control-box">
-								<input type="file"
-									accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
-									name="file__applyment__0__common__attachment__${fileNo}">
+								<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__applyment__0__common__attachment__${fileNo}">
 							</div>
 						</td>
 					</tr>
 				</c:forEach>
 				<tr>
 					<th>신청</th>
-					<td><input class="btn btn-primary" type="submit" value="신청">
-					</td>
+					<td><input class="btn btn-primary" type="submit" value="신청"></td>
 				</tr>
 			</tbody>
 		</table>
@@ -324,14 +296,11 @@
 </style>
 
 <h2 class="con">
-	<span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span
-		class="visible-actor-is-writer applyments-count">(0건)</span>
+	<span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span class="visible-actor-is-writer applyments-count">(0건)</span>
 </h2>
 
 <div class="con">
-	<label class="visible-actor-is-writer"> <input type="checkbox"
-		onchange="$('.applyment-list-box').toggleClass('show-hide-items');" />
-		숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
+	<label class="visible-actor-is-writer"> <input type="checkbox" onchange="$('.applyment-list-box').toggleClass('show-hide-items');" /> 숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
 	</label>
 </div>
 
@@ -409,8 +378,7 @@
 <div class="applyment-modify-form-modal">
 	<div class="bg-white">
 		<h1 class="text-align-center">신청 수정</h1>
-		<form action="" class="form1 padding-10"
-			onsubmit="ApplymentList__submitModifyForm(this); return false;">
+		<form action="" class="form1 padding-10" onsubmit="ApplymentList__submitModifyForm(this); return false;">
 			<input type="hidden" name="id" />
 			<div class="form-row none">
 				<div class="form-control-label">내용</div>
@@ -419,31 +387,23 @@
 				</div>
 			</div>
 
-			<c:forEach var="i" begin="1"
-				end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}"
-				step="1">
+			<c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="fileExtTypeCode"
-					value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
+				<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
 
 				<div class="form-row">
 					<div class="form-control-label">첨부${fileNo}</div>
 					<div class="form-control-box">
-						<input type="file"
-							accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
-							data-name="file__applyment__0__common__attachment__${fileNo}">
+						<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" data-name="file__applyment__0__common__attachment__${fileNo}">
 					</div>
 					<div style="width: 100%" class="video-box video-box-file-${fileNo}"></div>
-					<div style="width: 100%"
-						class="img-box img-box-auto img-box-file-${fileNo}"></div>
+					<div style="width: 100%" class="img-box img-box-auto img-box-file-${fileNo}"></div>
 				</div>
 
 				<div class="form-row none">
 					<div class="form-control-label">첨부${fileNo} 삭제</div>
 					<div class="form-control-box">
-						<label><input type="checkbox"
-							data-name="deleteFile__applyment__0__common__attachment__${fileNo}"
-							value="Y" /> 삭제 </label>
+						<label><input type="checkbox" data-name="deleteFile__applyment__0__common__attachment__${fileNo}" value="Y" /> 삭제 </label>
 					</div>
 				</div>
 			</c:forEach>
@@ -451,8 +411,7 @@
 				<div class="form-control-label">수정</div>
 				<div class="form-control-box">
 					<button class="btn btn-primary" type="submit">수정</button>
-					<button class="btn btn-info" type="button"
-						onclick="ApplymentList__hideModifyFormModal();">취소</button>
+					<button class="btn btn-info" type="button" onclick="ApplymentList__hideModifyFormModal();">취소</button>
 				</div>
 			</div>
 		</form>
@@ -478,19 +437,13 @@
 		var id = form.id.value;
 		var body = form.body.value;
 
-		var fileInput1 = form['file__applyment__' + id
-				+ '__common__attachment__1'];
-		var fileInput2 = form['file__applyment__' + id
-				+ '__common__attachment__2'];
-		var fileInput3 = form['file__applyment__' + id
-				+ '__common__attachment__3'];
+		var fileInput1 = form['file__applyment__' + id + '__common__attachment__1'];
+		var fileInput2 = form['file__applyment__' + id + '__common__attachment__2'];
+		var fileInput3 = form['file__applyment__' + id + '__common__attachment__3'];
 
-		var deleteFileInput1 = form["deleteFile__applyment__" + id
-				+ "__common__attachment__1"];
-		var deleteFileInput2 = form["deleteFile__applyment__" + id
-				+ "__common__attachment__2"];
-		var deleteFileInput3 = form["deleteFile__applyment__" + id
-				+ "__common__attachment__3"];
+		var deleteFileInput1 = form["deleteFile__applyment__" + id + "__common__attachment__1"];
+		var deleteFileInput2 = form["deleteFile__applyment__" + id + "__common__attachment__2"];
+		var deleteFileInput3 = form["deleteFile__applyment__" + id + "__common__attachment__3"];
 
 		if (fileInput1 && deleteFileInput1 && deleteFileInput1.checked) {
 			fileInput1.value = '';
@@ -576,43 +529,30 @@
 		var onModifyApplymentComplete = function(data) {
 			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
 				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
-				$('.applyment-list-box tbody > tr[data-id="' + id + '"]').data(
-						'data-originBody', body);
-				$(
-						'.applyment-list-box tbody > tr[data-id="' + id
-								+ '"] .applyment-body').empty().append(body);
+				$('.applyment-list-box tbody > tr[data-id="' + id + '"]').data('data-originBody', body);
+				var selector;
 
-				$(
-						'.applyment-list-box tbody > tr[data-id="' + id
-								+ '"] .video-box').empty();
-				$(
-						'.applyment-list-box tbody > tr[data-id="' + id
-								+ '"] .img-box').empty();
+				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .applyment-body'
+				$(selector).empty().append(body);
+
+				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .video-box'
+				$(selector).empty();
+
+				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .img-box';
+				$(selector).empty();
 
 				if (data && data.body && data.body.file__common__attachment) {
 					for ( var fileNo in data.body.file__common__attachment) {
 						var file = data.body.file__common__attachment[fileNo];
 
 						if (file.fileExtTypeCode == 'video') {
-							var html = '<video controls src="/usr/file/streamVideo?id='
-									+ file.id
-									+ '&updateDate='
-									+ file.updateDate
-									+ '">video not supported</video>';
-							$(
-									'.applyment-list-box tbody > tr[data-id="'
-											+ id + '"] [data-file-no="'
-											+ fileNo + '"].video-box').append(
-									html);
+							var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+							selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box';
+							$(selector).append(html);
 						} else {
-							var html = '<img src="/usr/file/showImg?id='
-									+ file.id + '&updateDate='
-									+ file.updateDate + '">';
-							$(
-									'.applyment-list-box tbody > tr[data-id="'
-											+ id + '"] [data-file-no="'
-											+ fileNo + '"].img-box').append(
-									html);
+							var html = '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
+							selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].img-box';
+							$(selector).append(html);
 						}
 					}
 				}
@@ -646,8 +586,7 @@
 				$tr.removeClass('hide');
 
 				ApplymentList__hiddenApplymentsCount--;
-				$('.hidden-applyments-count').text(
-						'(' + ApplymentList__hiddenApplymentsCount + '건)');
+				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
 
 			}, 'json');
 		} else if ($tr.addClass('hide')) {
@@ -658,8 +597,7 @@
 				$tr.addClass('hide');
 
 				ApplymentList__hiddenApplymentsCount++;
-				$('.hidden-applyments-count').text(
-						'(' + ApplymentList__hiddenApplymentsCount + '건)');
+				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
 			}, 'json');
 		}
 	}
@@ -690,28 +628,22 @@
 		for (var fileNo = 1; fileNo <= 3; fileNo++) {
 			$('.applyment-modify-form-modal .video-box-file-' + fileNo).empty();
 
-			var videoName = 'applyment__' + id + '__common__attachment__'
-					+ fileNo;
+			var videoName = 'applyment__' + id + '__common__attachment__' + fileNo;
 
-			var $videoBox = $('.applyment-list-box [data-video-name="'
-					+ videoName + '"]');
+			var $videoBox = $('.applyment-list-box [data-video-name="' + videoName + '"]');
 
 			if ($videoBox.length > 0) {
-				$('.applyment-modify-form-modal .video-box-file-' + fileNo)
-						.append($videoBox.html());
+				$('.applyment-modify-form-modal .video-box-file-' + fileNo).append($videoBox.html());
 			}
 
 			$('.applyment-modify-form-modal .img-box-file-' + fileNo).empty();
 
-			var imgName = 'applyment__' + id + '__common__attachment__'
-					+ fileNo;
+			var imgName = 'applyment__' + id + '__common__attachment__' + fileNo;
 
-			var $imgBox = $('.applyment-list-box [data-img-name="' + imgName
-					+ '"]');
+			var $imgBox = $('.applyment-list-box [data-img-name="' + imgName + '"]');
 
 			if ($imgBox.length > 0) {
-				$('.applyment-modify-form-modal .img-box-file-' + fileNo)
-						.append($imgBox.html());
+				$('.applyment-modify-form-modal .img-box-file-' + fileNo).append($imgBox.html());
 			}
 		}
 
@@ -767,16 +699,14 @@
 			id : id
 		}, function(data) {
 			ApplymentList__applymentsCount--;
-			$('.applyments-count').text(
-					'(' + ApplymentList__applymentsCount + '건)');
+			$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
 			$tr.remove();
 		}, 'json');
 	}
 
 	function ApplymentList__drawApplyment(applyment) {
 		ApplymentList__applymentsCount++;
-		$('.applyments-count')
-				.text('(' + ApplymentList__applymentsCount + '건)');
+		$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
 
 		var html = '';
 		var trClassStr = '';
@@ -784,8 +714,7 @@
 		if (applyment.hideStatus) {
 			trClassStr = 'hide';
 			ApplymentList__hiddenApplymentsCount++;
-			$('.hidden-applyments-count').text(
-					'(' + ApplymentList__hiddenApplymentsCount + '건)');
+			$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
 		}
 		html += '<tr data-id="' + applyment.id + '" class="' + trClassStr + '">';
 		html += '<td>' + applyment.id + '</td>';
@@ -793,41 +722,27 @@
 		html += '<td class="visible-on-md-up">';
 		html += '<div>' + applyment.extra.writer + '</div>';
 		html += '<div>' + applyment.extra.writerRealName + '</div>';
-		html += '<div>'
-				+ (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo
-						: '전화번호없음') + '</div>';
-		html += '<div>'
-				+ (applyment.extra.writerEmail ? applyment.extra.writerEmail
-						: '이메일없음') + '</div>';
+		html += '<div>' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
+		html += '<div>' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
 		html += '</td>';
 		html += '<td>';
 		html += '<div class="applyment-body">' + applyment.body + '</div>';
-		html += '<div class="visible-on-sm-down">신청일 : ' + applyment.regDate
-				+ '</div>';
-		html += '<div class="visible-on-sm-down">신청자 : '
-				+ applyment.extra.writer + '</div>';
-		html += '<div class="visible-on-sm-down">신청자(본명) : '
-				+ applyment.extra.writerRealName + '</div>';
-		html += '<div class="visible-on-sm-down">'
-				+ (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo
-						: '전화번호없음') + '</div>';
-		html += '<div class="visible-on-sm-down">'
-				+ (applyment.extra.writerEmail ? applyment.extra.writerEmail
-						: '이메일없음') + '</div>';
+		html += '<div class="visible-on-sm-down">신청일 : ' + applyment.regDate + '</div>';
+		html += '<div class="visible-on-sm-down">신청자 : ' + applyment.extra.writer + '</div>';
+		html += '<div class="visible-on-sm-down">신청자(본명) : ' + applyment.extra.writerRealName + '</div>';
+		html += '<div class="visible-on-sm-down">' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
+		html += '<div class="visible-on-sm-down">' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
 
 		for (var fileNo = 1; fileNo <= 3; fileNo++) {
 			var file = null;
-			if (applyment.extra.file__common__attachment
-					&& applyment.extra.file__common__attachment[fileNo]) {
+			if (applyment.extra.file__common__attachment && applyment.extra.file__common__attachment[fileNo]) {
 				file = applyment.extra.file__common__attachment[fileNo];
 			}
 
 			html += '<div class="video-box" data-video-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
 			if (file && file.fileExtTypeCode == 'video') {
-				html += '<video controls src="/usr/file/streamVideo?id='
-						+ file.id + '&updateDate=' + file.updateDate
-						+ '">video not supported</video>';
+				html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
 			}
 
 			html += '</div>';
@@ -835,8 +750,7 @@
 			html += '<div class="img-box img-box-auto" data-img-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
 			if (file && file.fileExtTypeCode == 'img') {
-				html += '<img src="/usr/file/showImg?id=' + file.id
-						+ '&updateDate=' + file.updateDate + '">';
+				html += '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
 			}
 
 			html += '</div>';

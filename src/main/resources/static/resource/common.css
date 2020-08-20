@@ -17,6 +17,30 @@ label[for] {
 }
 
 /* 라이브러리 */
+.abs-full {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.relative {
+	position: relative;
+}
+
+.ratio-16-9::after {
+	content: "";
+	display: block;
+	padding-top: 56.25%;
+}
+
+.ratio-1-1::after {
+	content: "";
+	display: block;
+	padding-top: 100%;
+}
+
 .img-box.img-box-auto>img {
 	display: block;
 	max-width: 100%;
@@ -153,7 +177,7 @@ html>head+body:nth-child(2) .height-300 {
 	resize: none;
 }
 
-.form1 .form-control-box > select {
+.form1 .form-control-box>select {
 	width: 100%;
 	padding: 0;
 	display: block;

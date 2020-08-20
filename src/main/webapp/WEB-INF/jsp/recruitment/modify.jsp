@@ -255,7 +255,7 @@
 						</c:if> <c:if test="${file != null && file.fileExtTypeCode == 'img'}">
 							<div class="img-box img-box-auto">
 								<img
-									src="/usr/file/showImg?id=${file.id}&updateDate=${file.updateDate}">
+									src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
 							</div>
 						</c:if>
 					</td>

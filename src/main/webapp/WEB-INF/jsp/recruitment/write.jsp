@@ -1,14 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <c:set var="pageTitle" value="${job.name} 모집 수정" />
 <%@ include file="../part/head.jspf"%>
+<%@ include file="../part/toastuiEditor.jspf"%>
 
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
 
 <script>
 	$(function() {
@@ -104,12 +102,8 @@
 		});
 	}
 </script>
-<form method="POST" class="table-box con form1"
-	action="${job.code}-doWrite"
-	onsubmit="RecruitmentWriteForm__submit(this); return false;">
-	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
-		name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id">
-	<input type="hidden" name="roleTypeCode" value="actingRole" />
+<form method="POST" class="table-box con form1" action="${job.code}-doWrite" onsubmit="RecruitmentWriteForm__submit(this); return false;">
+	<input type="hidden" name="fileIdsStr" /> <input type="hidden" name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id"> <input type="hidden" name="roleTypeCode" value="actingRole"> <input type="hidden" name="body">
 
 	<table>
 		<colgroup>
@@ -132,8 +126,7 @@
 				<th>제목</th>
 				<td>
 					<div class="form-control-box">
-						<input type="text" placeholder="제목을 입력해주세요." name="title"
-							maxlength="100" />
+						<input type="text" placeholder="제목을 입력해주세요." name="title" maxlength="100" />
 					</div>
 				</td>
 			</tr>
@@ -141,22 +134,28 @@
 				<th>특이 사항</th>
 				<td>
 					<div class="form-control-box">
-						<textarea placeholder="특이사항을 입력해주세요." name="body" maxlength="2000"></textarea>
+						<script type="text/x-template">
+# 유튜브 동영상 삽입
+
+```youtube
+https://www.youtube.com/watch?v=2UXq0e75V6s(동영상 주소)
+```
+
+# 이미지 삽입
+![img](이미지 주소)
+						</script>
+						<div class="toast-editor"></div>
 					</div>
 				</td>
 			</tr>
 			<c:forEach var="i" begin="1" end="3" step="1">
 				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="fileExtTypeCode"
-					value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
+				<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
 				<tr>
-					<th>첨부${fileNo}
-						${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
+					<th>첨부${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
 					<td>
 						<div class="form-control-box">
-							<input type="file"
-								accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
-								name="file__recruitment__0__common__attachment__${fileNo}">
+							<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__recruitment__0__common__attachment__${fileNo}">
 						</div>
 					</td>
 				</tr>
@@ -164,8 +163,7 @@
 			<tr>
 				<th>작성</th>
 				<td>
-					<button class="btn btn-primary" type="submit">작성</button> <a
-					class="btn btn-info" href="${listUrl}">리스트</a>
+					<button class="btn btn-primary" type="submit">작성</button> <a class="btn btn-info" href="${listUrl}">리스트</a>
 				</td>
 			</tr>
 		</tbody>

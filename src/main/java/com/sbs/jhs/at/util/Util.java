@@ -32,10 +32,10 @@ public class Util {
 	public static String safeHtmlNl2Br(String html) {
 		String htmlForPrint = HtmlUtils.htmlEscape(html);
 		htmlForPrint = htmlForPrint.replace("\n", "<br>");
-		
+
 		return htmlForPrint;
 	}
-	
+
 	public static int getAsInt(Object object) {
 		if (object instanceof BigInteger) {
 			return ((BigInteger) object).intValue();
@@ -291,10 +291,7 @@ public class Util {
 
 	public static String getTempPassword(int length) {
 		int index = 0;
-		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F',
-				'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a',
-				'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-				'w', 'x', 'y', 'z' };
+		char[] charArr = new char[] { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
 		StringBuffer sb = new StringBuffer();
 
@@ -444,10 +441,18 @@ public class Util {
 	}
 
 	public static String ifNull(Object value, String elseValue) {
-		if (value == null || ((String)value).length() == 0 ) {
+		if (value == null || ((String) value).length() == 0) {
 			return elseValue;
 		}
 
-		return (String)value;
+		return (String) value;
+	}
+
+	public static String getNowDateStr() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+		String dateStr = format1.format(System.currentTimeMillis());
+
+		return dateStr;
 	}
 }
