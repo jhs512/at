@@ -4,7 +4,15 @@ html, input, button, h1, h2, h3 {
 	/* 영문이면 roboto가 적용되고, 한글이면 Noto Sans KR가 적용되도록 아래와 같은 순서로 배치 */
 	font-family: "Roboto", "Noto Sans KR", sans-serif;
 	-webkit-font-smoothing: antialiased;
-	letter-spacing: -.5px;
+}
+
+html, input, button {
+  letter-spacing: -.5px;
+  word-spacing: 2px;
+}
+
+h1, h2, h3 {
+  letter-spacing: -1px;
 }
 
 /* 커스텀 */

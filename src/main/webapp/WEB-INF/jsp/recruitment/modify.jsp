@@ -1,11 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="pageTitle" value="${job.name} 모집 수정" />
 <%@ include file="../part/head.jspf"%>
-
-
+<%@ include file="../part/toastuiEditor.jspf"%>
 <script>
 	var RecruitmentModifyForm__submitDone = false;
 	function RecruitmentModifyForm__submit(form) {
@@ -14,19 +11,13 @@
 			return;
 		}
 
-		var fileInput1 = form["file__recruitment__" + param.id
-				+ "__common__attachment__1"];
-		var fileInput2 = form["file__recruitment__" + param.id
-				+ "__common__attachment__2"];
-		var fileInput3 = form["file__recruitment__" + param.id
-				+ "__common__attachment__3"];
+		var fileInput1 = form["file__recruitment__" + param.id + "__common__attachment__1"];
+		var fileInput2 = form["file__recruitment__" + param.id + "__common__attachment__2"];
+		var fileInput3 = form["file__recruitment__" + param.id + "__common__attachment__3"];
 
-		var deleteFileInput1 = form["deleteFile__recruitment__" + param.id
-				+ "__common__attachment__1"];
-		var deleteFileInput2 = form["deleteFile__recruitment__" + param.id
-				+ "__common__attachment__2"];
-		var deleteFileInput3 = form["deleteFile__recruitment__" + param.id
-				+ "__common__attachment__3"];
+		var deleteFileInput1 = form["deleteFile__recruitment__" + param.id + "__common__attachment__1"];
+		var deleteFileInput2 = form["deleteFile__recruitment__" + param.id + "__common__attachment__2"];
+		var deleteFileInput3 = form["deleteFile__recruitment__" + param.id + "__common__attachment__3"];
 
 		if (fileInput1 && deleteFileInput1) {
 			if (deleteFileInput1.checked) {
@@ -47,15 +38,19 @@
 		}
 
 		form.title.value = form.title.value.trim();
-		
-		form.body.value = form.body.value.trim();
 
-		if (form.body.value.length == 0) {
-			form.body.focus();
+		var bodyEditor = $(form).find('.toast-editor.input-body').data('data-toast-editor');
+
+		var body = bodyEditor.getMarkdown().trim();
+
+		if (body.length == 0) {
+			bodyEditor.focus();
 			alert('특이사항을 입력해주세요.');
 
 			return;
 		}
+
+		form.body.value = body;
 
 		var maxSizeMb = 50;
 		var maxSize = maxSizeMb * 1024 * 1024 //50MB
@@ -152,132 +147,124 @@
 		});
 	}
 </script>
-<form class="table-box con form1" method="POST"
-	action="${job.code}-doModify"
-	onsubmit="RecruitmentModifyForm__submit(this); return false;">
-	<input type="hidden" name="fileIdsStr" /> <input type="hidden"
-		name="redirectUri"
-		value="/usr/recruitment/${job.code}-detail?id=${recruitment.id}" /> <input
-		type="hidden" name="id" value="${recruitment.id}" />
-	<table>
-	   <colgroup>
+<style>
+.recruitment-modify-box td:empty {
+  background-color: #efefef;
+}
+</style>
+<form class="table-box table-box-vertical recruitment-modify-box con form1" method="POST" action="${job.code}-doModify" onsubmit="RecruitmentModifyForm__submit(this); return false;">
+    <input type="hidden" name="fileIdsStr" />
+    <input type="hidden" name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=${recruitment.id}" />
+    <input type="hidden" name="id" value="${recruitment.id}" />
+    <table>
+        <colgroup>
             <col class="table-first-col">
         </colgroup>
-		<tbody>
-			<tr>
-				<th>번호</th>
-				<td>${recruitment.id}</td>
-			</tr>
-			<tr>
-				<th>날짜</th>
-				<td>${recruitment.regDate}</td>
-			</tr>
-			<tr>
-				<th>모집상태</th>
-				<td>${recruitment.forPrintCompleteStatusHanName}</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>${recruitment.forPrintTitle}</td>
-			</tr>
-			<tr>
-				<th>작품명</th>
-				<td>${recruitment.extra.artworkName}</td>
-			</tr>
-			<tr>
-				<th>제작사</th>
-				<td>${recruitment.extra.productionName}</td>
-			</tr>
-			<tr>
-				<th>배역명</th>
-				<td>${recruitment.extra.actingRoleName}</td>
-			</tr>
-			<tr>
-				<th>배역성별</th>
-				<td>${recruitment.extra.actingRoleGender}</td>
-			</tr>
-			<tr>
-				<th>배역나이</th>
-				<td>${recruitment.extra.actingRoleAge}</td>
-			</tr>
-			<tr>
-				<th>배역직업</th>
-				<td>${recruitment.extra.actingRoleJob}</td>
-			</tr>
-			<tr>
-				<th>배역씬수</th>
-				<td>${recruitment.extra.actingRoleScenesCount}</td>
-			</tr>
-			<tr>
-				<th>배역촬영수</th>
-				<td>${recruitment.extra.actingRoleShootingsCount}</td>
-			</tr>
-			<tr>
-				<th>출연료</th>
-				<td>${recruitment.extra.actingRolePay}</td>
-			</tr>
-			<tr class="none">
-				<th>제목</th>
-				<td>
-					<div class="form-control-box">
-						<input type="text" value="${recruitment.title}" name="title"
-							placeholder="제목을 입력해주세요." />
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>특이 사항</th>
-				<td>
-					<div class="form-control-box">
-						<textarea name="body" placeholder="특이 사항을 입력해주세요.">${recruitment.body}</textarea>
-					</div>
-				</td>
-			</tr>
-			<c:forEach var="i" begin="1" end="3" step="1">
-				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="file"
-					value="${recruitment.extra.file__common__attachment[fileNo]}" />
-				<tr>
-					<th>첨부파일 ${fileNo}
-						${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
-					<td>
-						<div class="form-control-box">
-							<input type="file"
-								accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}"
-								name="file__recruitment__${recruitment.id}__common__attachment__${fileNo}">
-						</div> <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
-							<div class="video-box">
-								<video controls
-									src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}">video
-									not supported
-								</video>
-							</div>
-						</c:if> <c:if test="${file != null && file.fileExtTypeCode == 'img'}">
-							<div class="img-box img-box-auto">
-								<img
-									src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
-							</div>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th>첨부파일 ${fileNo} 삭제</th>
-					<td>
-						<div class="form-control-box">
-							<label><input type="checkbox"
-								name="deleteFile__recruitment__${recruitment.id}__common__attachment__${fileNo}"
-								value="Y" /> 삭제 </label>
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-
-	<div class="btn-box margin-top-20">
-		<button type="submit" class="btn btn-primary">수정</button>
-		<a class="btn btn-info" href="${listUrl}">리스트</a>
-	</div>
+        <tbody>
+            <tr>
+                <th>번호</th>
+                <td>${recruitment.id}</td>
+            </tr>
+            <tr>
+                <th>날짜</th>
+                <td>${recruitment.regDate}</td>
+            </tr>
+            <tr>
+                <th>모집상태</th>
+                <td>${recruitment.forPrintCompleteStatusHanName}</td>
+            </tr>
+            <tr>
+                <th>제목</th>
+                <td>${recruitment.forPrintTitle}</td>
+            </tr>
+            <tr>
+                <th>작품명</th>
+                <td>${recruitment.extra.artworkName}</td>
+            </tr>
+            <tr>
+                <th>제작사</th>
+                <td>${recruitment.extra.productionName}</td>
+            </tr>
+            <tr>
+                <th>배역명</th>
+                <td>${recruitment.extra.actingRoleName}</td>
+            </tr>
+            <tr>
+                <th>배역성별</th>
+                <td>${recruitment.extra.actingRoleGender}</td>
+            </tr>
+            <tr>
+                <th>배역나이</th>
+                <td>${recruitment.extra.actingRoleAge}</td>
+            </tr>
+            <tr>
+                <th>배역직업</th>
+                <td>${recruitment.extra.actingRoleJob}</td>
+            </tr>
+            <tr>
+                <th>배역씬수</th>
+                <td>${recruitment.extra.actingRoleScenesCount}</td>
+            </tr>
+            <tr>
+                <th>배역촬영수</th>
+                <td>${recruitment.extra.actingRoleShootingsCount}</td>
+            </tr>
+            <tr>
+                <th>출연료</th>
+                <td>${recruitment.extra.actingRolePay}</td>
+            </tr>
+            <tr class="none">
+                <th>제목</th>
+                <td>
+                    <div class="form-control-box">
+                        <input type="text" value="${recruitment.title}" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>특이 사항</th>
+                <td>
+                    <div class="form-control-box">
+                        <script type="text/x-template">${recruitment.body}</script>
+                        <div class="toast-editor input-body"></div>
+                    </div>
+                </td>
+            </tr>
+            <c:forEach var="i" begin="1" end="3" step="1">
+                <c:set var="fileNo" value="${String.valueOf(i)}" />
+                <c:set var="file" value="${recruitment.extra.file__common__attachment[fileNo]}" />
+                <tr>
+                    <th>첨부파일 ${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
+                    <td>
+                        <div class="form-control-box">
+                            <input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__recruitment__${recruitment.id}__common__attachment__${fileNo}">
+                        </div>
+                        <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
+                            <div class="video-box">
+                                <video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
+                            </div>
+                        </c:if>
+                        <c:if test="${file != null && file.fileExtTypeCode == 'img'}">
+                            <div class="img-box img-box-auto">
+                                <img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
+                            </div>
+                        </c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일 ${fileNo} 삭제</th>
+                    <td>
+                        <div class="form-control-box">
+                            <label><input type="checkbox" name="deleteFile__recruitment__${recruitment.id}__common__attachment__${fileNo}" value="Y" /> 삭제 </label>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <div class="btn-box margin-top-20">
+        <button type="submit" class="btn btn-primary">수정</button>
+        <a class="btn btn-info" href="${listUrl}">리스트</a>
+    </div>
 </form>
-
 <%@ include file="../part/foot.jspf"%>

@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- 구글 폰트 불러오기 -->
-<!-- rotobo(400/700/900), notosanskr(400/600/900) -->
+<!-- rotobo(400/700), notosanskr(400/700) -->
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 
 <!-- 폰트어썸 불러오기 -->
@@ -17,6 +17,9 @@
 
 <!-- 제이쿼리 불러오기 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- lodash 불러오기 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
 
 <!-- 공통(라이브러리) CSS -->
 <link rel="stylesheet" href="/resource/common.css" />
@@ -52,7 +55,7 @@ var param = ${paramJson};
 		<div class="mobile-side-bar flex flex-ai-c">
 			<nav class="menu-box-1 flex-1-0-0">
 				<ul>
-					<li><a href="/usr/recruitment/actor-list" class="flex flex-jc-c">모집</a></li>
+					<li><a href="/usr/recruitment/actor-list" class="flex flex-jc-c">배우모집</a></li>
 					<li><a class="flex flex-jc-c" href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">
 						<li><a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a></li>
@@ -71,7 +74,7 @@ var param = ${paramJson};
 
 			<nav class="menu-box-1">
 				<ul class="flex">
-					<li class="padding-0-10"><a href="/usr/recruitment/actor-list" class="btn btn-primary">모집</a></li>
+					<li class="padding-0-10"><a href="/usr/recruitment/actor-list" class="btn btn-primary">배우모집</a></li>
 					<li class="padding-0-10"><a class="btn btn-info" href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">
 						<li class="padding-0-10"><a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a></li>

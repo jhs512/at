@@ -98,7 +98,7 @@
 		});
 	}
 </script>
-<form method="POST" class="table-box con form1" action="${board.code}-doWrite" onsubmit="ArticleWriteForm__submit(this); return false;">
+<form method="POST" class="table-box table-box-vertical con form1" action="${board.code}-doWrite" onsubmit="ArticleWriteForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=#id">
 
 	<table>

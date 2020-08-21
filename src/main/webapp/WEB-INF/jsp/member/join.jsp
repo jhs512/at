@@ -123,15 +123,15 @@
 		MemberJoinForm__submitDone = true;
 	}
 </script>
-<form method="POST" class="table-box con form1" action="doJoin"
+<form method="POST" class="table-box table-box-vertical con form1" action="doJoin"
 	onsubmit="MemberJoinForm__submit(this); return false;">
 	<input type="hidden" name="redirectUri" value="/usr/member/login">
 	<input type="hidden" name="loginPwReal">
 
 	<table>
 		<colgroup>
-			<col width="70">
-		</colgroup>
+            <col class="table-first-col">
+        </colgroup>
 		<tbody>
 			<tr>
 				<th>로그인 아이디</th>

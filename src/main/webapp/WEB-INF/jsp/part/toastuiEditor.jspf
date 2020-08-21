@@ -263,6 +263,30 @@
 			$el.addClass('toast-editor-loaded');
 
 			$el.data('data-toast-editor', editor);
+
+			var onWindowResize = _.debounce(function() {
+				var windowWidth = $(window).width();
+
+				if ( windowWidth < 800 ) {
+					if ( editor.getCurrentPreviewStyle() != 'tab' ) {
+						editor.changePreviewStyle("tab");
+					}
+				}
+				else {
+					if ( editor.getCurrentPreviewStyle() != 'vertical' ) {
+						editor.changePreviewStyle("vertical");
+					}
+				}
+
+                var body = editor.getMarkdown();
+				editor.reset();
+                setTimeout(function() {
+                	editor.setMarkdown(body);
+                }, 100);
+			}, 500);
+
+			$(window).resize(onWindowResize);
+			onWindowResize();
 		});
 	}
 

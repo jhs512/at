@@ -1,19 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
-<c:set var="pageTitle" value="${job.name} 모집 수정" />
+<c:set var="pageTitle" value="${job.name} 신규모집" />
 <%@ include file="../part/head.jspf"%>
 <%@ include file="../part/toastuiEditor.jspf"%>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-
 <script>
 	$(function() {
 		$('.select2').select2();
 	});
 </script>
-
 <script>
 	var RecruitmentWriteForm__submitDone = false;
 	function RecruitmentWriteForm__submit(form) {
@@ -24,14 +20,18 @@
 
 		form.title.value = form.title.value.trim();
 
-		form.body.value = form.body.value.trim();
+		var bodyEditor = $(form).find('.toast-editor.input-body').data('data-toast-editor');
 
-		if (form.body.value.length == 0) {
-			form.body.focus();
+		var body = bodyEditor.getMarkdown().trim();
+
+		if (body.length == 0) {
+			bodyEditor.focus();
 			alert('특이사항을 입력해주세요.');
 
 			return;
 		}
+
+		form.body.value = body;
 
 		var maxSizeMb = 50;
 		var maxSize = maxSizeMb * 1024 * 1024 //50MB
@@ -102,72 +102,77 @@
 		});
 	}
 </script>
-<form method="POST" class="table-box con form1" action="${job.code}-doWrite" onsubmit="RecruitmentWriteForm__submit(this); return false;">
-	<input type="hidden" name="fileIdsStr" /> <input type="hidden" name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id"> <input type="hidden" name="roleTypeCode" value="actingRole"> <input type="hidden" name="body">
+<form method="POST" class="table-box table-box-vertical con form1" action="${job.code}-doWrite" onsubmit="RecruitmentWriteForm__submit(this); return false;">
+    <input type="hidden" name="fileIdsStr" />
+    <input type="hidden" name="redirectUri" value="/usr/recruitment/${job.code}-detail?id=#id">
+    <input type="hidden" name="roleTypeCode" value="actingRole">
+    <input type="hidden" name="body">
+    <table>
+        <colgroup>
+            <col class="table-first-col">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>배역</th>
+                <td>
+                    <div class="form-control-box">
+                        <select name="roleId" class="select2">
+                            <c:forEach items="${roles}" var="role">
+                                <option value="${role.id}">${role.getTitle()}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+            <tr class="none">
+                <th>제목</th>
+                <td>
+                    <div class="form-control-box">
+                        <input type="text" placeholder="제목을 입력해주세요." name="title" maxlength="100" />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>특이 사항</th>
+                <td>
+                    <div class="form-control-box">
+                        <script type="text/x-template">
+# 감독 인사말
+![img](https://placekitten.com/200/287)
+정말 반갑습니다.
 
-	<table>
-		<colgroup>
-			<col class="table-first-col">
-		</colgroup>
-		<tbody>
-			<tr>
-				<th>배역</th>
-				<td>
-					<div class="form-control-box">
-						<select name="roleId" class="select2">
-							<c:forEach items="${roles}" var="role">
-								<option value="${role.id}">${role.getTitle()}</option>
-							</c:forEach>
-						</select>
-					</div>
-				</td>
-			</tr>
-			<tr class="none">
-				<th>제목</th>
-				<td>
-					<div class="form-control-box">
-						<input type="text" placeholder="제목을 입력해주세요." name="title" maxlength="100" />
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>특이 사항</th>
-				<td>
-					<div class="form-control-box">
-						<script type="text/x-template">
-# 유튜브 동영상 삽입
+# 1분연기 예시
+
+아래 영상을 참고하여 영상을 촬영해서 신청해주세요.
 
 ```youtube
-https://www.youtube.com/watch?v=2UXq0e75V6s(동영상 주소)
+https://www.youtube.com/watch?v=LmgWxezH7cc(동영상 주소)
 ```
-
-# 이미지 삽입
-![img](이미지 주소)
 						</script>
-						<div class="toast-editor"></div>
-					</div>
-				</td>
-			</tr>
-			<c:forEach var="i" begin="1" end="3" step="1">
-				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
-				<tr>
-					<th>첨부${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
-					<td>
-						<div class="form-control-box">
-							<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__recruitment__0__common__attachment__${fileNo}">
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
-			<tr>
-				<th>작성</th>
-				<td>
-					<button class="btn btn-primary" type="submit">작성</button> <a class="btn btn-info" href="${listUrl}">리스트</a>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+                        <div class="toast-editor input-body"></div>
+                    </div>
+                </td>
+            </tr>
+            <c:forEach var="i" begin="1" end="3" step="1">
+                <c:set var="fileNo" value="${String.valueOf(i)}" />
+                <c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
+                <tr>
+                    <th>첨부${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('recruitment', i)}</th>
+                    <td>
+                        <div class="form-control-box">
+                            <input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__recruitment__0__common__attachment__${fileNo}">
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+            <tr>
+                <th>작성</th>
+                <td>
+                    <button class="btn btn-primary" type="submit">작성</button>
+                    <a class="btn btn-info" href="${listUrl}">리스트</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </form>
-
 <%@ include file="../part/foot.jspf"%>

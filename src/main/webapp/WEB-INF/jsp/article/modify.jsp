@@ -159,7 +159,7 @@
 		});
 	}
 </script>
-<form class="table-box con form1" method="POST"
+<form class="table-box table-box-vertical con form1" method="POST"
 	action="${board.code}-doModify"
 	onsubmit="ArticleModifyForm__submit(this); return false;">
 	<input type="hidden" name="fileIdsStr" /> <input type="hidden"

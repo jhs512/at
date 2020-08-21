@@ -5,7 +5,7 @@
 <c:set var="pageTitle" value="${board.name} 게시물 상세내용" />
 <%@ include file="../part/head.jspf"%>
 
-<div class="article-detail-box table-box con">
+<div class="article-detail-box table-box table-box-vertical con">
 	<table>
 		<colgroup>
 			<col class="table-first-col">
@@ -162,7 +162,7 @@
 		}
 	</script>
 
-	<form class="table-box con form1" onsubmit="WriteReplyForm__submit(this); return false;">
+	<form class="table-box table-box-vertical  con form1" onsubmit="WriteReplyForm__submit(this); return false;">
 		<input type="hidden" name="relTypeCode" value="article" /> <input type="hidden" name="relId" value="${article.id}" />
 
 		<table>
@@ -190,7 +190,7 @@
 						</td>
 					</tr>
 				</c:forEach>
-				<tr>
+				<tr class="tr-do">
 					<th>작성</th>
 					<td><input class="btn btn-primary" type="submit" value="작성"></td>
 				</tr>
@@ -204,7 +204,7 @@
 <div class="reply-list-box table-box con">
 	<table>
 		<colgroup>
-			<col class="table-first-col table-first-col-tight">
+			<col class="table-first-col">
 			<col width="180" class="visible-on-md-up">
 			<col width="180" class="visible-on-md-up">
 			<col>
