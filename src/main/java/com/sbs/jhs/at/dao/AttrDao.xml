@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sbs.jhs.at.dao.AttrDao">
+	<select id="get" resultType="Attr">
+	 	<![CDATA[
+		SELECT *
+		FROM attr
+		WHERE relId = #{relId}
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+		AND (expireDate >= NOW() OR expireDate IS NULL)
+		 ]]>
+	</select>
+
+	<select id="getValue" resultType="String">
+	 	<![CDATA[
+		SELECT value
+		FROM attr
+		WHERE relId = #{relId}
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+		AND (expireDate >= NOW() OR expireDate IS NULL)
+		 ]]>
+	</select>
+
+	<delete id="remove">
+		DELETE FROM attr
+		WHERE relId = #{relId}
+		AND relTypeCode = #{relTypeCode}
+		AND typeCode = #{typeCode}
+		AND type2Code = #{type2Code}
+	</delete>
+
+	<insert id="setValue">
+		INSERT INTO attr (regDate, updateDate, `relTypeCode`, `relId`, `typeCode`, `type2Code`, `value`, expireDate)
+		VALUES (NOW(), NOW(), #{relTypeCode}, #{relId}, #{typeCode}, #{type2Code}, #{value}, #{expireDate})
+		ON DUPLICATE KEY UPDATE
+		updateDate = NOW() , `value` = #{value}, expireDate = #{expireDate}
+	</insert>
+
+	<select id="getArticleById" resultType="Article">
+		SELECT *
+		FROM
+		article
+		WHERE
+		id = #{id}
+	</select>
+
+	<select id="getBoardByCode" resultType="Board">
+		SELECT *
+		FROM
+		board
+		WHERE
+		`code` = #{code}
+	</select>
+
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO article
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		title = #{title},
+		body = #{body},
+		memberId = #{memberId},
+		boardId = #{boardId},
+		displayStatus = 1
+	</insert>
+
+	<update id="modify">
+		UPDATE article
+		<set>
+			updateDate = NOW(),
+			<if test="title != null">title = #{title},</if>
+			<if test="body != null">body = #{body},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+
+	<resultMap type="Article" id="article">
+		<id property="id" column="id" />
+		<id property="regDate" column="regDate" />
+		<id property="updateDate" column="updateDate" />
+		<id property="delDate" column="delDate" />
+		<id property="delStatus" column="delStatus" />
+		<id property="title" column="title" />
+		<id property="body" column="body" />
+		<id property="memberId" column="memberId" />
+		<id property="boardId" column="boardId" />
+		<association property="extra" javaType="map">
+			<id property="writer" column="extra__writer" />
+		</association>
+	</resultMap>
+
+</mapper>
+

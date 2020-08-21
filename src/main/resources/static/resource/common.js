@@ -36,6 +36,7 @@ function isCellphoneNo(str) {
 	
 	return isNumber(str);
 }
+
 function isNumber(n) {
 	return /^-?[\d.]+(?:e-?\d+)?$/.test(n);
 }

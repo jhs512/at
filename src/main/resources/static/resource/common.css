@@ -223,7 +223,7 @@ html>head+body:nth-child(2) .height-300 {
     width: 100%;
   }
   .table-box>table>colgroup>col {
-    width:auto;
+    width: auto;
   }
   .table-box, .table-box head, .table-box tbody, .table-box tr, .table-box td, .table-box th {
     display: block;

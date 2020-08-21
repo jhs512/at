@@ -14,12 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sbs.jhs.at.service.AttrService;
 import com.sbs.jhs.at.service.FileService;
 
 @Controller
 public class TestController {
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private AttrService attrService;
 
 	@RequestMapping(value = "/usr/test/img", method = RequestMethod.GET)
 	public void showImg(HttpServletResponse response) throws IOException {
@@ -33,5 +36,13 @@ public class TestController {
 		InputStream in = new ByteArrayInputStream(fileService.getFileBodyById(1));
 		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
 		IOUtils.copy(in, response.getOutputStream());
+	}
+
+	@RequestMapping(value = "/usr/test/getAttr", method = RequestMethod.GET)
+	@ResponseBody
+	public String getAttr(HttpServletResponse response) throws IOException {
+		attrService.setValue("member__4__common__a", "안녕", null);
+
+		return attrService.getValue("member__4__common__a");
 	}
 }

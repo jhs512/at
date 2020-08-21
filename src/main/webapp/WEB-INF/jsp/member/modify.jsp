@@ -4,60 +4,43 @@
 <%@ include file="../part/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 <script>
-	var MemberJoinForm__submitDone = false;
-	function MemberJoinForm__submit(form) {
-		if (MemberJoinForm__submitDone) {
+	var MemberModifyForm__submitDone = false;
+	function MemberModifyForm__submit(form) {
+		if (MemberModifyForm__submitDone) {
 			alert('처리중입니다.');
-			return;
-		}
-
-		form.loginId.value = form.loginId.value.trim();
-		form.loginId.value = form.loginId.value.replaceAll('-', '');
-		form.loginId.value = form.loginId.value.replaceAll('_', '');
-		form.loginId.value = form.loginId.value.replaceAll(' ', '');
-
-		if (form.loginId.value.length == 0) {
-			form.loginId.focus();
-			alert('로그인 아이디를 입력해주세요.');
-
-			return;
-		}
-
-		if (form.loginId.value.length < 4) {
-			form.loginId.focus();
-			alert('로그인 아이디 4자 이상 입력해주세요.');
-
 			return;
 		}
 
 		form.loginPw.value = form.loginPw.value.trim();
 
-		if (form.loginPw.value.length == 0) {
-			form.loginPw.focus();
-			alert('로그인 비밀번호를 입력해주세요.');
+		if (form.loginPw.value.length > 0) {
+			if (form.loginPw.value.length == 0) {
+				form.loginPw.focus();
+				alert('로그인 비밀번호를 입력해주세요.');
 
-			return;
-		}
+				return;
+			}
 
-		if (form.loginPw.value.length < 5) {
-			form.loginPw.focus();
-			alert('로그인 비밀번호를 5자 이상 입력해주세요.');
+			if (form.loginPw.value.length < 5) {
+				form.loginPw.focus();
+				alert('로그인 비밀번호를 5자 이상 입력해주세요.');
 
-			return;
-		}
+				return;
+			}
 
-		if (form.loginPwConfirm.value.length == 0) {
-			form.loginPwConfirm.focus();
-			alert('로그인 비밀번호 확인을 입력해주세요.');
+			if (form.loginPwConfirm.value.length == 0) {
+				form.loginPwConfirm.focus();
+				alert('로그인 비밀번호 확인을 입력해주세요.');
 
-			return;
-		}
+				return;
+			}
 
-		if (form.loginPw.value != form.loginPwConfirm.value) {
-			form.loginPwConfirm.focus();
-			alert('로그인 비밀번호 확인이 일치하지 않습니다.');
+			if (form.loginPw.value != form.loginPwConfirm.value) {
+				form.loginPwConfirm.focus();
+				alert('로그인 비밀번호 확인이 일치하지 않습니다.');
 
-			return;
+				return;
+			}
 		}
 
 		form.name.value = form.name.value.trim();
@@ -112,16 +95,19 @@
 			return;
 		}
 
-		form.loginPwReal.value = sha256(form.loginPw.value);
+        if ( form.loginPw.value.length > 0 ) {
+        	form.loginPwReal.value = sha256(form.loginPw.value);
+        }
+        
 		form.loginPw.value = '';
 		form.loginPwConfirm.value = '';
 
 		form.submit();
-		MemberJoinForm__submitDone = true;
+		MemberModifyForm__submitDone = true;
 	}
 </script>
-<form method="POST" class="table-box table-box-vertical con form1" action="doJoin" onsubmit="MemberJoinForm__submit(this); return false;">
-    <input type="hidden" name="redirectUri" value="/usr/member/login">
+<form method="POST" class="table-box table-box-vertical con form1" action="doModify" onsubmit="MemberModifyForm__submit(this); return false;">
+    <input type="hidden" name="redirectUri" value="/usr/home/main">
     <input type="hidden" name="loginPwReal">
     <table>
         <colgroup>
@@ -131,24 +117,22 @@
             <tr>
                 <th>로그인 아이디</th>
                 <td>
+                    <div class="form-control-box">${loginedMember.loginId}</div>
+                </td>
+            </tr>
+            <tr>
+                <th>새 로그인 비번(선택)</th>
+                <td>
                     <div class="form-control-box">
-                        <input type="text" placeholder="로그인 아이디 입력해주세요." name="loginId" maxlength="30" />
+                        <input type="password" placeholder="새 로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="30" />
                     </div>
                 </td>
             </tr>
             <tr>
-                <th>로그인 비번</th>
+                <th>새 로그인 비번 확인(선택)</th>
                 <td>
                     <div class="form-control-box">
-                        <input type="password" placeholder="로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="30" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>로그인 비번 확인</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="password" placeholder="로그인 비밀번호 확인을 입력해주세요." name="loginPwConfirm" maxlength="30" />
+                        <input type="password" placeholder="새 로그인 비밀번호 확인을 입력해주세요." name="loginPwConfirm" maxlength="30" />
                     </div>
                 </td>
             </tr>
@@ -156,7 +140,7 @@
                 <th>이름</th>
                 <td>
                     <div class="form-control-box">
-                        <input type="text" placeholder="이름을 입력해주세요." name="name" maxlength="20" />
+                        <input type="text" placeholder="이름을 입력해주세요." name="name" maxlength="20" value="${loginedMember.name.trim()}" />
                     </div>
                 </td>
             </tr>
@@ -164,7 +148,7 @@
                 <th>활동명</th>
                 <td>
                     <div class="form-control-box">
-                        <input type="text" placeholder="활동명 입력해주세요." name="nickname" maxlength="20" />
+                        <input type="text" placeholder="활동명 입력해주세요." name="nickname" maxlength="20" value="${loginedMember.nickname.trim()}" />
                     </div>
                 </td>
             </tr>
@@ -172,7 +156,7 @@
                 <th>이메일</th>
                 <td>
                     <div class="form-control-box">
-                        <input type="email" placeholder="이메일 입력해주세요." name="email" maxlength="50" />
+                        <input type="email" placeholder="이메일 입력해주세요." name="email" maxlength="50" value="${loginedMember.email.trim()}" />
                     </div>
                 </td>
             </tr>
@@ -180,14 +164,14 @@
                 <th>휴대폰</th>
                 <td>
                     <div class="form-control-box">
-                        <input type="tel" placeholder="휴대전화번호를 입력해주세요." name="cellphoneNo" maxlength="12" />
+                        <input type="tel" placeholder="휴대전화번호를 입력해주세요." name="cellphoneNo" maxlength="12" value="${loginedMember.cellphoneNo.trim()}" />
                     </div>
                 </td>
             </tr>
-            <tr>
-                <th>가입</th>
+            <tr class="tr-do">
+                <th>수정</th>
                 <td>
-                    <button class="btn btn-primary" type="submit">가입</button>
+                    <button class="btn btn-primary" type="submit">수정</button>
                     <button class="btn btn-info" type="button" onclick="history.back();">취소</button>
                 </td>
             </tr>

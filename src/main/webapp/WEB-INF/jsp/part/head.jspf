@@ -1,3 +1,4 @@
+<%@ page import="com.sbs.jhs.at.util.Util" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -58,6 +59,7 @@ var param = ${paramJson};
 					<li><a href="/usr/recruitment/actor-list" class="flex flex-jc-c">배우모집</a></li>
 					<li><a class="flex flex-jc-c" href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">
+                        <li><a class="flex flex-jc-c" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a></li>
 						<li><a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a></li>
 					</c:if>
 					<c:if test="${isLogined == false}">
@@ -77,6 +79,7 @@ var param = ${paramJson};
 					<li class="padding-0-10"><a href="/usr/recruitment/actor-list" class="btn btn-primary">배우모집</a></li>
 					<li class="padding-0-10"><a class="btn btn-info" href="/usr/article/free-list">자유 게시판</a></li>
 					<c:if test="${isLogined}">
+                        <li class="padding-0-10"><a class="btn btn-info" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a></li>
 						<li class="padding-0-10"><a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a></li>
 					</c:if>
 					<c:if test="${isLogined == false}">

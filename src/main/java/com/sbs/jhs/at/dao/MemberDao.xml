@@ -16,7 +16,7 @@
 		FROM member
 		WHERE loginId = #{loginId}
 	</select>
-	
+
 	<select id="getMemberByLoginId" resultType="Member">
 		SELECT *
 		FROM member
@@ -37,4 +37,17 @@
 		email = #{email},
 		cellphoneNo = #{cellphoneNo}
 	</insert>
+
+	<update id="modify">
+		UPDATE member
+		<set>
+			updateDate = NOW(),
+			<if test="name != null and name.length() > 0">`name` = #{name},</if>
+			<if test="nickname != null and nickname.length() > 0">`nickname` = #{nickname},</if>
+			<if test="email != null and email.length() > 0">`email` = #{email},</if>
+			<if test="cellphoneNo != null and cellphoneNo.length() > 0">`cellphoneNo` = #{cellphoneNo},</if>
+			<if test="loginPw != null and loginPw.length() > 0">`loginPw` = #{loginPw},</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 </mapper>
