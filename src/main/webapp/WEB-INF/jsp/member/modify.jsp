@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="회원가입" />
+<c:set var="pageTitle" value="회원정보수정" />
 <%@ include file="../part/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 <script>
@@ -95,10 +95,10 @@
 			return;
 		}
 
-        if ( form.loginPw.value.length > 0 ) {
-        	form.loginPwReal.value = sha256(form.loginPw.value);
-        }
-        
+		if (form.loginPw.value.length > 0) {
+			form.loginPwReal.value = sha256(form.loginPw.value);
+		}
+
 		form.loginPw.value = '';
 		form.loginPwConfirm.value = '';
 
@@ -107,75 +107,75 @@
 	}
 </script>
 <form method="POST" class="table-box table-box-vertical con form1" action="doModify" onsubmit="MemberModifyForm__submit(this); return false;">
-    <input type="hidden" name="redirectUri" value="/usr/home/main">
-    <input type="hidden" name="loginPwReal">
-    <table>
-        <colgroup>
-            <col class="table-first-col">
-        </colgroup>
-        <tbody>
-            <tr>
-                <th>로그인 아이디</th>
-                <td>
-                    <div class="form-control-box">${loginedMember.loginId}</div>
-                </td>
-            </tr>
-            <tr>
-                <th>새 로그인 비번(선택)</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="password" placeholder="새 로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="30" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>새 로그인 비번 확인(선택)</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="password" placeholder="새 로그인 비밀번호 확인을 입력해주세요." name="loginPwConfirm" maxlength="30" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>이름</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="text" placeholder="이름을 입력해주세요." name="name" maxlength="20" value="${loginedMember.name.trim()}" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>활동명</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="text" placeholder="활동명 입력해주세요." name="nickname" maxlength="20" value="${loginedMember.nickname.trim()}" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>이메일</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="email" placeholder="이메일 입력해주세요." name="email" maxlength="50" value="${loginedMember.email.trim()}" />
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <th>휴대폰</th>
-                <td>
-                    <div class="form-control-box">
-                        <input type="tel" placeholder="휴대전화번호를 입력해주세요." name="cellphoneNo" maxlength="12" value="${loginedMember.cellphoneNo.trim()}" />
-                    </div>
-                </td>
-            </tr>
-            <tr class="tr-do">
-                <th>수정</th>
-                <td>
-                    <button class="btn btn-primary" type="submit">수정</button>
-                    <button class="btn btn-info" type="button" onclick="history.back();">취소</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+	<input type="hidden" name="redirectUri" value="/usr/home/main">
+	<input type="hidden" name="loginPwReal">
+	<table>
+		<colgroup>
+			<col class="table-first-col">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>로그인 아이디</th>
+				<td>
+					<div class="form-control-box">${loginedMember.loginId}</div>
+				</td>
+			</tr>
+			<tr>
+				<th>새 로그인 비번(선택)</th>
+				<td>
+					<div class="form-control-box">
+						<input type="password" placeholder="새 로그인 비밀번호를 입력해주세요." name="loginPw" maxlength="30" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>새 로그인 비번 확인(선택)</th>
+				<td>
+					<div class="form-control-box">
+						<input type="password" placeholder="새 로그인 비밀번호 확인을 입력해주세요." name="loginPwConfirm" maxlength="30" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>이름</th>
+				<td>
+					<div class="form-control-box">
+						<input type="text" placeholder="이름을 입력해주세요." name="name" maxlength="20" value="${loginedMember.name.trim()}" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>활동명</th>
+				<td>
+					<div class="form-control-box">
+						<input type="text" placeholder="활동명 입력해주세요." name="nickname" maxlength="20" value="${loginedMember.nickname.trim()}" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>이메일</th>
+				<td>
+					<div class="form-control-box">
+						<input type="email" placeholder="이메일 입력해주세요." name="email" maxlength="50" value="${loginedMember.email.trim()}" />
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<th>휴대폰</th>
+				<td>
+					<div class="form-control-box">
+						<input type="tel" placeholder="휴대전화번호를 입력해주세요." name="cellphoneNo" maxlength="12" value="${loginedMember.cellphoneNo.trim()}" />
+					</div>
+				</td>
+			</tr>
+			<tr class="tr-do">
+				<th>수정</th>
+				<td>
+					<button class="btn btn-primary" type="submit">수정</button>
+					<button class="btn btn-info" type="button" onclick="history.back();">취소</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </form>
 <%@ include file="../part/foot.jspf"%>

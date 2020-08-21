@@ -271,18 +271,11 @@
     overflow-y:auto;
     max-height:100vh;
     box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
+    border-radius:10px;
 }
 
 .reply-modify-form-modal-actived .reply-modify-form-modal {
     display: flex;
-}
-
-.reply-modify-form-modal .form-control-label {
-    width: 60px;
-}
-
-.reply-modify-form-modal .form-control-box {
-    flex: 1 0 0;
 }
 
 .reply-modify-form-modal .video-box {

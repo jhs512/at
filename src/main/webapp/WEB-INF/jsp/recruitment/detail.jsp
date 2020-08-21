@@ -10,399 +10,415 @@
 </script>
 <style>
 .visible-actor-is-writer {
-  display: <%=(boolean) request.getAttribute("actorIsWriter") ? "inline" : "none"%>;
+    display: <%=(boolean) request.getAttribute("actorIsWriter") ? "inline" : "none"%>;
 }
 
 .visible-actor-is-not-writer {
-  display: <%=(boolean) request.getAttribute("actorIsWriter") ? "none" : "inline"%>;
+    display: <%=(boolean) request.getAttribute("actorIsWriter") ? "none" : "inline"%>;
 }
 </style>
 <style>
 .recruitment-detail-box td:empty {
-  background-color: #efefef;
+    background-color: #efefef;
 }
 </style>
 <div class="recruitment-detail-box table-box con">
-    <table>
-        <colgroup>
-            <col class="table-first-col">
-        </colgroup>
-        <tbody>
-            <tr>
-                <th>번호</th>
-                <td>${recruitment.id}</td>
-            </tr>
-            <tr>
-                <th>날짜</th>
-                <td>${recruitment.regDate}</td>
-            </tr>
-            <tr>
-                <th>모집상태</th>
-                <td>${recruitment.forPrintCompleteStatusHanName}</td>
-            </tr>
-            <tr>
-                <th>제목</th>
-                <td>${recruitment.forPrintTitle}</td>
-            </tr>
-            <tr>
-                <th>작품명</th>
-                <td>${recruitment.extra.artworkName}</td>
-            </tr>
-            <tr>
-                <th>제작사</th>
-                <td>${recruitment.extra.productionName}</td>
-            </tr>
-            <tr>
-                <th>배역명</th>
-                <td>${recruitment.extra.actingRoleName}</td>
-            </tr>
-            <tr>
-                <th>배역성별</th>
-                <td>${recruitment.extra.actingRoleGender}</td>
-            </tr>
-            <tr>
-                <th>배역나이</th>
-                <td>${recruitment.extra.actingRoleAge}</td>
-            </tr>
-            <tr>
-                <th>배역직업</th>
-                <td>${recruitment.extra.actingRoleJob}</td>
-            </tr>
-            <tr>
-                <th>배역캐릭터</th>
-                <td>${Util.safeHtmlNl2Br(recruitment.extra.actingRoleCharacter)}</td>
-            </tr>
-            <tr>
-                <th>배역씬수</th>
-                <td>${recruitment.extra.actingRoleScenesCount}</td>
-            </tr>
-            <tr>
-                <th>배역촬영수</th>
-                <td>${recruitment.extra.actingRoleShootingsCount}</td>
-            </tr>
-            <tr>
-                <th>출연료</th>
-                <td>${recruitment.extra.actingRolePay}</td>
-            </tr>
-            <tr>
-                <th>특이 사항</th>
-                <td>
-                    <script type="text/x-template">${recruitment.body}</script>
-                    <div class="toast-editor toast-editor-viewer"></div>
-                </td>
-            </tr>
-            <c:forEach var="i" begin="1" end="${appConfig.getMaxAttachmentFileNo('recruitment')}" step="1">
-                <c:set var="fileNo" value="${String.valueOf(i)}" />
-                <c:set var="file" value="${recruitment.extra.file__common__attachment[fileNo]}" />
-                <c:if test="${file != null}">
-                    <tr>
-                        <th>첨부 파일 ${fileNo}</th>
-                        <td>
-                            <c:if test="${file.fileExtTypeCode == 'video'}">
-                                <div class="video-box">
-                                    <video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
-                                </div>
-                            </c:if>
-                            <c:if test="${file.fileExtTypeCode == 'img'}">
-                                <div class="img-box img-box-auto">
-                                    <img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}" alt="" />
-                                </div>
-                            </c:if>
-                        </td>
-                    </tr>
-                </c:if>
-            </c:forEach>
-        </tbody>
-    </table>
+	<table>
+		<colgroup>
+			<col class="table-first-col">
+		</colgroup>
+		<tbody>
+			<tr>
+				<th>번호</th>
+				<td>${recruitment.id}</td>
+			</tr>
+			<tr>
+				<th>날짜</th>
+				<td>${recruitment.regDate}</td>
+			</tr>
+			<tr>
+				<th>모집상태</th>
+				<td>${recruitment.forPrintCompleteStatusHanName}</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>${recruitment.forPrintTitle}</td>
+			</tr>
+			<tr>
+				<th>작품명</th>
+				<td>${recruitment.extra.artworkName}</td>
+			</tr>
+			<tr>
+				<th>제작사</th>
+				<td>${recruitment.extra.productionName}</td>
+			</tr>
+			<tr>
+				<th>배역명</th>
+				<td>${recruitment.extra.actingRoleName}</td>
+			</tr>
+			<tr>
+				<th>배역성별</th>
+				<td>${recruitment.extra.actingRoleGender}</td>
+			</tr>
+			<tr>
+				<th>배역나이</th>
+				<td>${recruitment.extra.actingRoleAge}</td>
+			</tr>
+			<tr>
+				<th>배역직업</th>
+				<td>${recruitment.extra.actingRoleJob}</td>
+			</tr>
+			<tr>
+				<th>배역캐릭터</th>
+				<td>${Util.safeHtmlNl2Br(recruitment.extra.actingRoleCharacter)}</td>
+			</tr>
+			<tr>
+				<th>배역씬수</th>
+				<td>${recruitment.extra.actingRoleScenesCount}</td>
+			</tr>
+			<tr>
+				<th>배역촬영수</th>
+				<td>${recruitment.extra.actingRoleShootingsCount}</td>
+			</tr>
+			<tr>
+				<th>출연료</th>
+				<td>${recruitment.extra.actingRolePay}</td>
+			</tr>
+			<tr>
+				<th>특이 사항</th>
+				<td>
+					<script type="text/x-template">${recruitment.body}</script>
+					<div class="toast-editor toast-editor-viewer"></div>
+				</td>
+			</tr>
+			<c:forEach var="i" begin="1" end="${appConfig.getMaxAttachmentFileNo('recruitment')}" step="1">
+				<c:set var="fileNo" value="${String.valueOf(i)}" />
+				<c:set var="file" value="${recruitment.extra.file__common__attachment[fileNo]}" />
+				<c:if test="${file != null}">
+					<tr>
+						<th>첨부 파일 ${fileNo}</th>
+						<td>
+							<c:if test="${file.fileExtTypeCode == 'video'}">
+								<div class="video-box">
+									<video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
+								</div>
+							</c:if>
+							<c:if test="${file.fileExtTypeCode == 'img'}">
+								<div class="img-box img-box-auto">
+									<img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}" alt="" />
+								</div>
+							</c:if>
+						</td>
+					</tr>
+				</c:if>
+			</c:forEach>
+		</tbody>
+	</table>
 </div>
 <div class="btn-box con margin-top-20">
-    <c:if test="${recruitment.extra.actorCanSetComplete}">
-        <a class="btn btn-danger" href="${job.code}-doSetComplete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('모집완료처리 하시겠습니까?\n더 이상 지원할 수 없습니다.') == false ) return false;">모집완료</a>
-    </c:if>
-    <c:if test="${recruitment.extra.actorCanModify}">
-        <a class="btn btn-info" href="${job.code}-modify?id=${recruitment.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
-    </c:if>
-    <c:if test="${recruitment.extra.actorCanDelete}">
-        <a class="btn btn-danger" href="${job.code}-doDelete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
-    </c:if>
-    <a href="${listUrl}" class="btn btn-info">리스트</a>
+	<c:if test="${recruitment.extra.actorCanSetComplete}">
+		<a class="btn btn-danger" href="${job.code}-doSetComplete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('모집완료처리 하시겠습니까?\n더 이상 지원자들이 지원할 수 없습니다.') == false ) return false;">모집완료</a>
+	</c:if>
+	<c:if test="${recruitment.extra.actorCanModify}">
+		<a class="btn btn-info" href="${job.code}-modify?id=${recruitment.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
+	</c:if>
+	<c:if test="${recruitment.extra.actorCanDelete}">
+		<a class="btn btn-danger" href="${job.code}-doDelete?id=${recruitment.id}&redirectUri=${Util.getUriEncoded(listUrl)}" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
+	</c:if>
+	<a href="${listUrl}" class="btn btn-info">리스트</a>
 </div>
 <c:if test="${actorIsWriter}">
-    <h2 class="con">해당 배역 신청</h2>
-    <div class="con">작성자는 신청할 수 없습니다.</div>
+	<h2 class="con">해당 배역 신청</h2>
+	<div class="con">작성자는 신청할 수 없습니다.</div>
 </c:if>
 <c:if test="${needToShowApplymentWriteForm && recruitment.completeStatus == false}">
-    <script>
-					var WriteApplymentForm__submitDone = false;
-					function WriteApplymentForm__submit(form) {
-						if (WriteApplymentForm__submitDone) {
-							alert('처리중입니다.');
-						}
+	<script>
+		var WriteApplymentForm__submitDone = false;
+		function WriteApplymentForm__submit(form) {
+			if (WriteApplymentForm__submitDone) {
+				alert('처리중입니다.');
+			}
 
-						form.body.value = form.body.value.trim();
+			form.body.value = form.body.value.trim();
 
-						if (form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value == '') {
-							form.file__applyment__0__common__attachment__1.focus();
-							alert('파일을 업로드 해주세요.');
+			if (form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value == '') {
+				form.file__applyment__0__common__attachment__1.focus();
+				alert('파일을 업로드 해주세요.');
 
-							return;
-						}
+				return;
+			}
 
-						WriteApplymentForm__submitDone = true;
+			WriteApplymentForm__submitDone = true;
 
-						var startUploadFiles = function(onSuccess) {
-							var needToUpload = false;
+			var startUploadFiles = function(onSuccess) {
+				var needToUpload = false;
 
-							if (needToUpload == false) {
-								needToUpload = form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value.length > 0;
-							}
+				if (needToUpload == false && form.file__applyment__0__common__attachment__1) {
+					needToUpload = form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value.length > 0;
+				}
 
-							if (needToUpload == false) {
-								needToUpload = form.file__applyment__0__common__attachment__2 && form.file__applyment__0__common__attachment__2.value.length > 0;
-							}
+				if (needToUpload == false && form.file__applyment__0__common__attachment__2) {
+					needToUpload = form.file__applyment__0__common__attachment__2 && form.file__applyment__0__common__attachment__2.value.length > 0;
+				}
 
-							if (needToUpload == false) {
-								needToUpload = form.file__applyment__0__common__attachment__3 && form.file__applyment__0__common__attachment__3.value.length > 0;
-							}
+				if (needToUpload == false && form.file__applyment__0__common__attachment__3) {
+					needToUpload = form.file__applyment__0__common__attachment__3 && form.file__applyment__0__common__attachment__3.value.length > 0;
+				}
 
-							if (needToUpload == false) {
-								onSuccess();
-								return;
-							}
+				if (needToUpload == false) {
+					onSuccess();
+					return;
+				}
 
-							var fileUploadFormData = new FormData(form);
+				var fileUploadFormData = new FormData(form);
 
-							$.ajax({
-								url : './../file/doUploadAjax',
-								data : fileUploadFormData,
-								processData : false,
-								contentType : false,
-								dataType : "json",
-								type : 'POST',
-								success : onSuccess
-							});
-						}
+				$.ajax({
+					url : './../file/doUploadAjax',
+					data : fileUploadFormData,
+					processData : false,
+					contentType : false,
+					dataType : "json",
+					type : 'POST',
+					success : onSuccess
+				});
+			}
 
-						var startWriteApplyment = function(fileIdsStr, onSuccess) {
+			var startWriteApplyment = function(fileIdsStr, onSuccess) {
 
-							$.ajax({
-								url : './../applyment/doWriteApplymentAjax',
-								data : {
-									fileIdsStr : fileIdsStr,
-									body : form.body.value,
-									relTypeCode : form.relTypeCode.value,
-									relId : form.relId.value
-								},
-								dataType : "json",
-								type : 'POST',
-								success : onSuccess
-							});
-						};
+				$.ajax({
+					url : './../applyment/doWriteApplymentAjax',
+					data : {
+						fileIdsStr : fileIdsStr,
+						body : form.body.value,
+						relTypeCode : form.relTypeCode.value,
+						relId : form.relId.value
+					},
+					dataType : "json",
+					type : 'POST',
+					success : onSuccess
+				});
+			};
 
-						startUploadFiles(function(data) {
+			startUploadFiles(function(data) {
 
-							var idsStr = '';
-							if (data && data.body && data.body.fileIdsStr) {
-								idsStr = data.body.fileIdsStr;
-							}
+				var idsStr = '';
+				if (data && data.body && data.body.fileIdsStr) {
+					idsStr = data.body.fileIdsStr;
+				}
 
-							startWriteApplyment(idsStr, function(data) {
+				startWriteApplyment(idsStr, function(data) {
 
-								if (data.msg) {
-									alert(data.msg);
-								}
-
-								form.body.value = '';
-
-								if (form.file__applyment__0__common__attachment__1) {
-									form.file__applyment__0__common__attachment__1.value = '';
-								}
-
-								if (form.file__applyment__0__common__attachment__2) {
-									form.file__applyment__0__common__attachment__2.value = '';
-								}
-
-								if (form.file__applyment__0__common__attachment__3) {
-									form.file__applyment__0__common__attachment__3.value = '';
-								}
-
-								WriteApplymentForm__submitDone = false;
-
-								// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
-								if (ApplymentList__needToLoadMore == false) {
-									ApplymentList__loadMore();
-								}
-							});
-						});
+					if (data.msg) {
+						alert(data.msg);
 					}
-				</script>
-    <h2 class="con">해당 배역 신청</h2>
-    <form class="table-box con form1 write-applyment-form" onsubmit="WriteApplymentForm__submit(this); return false;">
-        <input type="hidden" name="relTypeCode" value="recruitment" /> <input type="hidden" name="relId" value="${recruitment.id}" />
-        <table>
-            <colgroup>
-                <col class="table-first-col">
-            </colgroup>
-            <tbody>
-                <tr class="none">
-                    <th>내용</th>
-                    <td>
-                        <div class="form-control-box">
-                            <textarea maxlength="300" name="body" placeholder="내용을 입력해주세요." class="height-300"></textarea>
-                        </div>
-                    </td>
-                </tr>
-                <c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
-                    <c:set var="fileNo" value="${String.valueOf(i)}" />
-                    <c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('applyment', i)}" />
-                    <tr>
-                        <th>${appConfig.getAttachmentFileInputDisplayName('applyment', i)}</th>
-                        <td>
-                            <div class="form-control-box">
-                                <input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__applyment__0__common__attachment__${fileNo}">
-                            </div>
-                        </td>
-                    </tr>
-                </c:forEach>
-                <tr>
-                    <th>신청</th>
-                    <td>
-                        <input class="btn btn-primary" type="submit" value="신청">
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
+
+					form.body.value = '';
+
+					if (form.file__applyment__0__common__attachment__1) {
+						form.file__applyment__0__common__attachment__1.value = '';
+					}
+
+					if (form.file__applyment__0__common__attachment__2) {
+						form.file__applyment__0__common__attachment__2.value = '';
+					}
+
+					if (form.file__applyment__0__common__attachment__3) {
+						form.file__applyment__0__common__attachment__3.value = '';
+					}
+
+					WriteApplymentForm__submitDone = false;
+
+					// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
+					if (ApplymentList__needToLoadMore == false) {
+						ApplymentList__loadMore();
+					}
+				});
+			});
+		}
+	</script>
+	<h2 class="con">해당 배역 신청</h2>
+	<form class="table-box con form1 write-applyment-form" onsubmit="WriteApplymentForm__submit(this); return false;">
+		<input type="hidden" name="relTypeCode" value="recruitment" />
+		<input type="hidden" name="relId" value="${recruitment.id}" />
+		<table>
+			<colgroup>
+				<col class="table-first-col">
+			</colgroup>
+			<tbody>
+				<tr class="none">
+					<th>인사말(30자 제한)</th>
+					<td>
+						<div class="form-control-box">
+							<textarea maxlength="50" name="body" placeholder="인사말을 입력해주세요." class="height-50"></textarea>
+						</div>
+					</td>
+				</tr>
+				<c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
+					<c:set var="fileNo" value="${String.valueOf(i)}" />
+					<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('applyment', i)}" />
+					<tr>
+						<th>${appConfig.getAttachmentFileInputDisplayName('applyment', i)}</th>
+						<td>
+							<div class="form-control-box">
+								<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" name="file__applyment__0__common__attachment__${fileNo}">
+							</div>
+						</td>
+					</tr>
+				</c:forEach>
+				<tr>
+					<th>신청</th>
+					<td>
+						<input class="btn btn-primary" type="submit" value="신청">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
 </c:if>
 <style>
 .applyment-list-box tr .btn-toggle-applyment::after {
-  content: "숨기기";
+    content: "숨기기";
 }
 
 .applyment-list-box tr.hide {
-  display: none;
+    display: none;
 }
 
 .applyment-list-box.show-hide-items tr.hide {
-  display: table-row;
+    display: table-row;
 }
 
 .applyment-list-box tr.hide .btn-toggle-applyment::after {
-  content: "보이기";
+    content: "보이기";
 }
 </style>
 <h2 class="con">
-    <span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span class="visible-actor-is-writer applyments-count">(0건)</span>
+	<span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span class="visible-actor-is-writer applyments-count">(0건)</span>
 </h2>
 <div class="con">
-    <label class="visible-actor-is-writer"> <input type="checkbox" onchange="$('.applyment-list-box').toggleClass('show-hide-items');" /> 숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
-    </label>
+	<label class="visible-actor-is-writer">
+		<input type="checkbox" onchange="$('.applyment-list-box').toggleClass('show-hide-items');" />
+		숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
+	</label>
 </div>
 <div class="applyment-list-box table-box con margin-top-20">
-    <table>
-        <colgroup>
-            <col class="table-first-col table-first-col-tight">
-            <col width="180" class="visible-on-md-up">
-            <col width="180" class="visible-on-md-up">
-            <col>
-            <col width="200" class="visible-on-md-up">
-        </colgroup>
-        <thead>
-            <tr>
-                <th>번호</th>
-                <th class="visible-on-md-up">신청일</th>
-                <th class="visible-on-md-up">신청자</th>
-                <th>지원배역 연기영상</th>
-                <th class="visible-on-md-up">비고</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+	<table>
+		<colgroup>
+			<col class="table-first-col table-first-col-tight">
+			<col width="180" class="visible-on-md-up">
+			<col width="180" class="visible-on-md-up">
+			<col>
+			<col width="200" class="visible-on-md-up">
+		</colgroup>
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th class="visible-on-md-up">신청일</th>
+				<th class="visible-on-md-up">신청자</th>
+				<th>지원배역 연기영상</th>
+				<th class="visible-on-md-up">비고</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </div>
 <style>
 .applyment-modify-form-modal-actived, applyment-modify-form-modal-actived>body {
-  overflow: hidden;
+    overflow: hidden;
 }
 
 .applyment-modify-form-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.4);
-  display: none;
-  z-index: 20;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
 }
 
 .applyment-modify-form-modal>div {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  max-width: 100vw;
-  min-width: 320px;
-  max-height: 100vh;
-  overflow-y: auto;
-  border: 3px solid black;
-  box-sizing: border-box;
+    border: 1px solid #787878;
+    overflow-y: auto;
+    max-height: 100vh;
+    box-shadow: 10px 10px 100px rgba(0, 0, 0, 0.3);
+    border-radius:10px;
 }
 
 .applyment-modify-form-modal-actived .applyment-modify-form-modal {
-  display: flex;
-}
-
-.applyment-modify-form-modal .form-control-label {
-  width: 60px;
-}
-
-.applyment-modify-form-modal .form-control-box {
-  flex: 1 0 0;
+    display: flex;
 }
 
 .applyment-modify-form-modal .video-box {
-  width: 100px;
+    width: 100px;
+}
+
+.applyment-modify-form-modal .img-box {
+    width: 100px;
 }
 </style>
 <div class="applyment-modify-form-modal">
-    <div class="bg-white">
-        <h1 class="text-align-center">신청 수정</h1>
-        <form action="" class="form1 padding-10" onsubmit="ApplymentList__submitModifyForm(this); return false;">
-            <input type="hidden" name="id" />
-            <div class="form-row none">
-                <div class="form-control-label">내용</div>
-                <div class="form-control-box">
-                    <textarea name="body" placeholder="내용을 입력해주세요."></textarea>
-                </div>
-            </div>
-            <c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
-                <c:set var="fileNo" value="${String.valueOf(i)}" />
-                <c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
-                <div class="form-row">
-                    <div class="form-control-label">첨부${fileNo}</div>
-                    <div class="form-control-box">
-                        <input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" data-name="file__applyment__0__common__attachment__${fileNo}">
-                    </div>
-                    <div style="width: 100%" class="video-box video-box-file-${fileNo}"></div>
-                    <div style="width: 100%" class="img-box img-box-auto img-box-file-${fileNo}"></div>
-                </div>
-                <div class="form-row none">
-                    <div class="form-control-label">첨부${fileNo} 삭제</div>
-                    <div class="form-control-box">
-                        <label><input type="checkbox" data-name="deleteFile__applyment__0__common__attachment__${fileNo}" value="Y" /> 삭제 </label>
-                    </div>
-                </div>
-            </c:forEach>
-            <div class="form-row">
-                <div class="form-control-label">수정</div>
-                <div class="form-control-box">
-                    <button class="btn btn-primary" type="submit">수정</button>
-                    <button class="btn btn-info" type="button" onclick="ApplymentList__hideModifyFormModal();">취소</button>
-                </div>
-            </div>
-        </form>
-    </div>
+	<div class="bg-white con">
+		<h1 class="text-align-center">신청 수정</h1>
+		<form action="" class="form1 padding-10 table-box table-box-vertical" onsubmit="ApplymentList__submitModifyForm(this); return false;">
+			<input type="hidden" name="id" />
+			<table>
+				<colgroup>
+					<col class="table-first-col">
+				</colgroup>
+				<tbody>
+					<tr>
+						<th>인사말(30자 제한)</th>
+						<td>
+							<div class="form-control-box">
+								<textarea maxlength="50" name="body" placeholder="내용을 입력해주세요." class="height-50"></textarea>
+							</div>
+						</td>
+					</tr>
+					<c:forEach var="i" begin="1" end="${appConfig.getForUploadMaxAttachmentFileNo('applyment')}" step="1">
+						<c:set var="fileNo" value="${String.valueOf(i)}" />
+						<c:set var="fileExtTypeCode" value="${appConfig.getAttachmentFileExtTypeCode('recruitment', i)}" />
+						<tr>
+							<th>
+								<div class="form-control-box">첨부${fileNo}</div>
+							</th>
+							<td>
+								<div class="form-control-box">
+									<input type="file" accept="${appConfig.getAttachemntFileInputAccept('recruitment', i)}" data-name="file__applyment__0__common__attachment__${fileNo}">
+								</div>
+								<div style="width: 100%" class="video-box video-box-file-${fileNo}"></div>
+								<div style="width: 100%" class="img-box img-box-auto img-box-file-${fileNo}"></div>
+							</td>
+						</tr>
+						<tr>
+							<th>
+								<div class="form-control-box">첨부${fileNo} 삭제</div>
+							</th>
+							<td>
+								<div class="form-control-box">
+									<label>
+										<input type="checkbox" data-name="deleteFile__applyment__0__common__attachment__${fileNo}" value="Y" />
+										삭제
+									</label>
+								</div>
+							</td>
+						</tr>
+					</c:forEach>
+					<tr class="tr-do">
+						<th>수정</th>
+						<td>
+							<button class="btn btn-primary" type="submit">수정</button>
+							<button class="btn btn-info" type="button" onclick="ApplymentList__hideModifyFormModal();">취소</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</form>
+	</div>
 </div>
 <script>
 	var ApplymentList__$box = $('.applyment-list-box');

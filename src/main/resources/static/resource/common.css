@@ -88,8 +88,12 @@ label[for] {
     border: 10px solid red;
 }
 
-html>head+body:nth-child(2) .height-300 {
-    min-height: 100px;
+.height-50 {
+    min-height:50px !important;
+}
+
+.height-300 {
+    min-height: 300px;
 }
 
 .margin-top-10 {
