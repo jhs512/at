@@ -3,6 +3,7 @@
 
 <c:set var="pageTitle" value="${board.name} 게시물 작성" />
 <%@ include file="../part/head.jspf"%>
+<%@ include file="../part/toastuiEditor.jspf"%>
 
 <script>
 	var ArticleWriteForm__submitDone = false;
@@ -20,14 +21,18 @@
 			return;
 		}
 
-		form.body.value = form.body.value.trim();
+		var bodyEditor = $(form).find('.toast-editor.input-body').data('data-toast-editor');
 
-		if (form.body.value.length == 0) {
-			form.body.focus();
-			alert('내용을 입력해주세요.');
+		var body = bodyEditor.getMarkdown().trim();
+
+		if (body.length == 0) {
+			bodyEditor.focus();
+			alert('특이사항을 입력해주세요.');
 
 			return;
 		}
+
+		form.body.value = body;
 
 		var maxSizeMb = 50;
 		var maxSize = maxSizeMb * 1024 * 1024 //50MB
@@ -94,16 +99,23 @@
 			form.file__article__0__common__attachment__1.value = '';
 			form.file__article__0__common__attachment__2.value = '';
 
+			if (bodyEditor.inBodyFileIdsStr) {
+				form.fileIdsStr.value += bodyEditor.inBodyFileIdsStr;
+			}
+
 			form.submit();
 		});
 	}
 </script>
 <form method="POST" class="table-box table-box-vertical con form1" action="${board.code}-doWrite" onsubmit="ArticleWriteForm__submit(this); return false;">
-	<input type="hidden" name="fileIdsStr" /> <input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=#id">
+	<input type="hidden" name="fileIdsStr" />
+	<input type="hidden" name="body" />
+	<input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=#id">
 
 	<table>
 		<colgroup>
 			<col class="table-first-col">
+			<col />
 		</colgroup>
 		<tbody>
 			<tr>
@@ -118,7 +130,20 @@
 				<th>내용</th>
 				<td>
 					<div class="form-control-box">
-						<textarea placeholder="내용을 입력해주세요." name="body" maxlength="2000"></textarea>
+						<script type="text/x-template">
+# 제목
+![img](https://placekitten.com/200/287)
+이미지는 이렇게 씁니다.
+
+# 유투브 동영상 첨부
+
+아래와 같이 첨부할 수 있습니다.
+
+```youtube
+https://www.youtube.com/watch?v=LmgWxezH7cc(동영상 주소)
+```
+                        </script>
+						<div data-relTypeCode="artile" data-relId="0" class="toast-editor input-body"></div>
 					</div>
 				</td>
 			</tr>
@@ -134,10 +159,11 @@
 					</td>
 				</tr>
 			</c:forEach>
-			<tr>
+			<tr class="tr-do">
 				<th>작성</th>
 				<td>
-					<button class="btn btn-primary" type="submit">작성</button> <a class="btn btn-info" href="${listUrl}">리스트</a>
+					<button class="btn btn-primary" type="submit">작성</button>
+					<a class="btn btn-info" href="${listUrl}">리스트</a>
 				</td>
 			</tr>
 		</tbody>

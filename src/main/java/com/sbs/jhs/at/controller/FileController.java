@@ -70,7 +70,7 @@ public class FileController {
 
 		IOUtils.copy(in, response.getOutputStream());
 	}
-	
+
 	@RequestMapping(value = "/usr/file/tempImg", method = RequestMethod.GET)
 	public void showTempImg(HttpServletResponse response, int id) throws IOException {
 
@@ -140,7 +140,8 @@ public class FileController {
 				fileInf.put("fileExtType2Code", fileExtType2Code);
 				fileInf.put("fileExt", fileExt);
 				fileInf.put("fileSize", fileSize);
-				fileInf.put("url", "/usr/file/tempImg?id=" + fileId + "&updateDate=" + Util.getNowDateStr().replace("-", "").replace(":", "").replace(" ", ""));
+				fileInf.put("id", fileId);
+				fileInf.put("url", "/usr/file/img?id=" + fileId + "&updateDate=" + Util.getNowDateStr().replace("-", "").replace(":", "").replace(" ", ""));
 				fileInfs.add(fileInf);
 			}
 		}

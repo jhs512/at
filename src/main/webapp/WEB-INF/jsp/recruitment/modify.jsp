@@ -131,6 +131,10 @@
 
 			form.fileIdsStr.value = fileIdsStr;
 
+			if (bodyEditor.inBodyFileIdsStr) {
+                form.fileIdsStr.value += bodyEditor.inBodyFileIdsStr;
+            }
+
 			if (fileInput1) {
 				fileInput1.value = '';
 			}
@@ -226,7 +230,7 @@
                 <td>
                     <div class="form-control-box">
                         <script type="text/x-template">${recruitment.body}</script>
-                        <div class="toast-editor input-body"></div>
+                        <div data-relTypeCode="recruitment" data-relId="${recruitment.id}" class="toast-editor input-body"></div>
                     </div>
                 </td>
             </tr>
