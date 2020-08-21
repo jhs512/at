@@ -116,7 +116,7 @@
                 <th>배역</th>
                 <td>
                     <div class="form-control-box">
-                        <select name="roleId" class="select2">
+                        <select name="roleId" class="select2" style="width:100%;">
                             <c:forEach items="${roles}" var="role">
                                 <option value="${role.id}">${role.getTitle()}</option>
                             </c:forEach>
