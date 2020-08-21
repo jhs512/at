@@ -553,3 +553,6 @@ VALUES (NOW(), NOW(), 1, '남앵커', '1씬', 1, NULL);
 #56
 INSERT INTO actingRole (regDate, updateDate, artworkId, `name`, scenesCount, shootingsCount, etc)
 VALUES (NOW(), NOW(), 1, '여앵커', '1씬', 1, NULL);
+
+# attr에 만료날짜 추가
+ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
