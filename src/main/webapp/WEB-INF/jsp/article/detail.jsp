@@ -64,16 +64,15 @@
 		<a class="btn btn-danger" href="${board.code}-doDelete?id=${article.id}" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
 
-	<a href="${listUrl}" class="btn btn-info">리스트</a>
+	<a href="${listUrl}" class="btn btn-info">목록</a>
 </div>
 
 <c:if test="${isLogined}">
 	<h2 class="con">댓글 작성</h2>
 
 	<script>
-		var WriteReplyForm__submitDone = false;
 		function WriteReplyForm__submit(form) {
-			if (WriteReplyForm__submitDone) {
+			if (isNowLoading()) {
 				alert('처리중입니다.');
 			}
 
@@ -84,7 +83,7 @@
 				return;
 			}
 
-			WriteReplyForm__submitDone = true;
+			startLoading();
 
 			var startUploadFiles = function(onSuccess) {
 				var needToUpload = false;
@@ -162,13 +161,13 @@
 						form.file__reply__0__common__attachment__3.value = '';
 					}
 
-					WriteReplyForm__submitDone = false;
+					endLoading();
 				});
 			});
 		}
 	</script>
 
-	<form class="table-box table-box-vertical  con form1" onsubmit="WriteReplyForm__submit(this); return false;">
+	<form class="table-box table-box-vertical con form1" onsubmit="WriteReplyForm__submit(this); return false;">
 		<input type="hidden" name="relTypeCode" value="article" />
 		<input type="hidden" name="relId" value="${article.id}" />
 
@@ -254,24 +253,7 @@
 }
 
 .reply-modify-form-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
     display: none;
-    align-items:center;
-    justify-content:center;
-    z-index: 20;
-}
-
-.reply-modify-form-modal>div {
-    border:1px solid #787878;
-    overflow-y:auto;
-    max-height:100vh;
-    box-shadow: 10px 10px 100px rgba(0,0,0,0.3);
-    border-radius:10px;
 }
 
 .reply-modify-form-modal-actived .reply-modify-form-modal {
@@ -287,9 +269,9 @@
 }
 </style>
 
-<div class="reply-modify-form-modal">
-	<div class="bg-white con">
-		<h1 class="padding-left-10">댓글 수정</h1>
+<div class="popup-1 reply-modify-form-modal">
+	<div>
+		<h1>댓글 수정</h1>
 		<form action="" class="form1 padding-10 table-box table-box-vertical" onsubmit="ReplyList__submitModifyForm(this); return false;">
 			<input type="hidden" name="id" />
 			<table>
@@ -353,10 +335,8 @@
 
 	var ReplyList__lastLodedId = 0;
 
-	var ReplyList__submitModifyFormDone = false;
-
 	function ReplyList__submitModifyForm(form) {
-		if (ReplyList__submitModifyFormDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -393,7 +373,7 @@
 			fileInput3.value = '';
 		}
 
-		ReplyList__submitModifyFormDone = true;
+		startLoading();
 
 		// 파일 업로드 시작
 		var startUploadFiles = function() {
@@ -466,7 +446,7 @@
 			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
 				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
 				$('.reply-list-box tbody > tr[data-id="' + id + '"]').data('data-originBody', body);
-				$('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body').empty().append(body.replaceAll('\n', '<br>'));
+				$('.reply-list-box tbody > tr[data-id="' + id + '"] .reply-body').empty().append(getHtmlEncoded(body).replaceAll('\n', '<br>'));
 
 				$('.reply-list-box tbody > tr[data-id="' + id + '"] .video-box').empty();
 				$('.reply-list-box tbody > tr[data-id="' + id + '"] .img-box').empty();
@@ -491,7 +471,7 @@
 			}
 
 			ReplyList__hideModifyFormModal();
-			ReplyList__submitModifyFormDone = false;
+			endLoading();
 		};
 
 		startUploadFiles();
@@ -578,6 +558,10 @@
 	}
 
 	function ReplyList__delete(el) {
+	    if (isNowLoading()) {
+            alert('처리중입니다.');
+        }
+		
 		if (confirm('삭제 하시겠습니까?') == false) {
 			return;
 		}
@@ -586,10 +570,20 @@
 
 		var id = $tr.attr('data-id');
 
+		startLoading();
+
 		$.post('./../reply/doDeleteReplyAjax', {
 			id : id
 		}, function(data) {
-			$tr.remove();
+		    if ( data.msg ) {
+                alert(data.msg);
+            }
+
+			if ( data.resultCode.substr(0, 2) == 'S-' ) {
+				$tr.remove();
+			}
+
+			endLoading();
 		}, 'json');
 	}
 
@@ -647,37 +641,38 @@
 
 		html += '<td class="visible-on-sm-down">';
 
-		html += '<div class="flex flex-row-wrap flex-ai-c">';
-		html += '<span class="badge badge-primary bold margin-right-10">' + reply.id + '</span>';
-		html += '<div class="writer">' + reply.extra.writer + '</div>';
-		html += '&nbsp;|&nbsp;';
-		html += '<div class="reg-date">' + reply.regDate + '</div>';
-		html += '<div class="width-100p"></div>';
-		html += '<div class="body flex-1-0-0 margin-top-10 reply-body">' + reply.forPrintBody + '</div>';
-		html += ReplyList__getMediaHtml(reply);
-		html += '</div>';
 
-		html += '<div class="margin-top-10">';
+    html += '<div class="flex flex-row-wrap flex-ai-c">';
+        html += '<span class="badge badge-primary bold margin-right-10">' + reply.id + '</span>';
+        html += '<div class="writer">' + reply.extra.writer + '</div>';
+        html += '&nbsp;|&nbsp;';
+        html += '<div class="reg-date">' + reply.regDate + '</div>';
+        html += '<div class="width-100p"></div>';
+        html += '<div class="body flex-1-0-0 margin-top-10 reply-body">' + reply.forPrintBody + '</div>';
+        html += ReplyList__getMediaHtml(reply);
+        html += '</div>';
 
-		if (reply.extra.actorCanDelete) {
-			html += '<button class="btn btn-danger" type="button" onclick="ReplyList__delete(this);">삭제</button>';
-		}
+        html += '<div class="margin-top-10 btn-inline-box">';
 
-		if (reply.extra.actorCanModify) {
-			html += '<button class="btn btn-info" type="button" onclick="ReplyList__showModifyFormModal(this);">수정</button>';
-		}
+        if (reply.extra.actorCanDelete) {
+            html += '<button class="btn btn-danger" type="button" onclick="ReplyList__delete(this);">삭제</button>';
+        }
 
-		html += '</div>';
+        if (reply.extra.actorCanModify) {
+            html += '<button class="btn btn-info" type="button" onclick="ReplyList__showModifyFormModal(this);">수정</button>';
+        }
 
-		html += '</td>';
-		html += '</tr>';
+        html += '</div>';
 
-		var $tr = $(html);
-		$tr.data('data-originBody', reply.body);
-		ReplyList__$tbody.prepend($tr);
-	}
+        html += '</td>';
+        html += '</tr>';
 
-	ReplyList__loadMore();
+        var $tr = $(html);
+        $tr.data('data-originBody', reply.body);
+        ReplyList__$tbody.prepend($tr);
+    }
+
+    ReplyList__loadMore();
 </script>
 
 <%@ include file="../part/foot.jspf"%>

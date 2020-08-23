@@ -8,9 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
-	var MemberCheckPasswordForm__submitDone = false;
 	function MemberCheckPasswordForm__submit(form) {
-		if (MemberCheckPasswordForm__submitDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -35,7 +34,6 @@
 		form.loginPw.value = '';
 
 		form.submit();
-		MemberCheckPasswordForm__submitDone = true;
 	}
 </script>
 <form method="POST" class="table-box table-box-vertical  con form1" action="doCheckPassword"

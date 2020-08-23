@@ -36,7 +36,7 @@ spring:
 - JAVA_HOME 환경변수가 이미 존재해야 합니다.
 - 윈도우 키 + CMD
 - cd C:\work\sts-4.4.0.RELEASE-workspace\at
-- mvnw.cmd tomcat7:redeploy
+-   
 
 # 운영환경에서 만들어야 실행해야하는 초기 DB 세팅
 

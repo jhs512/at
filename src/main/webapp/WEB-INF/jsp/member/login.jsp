@@ -8,9 +8,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 
 <script>
-	var MemberLoginForm__submitDone = false;
 	function MemberLoginForm__submit(form) {
-		if (MemberLoginForm__submitDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -54,7 +53,7 @@
 		form.loginPw.value = '';
 
 		form.submit();
-		MemberLoginForm__submitDone = true;
+		startLoading();
 	}
 </script>
 <form method="POST" class="table-box table-box-vertical  con form1" action="doLogin"

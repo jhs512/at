@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${board.name} 게시물 리스트" />
 <%@ include file="../part/head.jspf"%>
-<!-- PC용 -->
 <div class="table-box table-box-data con">
     <table>
         <colgroup>

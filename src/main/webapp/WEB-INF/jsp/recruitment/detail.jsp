@@ -5,8 +5,8 @@
 <%@ include file="../part/head.jspf"%>
 <%@ include file="../part/toastuiEditor.jspf"%>
 <script>
-	var ApplymentList__needToLoadMore = '${needToLoadMore}' == 'true';
-	var actorIsWriter = '${actorIsWriter}' == 'true';
+    var ApplymentList__needToLoadMore = '${needToLoadMore}' == 'true';
+    var actorIsWriter = '${actorIsWriter}' == 'true';
 </script>
 <style>
 .visible-actor-is-writer {
@@ -30,7 +30,7 @@
 		<tbody>
 			<tr>
 				<th>번호</th>
-				<td>${recruitment.id}</td>
+				<td><span class="badge badge-primary bold">${recruitment.id}</span></td>
 			</tr>
 			<tr>
 				<th>날짜</th>
@@ -133,111 +133,110 @@
 </c:if>
 <c:if test="${needToShowApplymentWriteForm && recruitment.completeStatus == false}">
 	<script>
-		var WriteApplymentForm__submitDone = false;
-		function WriteApplymentForm__submit(form) {
-			if (WriteApplymentForm__submitDone) {
-				alert('처리중입니다.');
-			}
+        function WriteApplymentForm__submit(form) {
+            if (isNowLoading()) {
+                alert('처리중입니다.');
+            }
 
-			form.body.value = form.body.value.trim();
+            form.body.value = form.body.value.trim();
 
-			if (form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value == '') {
-				form.file__applyment__0__common__attachment__1.focus();
-				alert('파일을 업로드 해주세요.');
+            if (form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value == '') {
+                form.file__applyment__0__common__attachment__1.focus();
+                alert('파일을 업로드 해주세요.');
 
-				return;
-			}
+                return;
+            }
 
-			WriteApplymentForm__submitDone = true;
+            startLoading();
 
-			var startUploadFiles = function(onSuccess) {
-				var needToUpload = false;
+            var startUploadFiles = function(onSuccess) {
+                var needToUpload = false;
 
-				if (needToUpload == false && form.file__applyment__0__common__attachment__1) {
-					needToUpload = form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value.length > 0;
-				}
+                if (needToUpload == false && form.file__applyment__0__common__attachment__1) {
+                    needToUpload = form.file__applyment__0__common__attachment__1 && form.file__applyment__0__common__attachment__1.value.length > 0;
+                }
 
-				if (needToUpload == false && form.file__applyment__0__common__attachment__2) {
-					needToUpload = form.file__applyment__0__common__attachment__2 && form.file__applyment__0__common__attachment__2.value.length > 0;
-				}
+                if (needToUpload == false && form.file__applyment__0__common__attachment__2) {
+                    needToUpload = form.file__applyment__0__common__attachment__2 && form.file__applyment__0__common__attachment__2.value.length > 0;
+                }
 
-				if (needToUpload == false && form.file__applyment__0__common__attachment__3) {
-					needToUpload = form.file__applyment__0__common__attachment__3 && form.file__applyment__0__common__attachment__3.value.length > 0;
-				}
+                if (needToUpload == false && form.file__applyment__0__common__attachment__3) {
+                    needToUpload = form.file__applyment__0__common__attachment__3 && form.file__applyment__0__common__attachment__3.value.length > 0;
+                }
 
-				if (needToUpload == false) {
-					onSuccess();
-					return;
-				}
+                if (needToUpload == false) {
+                    onSuccess();
+                    return;
+                }
 
-				var fileUploadFormData = new FormData(form);
+                var fileUploadFormData = new FormData(form);
 
-				$.ajax({
-					url : './../file/doUploadAjax',
-					data : fileUploadFormData,
-					processData : false,
-					contentType : false,
-					dataType : "json",
-					type : 'POST',
-					success : onSuccess
-				});
-			}
+                $.ajax({
+                    url : './../file/doUploadAjax',
+                    data : fileUploadFormData,
+                    processData : false,
+                    contentType : false,
+                    dataType : "json",
+                    type : 'POST',
+                    success : onSuccess
+                });
+            }
 
-			var startWriteApplyment = function(fileIdsStr, onSuccess) {
+            var startWriteApplyment = function(fileIdsStr, onSuccess) {
 
-				$.ajax({
-					url : './../applyment/doWriteApplymentAjax',
-					data : {
-						fileIdsStr : fileIdsStr,
-						body : form.body.value,
-						relTypeCode : form.relTypeCode.value,
-						relId : form.relId.value
-					},
-					dataType : "json",
-					type : 'POST',
-					success : onSuccess
-				});
-			};
+                $.ajax({
+                    url : './../applyment/doWriteApplymentAjax',
+                    data : {
+                        fileIdsStr : fileIdsStr,
+                        body : form.body.value,
+                        relTypeCode : form.relTypeCode.value,
+                        relId : form.relId.value
+                    },
+                    dataType : "json",
+                    type : 'POST',
+                    success : onSuccess
+                });
+            };
 
-			startUploadFiles(function(data) {
+            startUploadFiles(function(data) {
 
-				var idsStr = '';
-				if (data && data.body && data.body.fileIdsStr) {
-					idsStr = data.body.fileIdsStr;
-				}
+                var idsStr = '';
+                if (data && data.body && data.body.fileIdsStr) {
+                    idsStr = data.body.fileIdsStr;
+                }
 
-				startWriteApplyment(idsStr, function(data) {
+                startWriteApplyment(idsStr, function(data) {
 
-					if (data.msg) {
-						alert(data.msg);
-					}
+                    if (data.msg) {
+                        alert(data.msg);
+                    }
 
-					form.body.value = '';
+                    form.body.value = '';
 
-					if (form.file__applyment__0__common__attachment__1) {
-						form.file__applyment__0__common__attachment__1.value = '';
-					}
+                    if (form.file__applyment__0__common__attachment__1) {
+                        form.file__applyment__0__common__attachment__1.value = '';
+                    }
 
-					if (form.file__applyment__0__common__attachment__2) {
-						form.file__applyment__0__common__attachment__2.value = '';
-					}
+                    if (form.file__applyment__0__common__attachment__2) {
+                        form.file__applyment__0__common__attachment__2.value = '';
+                    }
 
-					if (form.file__applyment__0__common__attachment__3) {
-						form.file__applyment__0__common__attachment__3.value = '';
-					}
+                    if (form.file__applyment__0__common__attachment__3) {
+                        form.file__applyment__0__common__attachment__3.value = '';
+                    }
 
-					WriteApplymentForm__submitDone = false;
+                    endLoading();
 
-					// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
-					if (ApplymentList__needToLoadMore == false) {
-						ApplymentList__loadMore();
-					}
-				});
-			});
-		}
-	</script>
-	<h2 class="con">해당 배역 신청</h2>
-	<form class="table-box con form1 write-applyment-form" onsubmit="WriteApplymentForm__submit(this); return false;">
+                    // 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
+                    if (ApplymentList__needToLoadMore == false) {
+                        ApplymentList__loadMore();
+                    }
+                });
+            });
+        }
+    </script>
+	<h1 class="con">해당 배역 신청</h1>
+	<form class="table-box table-box-vertical con form1 write-applyment-form" onsubmit="WriteApplymentForm__submit(this); return false;">
 		<input type="hidden" name="relTypeCode" value="recruitment" />
 		<input type="hidden" name="relId" value="${recruitment.id}" />
 		<table>
@@ -265,10 +264,12 @@
 						</td>
 					</tr>
 				</c:forEach>
-				<tr>
+				<tr class="tr-do">
 					<th>신청</th>
 					<td>
-						<input class="btn btn-primary" type="submit" value="신청">
+						<div class="btn-inline-box">
+							<input class="btn btn-primary" type="submit" value="신청">
+						</div>
 					</td>
 				</tr>
 			</tbody>
@@ -277,7 +278,10 @@
 </c:if>
 <style>
 .applyment-list-box tr .btn-toggle-applyment::after {
-    content: "숨기기";
+    content: "목록에서 숨기기";
+}
+.applyment-list-box tr .btn-toggle-applyment {
+    background-color:#dc3540;
 }
 
 .applyment-list-box tr.hide {
@@ -288,35 +292,47 @@
     display: table-row;
 }
 
+@media ( max-width:800px ) {
+    .applyment-list-box.show-hide-items tr.hide {
+	    display: block;
+	}
+}
+
 .applyment-list-box tr.hide .btn-toggle-applyment::after {
-    content: "보이기";
+    content: "숨김 해제하기";
+}
+.applyment-list-box tr.hide .btn-toggle-applyment {    
+    background-color:#17a2b8;
 }
 </style>
 <h2 class="con">
-	<span class="visible-actor-is-not-writer">본인 </span>신청 리스트<span class="visible-actor-is-writer applyments-count">(0건)</span>
+	<span class="visible-actor-is-not-writer">본인 신청내역</span>
+	<span class="visible-actor-is-writer">실시간 접수내역</span>
+	<span class="visible-actor-is-writer applyments-count">(0건)</span>
 </h2>
 <div class="con">
 	<label class="visible-actor-is-writer">
 		<input type="checkbox" onchange="$('.applyment-list-box').toggleClass('show-hide-items');" />
-		숨김처리한 내용 보기<span class="hidden-applyments-count">(0건)</span>
+		숨김처리한 내용 보기
+		<span class="hidden-applyments-count">(0건)</span>
 	</label>
 </div>
-<div class="applyment-list-box table-box con margin-top-20">
+<div class="applyment-list-box table-box table-box-data con margin-top-20">
 	<table>
 		<colgroup>
-			<col class="table-first-col table-first-col-tight">
-			<col width="180" class="visible-on-md-up">
-			<col width="180" class="visible-on-md-up">
+			<col class="table-first-col">
+			<col width="100">
+			<col width="140">
 			<col>
-			<col width="200" class="visible-on-md-up">
+			<col width="180">
 		</colgroup>
 		<thead>
 			<tr>
 				<th>번호</th>
-				<th class="visible-on-md-up">신청일</th>
-				<th class="visible-on-md-up">신청자</th>
+				<th>신청일</th>
+				<th>신청자</th>
 				<th>지원배역 연기영상</th>
-				<th class="visible-on-md-up">비고</th>
+				<th>비고</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -329,24 +345,7 @@
 }
 
 .applyment-modify-form-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4);
     display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 20;
-}
-
-.applyment-modify-form-modal>div {
-    border: 1px solid #787878;
-    overflow-y: auto;
-    max-height: 100vh;
-    box-shadow: 10px 10px 100px rgba(0, 0, 0, 0.3);
-    border-radius:10px;
 }
 
 .applyment-modify-form-modal-actived .applyment-modify-form-modal {
@@ -361,10 +360,10 @@
     width: 100px;
 }
 </style>
-<div class="applyment-modify-form-modal">
-	<div class="bg-white con">
-		<h1 class="text-align-center">신청 수정</h1>
-		<form action="" class="form1 padding-10 table-box table-box-vertical" onsubmit="ApplymentList__submitModifyForm(this); return false;">
+<div class="popup-1 applyment-modify-form-modal">
+	<div>
+		<h1>신청 수정</h1>
+		<form action="" class="form1 table-box table-box-vertical" onsubmit="ApplymentList__submitModifyForm(this); return false;">
 			<input type="hidden" name="id" />
 			<table>
 				<colgroup>
@@ -421,361 +420,386 @@
 	</div>
 </div>
 <script>
-	var ApplymentList__$box = $('.applyment-list-box');
-	var ApplymentList__$tbody = ApplymentList__$box.find('tbody');
-
-	var ApplymentList__lastLodedId = 0;
-
-	var ApplymentList__submitModifyFormDone = false;
-
-	function ApplymentList__submitModifyForm(form) {
-		if (ApplymentList__submitModifyFormDone) {
-			alert('처리중입니다.');
-			return;
-		}
-
-		form.body.value = form.body.value.trim();
-
-		var id = form.id.value;
-		var body = form.body.value;
-
-		var fileInput1 = form['file__applyment__' + id + '__common__attachment__1'];
-		var fileInput2 = form['file__applyment__' + id + '__common__attachment__2'];
-		var fileInput3 = form['file__applyment__' + id + '__common__attachment__3'];
-
-		var deleteFileInput1 = form["deleteFile__applyment__" + id + "__common__attachment__1"];
-		var deleteFileInput2 = form["deleteFile__applyment__" + id + "__common__attachment__2"];
-		var deleteFileInput3 = form["deleteFile__applyment__" + id + "__common__attachment__3"];
-
-		if (fileInput1 && deleteFileInput1 && deleteFileInput1.checked) {
-			fileInput1.value = '';
-		}
-
-		if (fileInput2 && deleteFileInput2 && deleteFileInput2.checked) {
-			fileInput2.value = '';
-		}
-
-		if (fileInput3 && deleteFileInput3 && deleteFileInput3.checked) {
-			fileInput3.value = '';
-		}
-
-		ApplymentList__submitModifyFormDone = true;
-
-		// 파일 업로드 시작
-		var startUploadFiles = function() {
-			var needToUpload = false;
-
-			if (needToUpload == false) {
-				needToUpload = fileInput1 && fileInput1.value.length > 0;
-			}
-
-			if (needToUpload == false) {
-				needToUpload = deleteFileInput1 && deleteFileInput1.checked;
-			}
-
-			if (needToUpload == false) {
-				needToUpload = fileInput2 && fileInput2.value.length > 0;
-			}
-
-			if (needToUpload == false) {
-				needToUpload = deleteFileInput2 && deleteFileInput2.checked;
-			}
-
-			if (needToUpload == false) {
-				needToUpload = fileInput3 && fileInput3.value.length > 0;
-			}
-
-			if (needToUpload == false) {
-				needToUpload = deleteFileInput3 && deleteFileInput3.checked;
-			}
-
-			if (needToUpload == false) {
-				onUploadFilesComplete();
-				return;
-			}
-
-			var fileUploadFormData = new FormData(form);
-
-			$.ajax({
-				url : './../file/doUploadAjax',
-				data : fileUploadFormData,
-				processData : false,
-				contentType : false,
-				dataType : "json",
-				type : 'POST',
-				success : onUploadFilesComplete
-			});
-		}
-
-		// 파일 업로드 완료시 실행되는 함수
-		var onUploadFilesComplete = function(data) {
-
-			var fileIdsStr = '';
-			if (data && data.body && data.body.fileIdsStr) {
-				fileIdsStr = data.body.fileIdsStr;
-			}
-
-			startModifyApplyment(fileIdsStr);
-		};
-
-		// 신청 수정 시작
-		var startModifyApplyment = function(fileIdsStr) {
-			$.post('../applyment/doModifyApplymentAjax', {
-				id : id,
-				body : body,
-				fileIdsStr : fileIdsStr
-			}, onModifyApplymentComplete, 'json');
-		};
-
-		// 신청 수정이 완료되면 실행되는 함수
-		var onModifyApplymentComplete = function(data) {
-			if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
-				// 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
-				$('.applyment-list-box tbody > tr[data-id="' + id + '"]').data('data-originBody', body);
-				var selector;
-
-				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .applyment-body'
-				$(selector).empty().append(body);
-
-				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .video-box'
-				$(selector).empty();
-
-				selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .img-box';
-				$(selector).empty();
-
-				if (data && data.body && data.body.file__common__attachment) {
-					for ( var fileNo in data.body.file__common__attachment) {
-						var file = data.body.file__common__attachment[fileNo];
-
-						if (file.fileExtTypeCode == 'video') {
-							var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
-							selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box';
-							$(selector).append(html);
-						} else {
-							var html = '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
-							selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].img-box';
-							$(selector).append(html);
-						}
-					}
-				}
-			}
-
-			if (data.msg) {
-				alert(data.msg);
-			}
-
-			ApplymentList__hideModifyFormModal();
-			ApplymentList__submitModifyFormDone = false;
-
-			// 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
-			if (ApplymentList__needToLoadMore == false) {
-				ApplymentList__loadMore();
-			}
-		};
-
-		startUploadFiles();
-	}
-
-	function ApplymentList__toggleItem(el) {
-		var $tr = $(el).closest('tr');
-		var id = $tr.attr('data-id');
-
-		if ($tr.hasClass('hide')) {
-			$.post('/usr/applyment/doSetVisible', {
-				id : id,
-				value : 'show'
-			}, function(data) {
-				$tr.removeClass('hide');
-
-				ApplymentList__hiddenApplymentsCount--;
-				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
-
-			}, 'json');
-		} else if ($tr.addClass('hide')) {
-			$.post('/usr/applyment/doSetVisible', {
-				id : id,
-				value : 'hide'
-			}, function(data) {
-				$tr.addClass('hide');
-
-				ApplymentList__hiddenApplymentsCount++;
-				$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
-			}, 'json');
-		}
-	}
-
-	function ApplymentList__showModifyFormModal(el) {
-		$('html').addClass('applyment-modify-form-modal-actived');
-		var $tr = $(el).closest('tr');
-		var originBody = $tr.data('data-originBody');
-
-		var id = $tr.attr('data-id');
-
-		var form = $('.applyment-modify-form-modal form').get(0);
-
-		$(form).find('[data-name]').each(function(index, el) {
-			var $el = $(el);
-
-			var name = $el.attr('data-name');
-			name = name.replaceAll('__0__', '__' + id + '__');
-			$el.attr('name', name);
-
-			if ($el.prop('type') == 'file') {
-				$el.val('');
-			} else if ($el.prop('type') == 'checkbox') {
-				$el.prop('checked', false);
-			}
-		});
-
-		for (var fileNo = 1; fileNo <= 3; fileNo++) {
-			$('.applyment-modify-form-modal .video-box-file-' + fileNo).empty();
-
-			var videoName = 'applyment__' + id + '__common__attachment__' + fileNo;
-
-			var $videoBox = $('.applyment-list-box [data-video-name="' + videoName + '"]');
-
-			if ($videoBox.length > 0) {
-				$('.applyment-modify-form-modal .video-box-file-' + fileNo).append($videoBox.html());
-			}
-
-			$('.applyment-modify-form-modal .img-box-file-' + fileNo).empty();
-
-			var imgName = 'applyment__' + id + '__common__attachment__' + fileNo;
-
-			var $imgBox = $('.applyment-list-box [data-img-name="' + imgName + '"]');
-
-			if ($imgBox.length > 0) {
-				$('.applyment-modify-form-modal .img-box-file-' + fileNo).append($imgBox.html());
-			}
-		}
-
-		form.id.value = id;
-		form.body.value = originBody;
-	}
-
-	function ApplymentList__hideModifyFormModal() {
-		$('html').removeClass('applyment-modify-form-modal-actived');
-	}
-
-	// 1초
-	var ApplymentList__loadMoreInterval = 1 * 1000;
-	var ApplymentList__applymentsCount = 0;
-	var ApplymentList__hiddenApplymentsCount = 0;
-
-	function ApplymentList__loadMoreCallback(data) {
-		if (data.body.applyments && data.body.applyments.length > 0) {
-			ApplymentList__lastLodedId = data.body.applyments[data.body.applyments.length - 1].id;
-			ApplymentList__drawApplyments(data.body.applyments);
-		}
-
-		if (ApplymentList__needToLoadMore) {
-			setTimeout(ApplymentList__loadMore, ApplymentList__loadMoreInterval);
-		}
-	}
-
-	function ApplymentList__loadMore() {
-
-		$.get('../applyment/getForPrintApplyments', {
-			recruitmentId : param.id,
-			from : ApplymentList__lastLodedId + 1
-		}, ApplymentList__loadMoreCallback, 'json');
-	}
-
-	function ApplymentList__drawApplyments(applyments) {
-		for (var i = 0; i < applyments.length; i++) {
-			var applyment = applyments[i];
-			ApplymentList__drawApplyment(applyment);
-		}
-	}
-
-	function ApplymentList__delete(el) {
-		if (confirm('삭제 하시겠습니까?') == false) {
-			return;
-		}
-
-		var $tr = $(el).closest('tr');
-
-		var id = $tr.attr('data-id');
-
-		$.post('./../applyment/doDeleteApplymentAjax', {
-			id : id
-		}, function(data) {
-			ApplymentList__applymentsCount--;
-			$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
-			$tr.remove();
-		}, 'json');
-	}
-
-	function ApplymentList__drawApplyment(applyment) {
-		ApplymentList__applymentsCount++;
-		$('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
-
+    var ApplymentList__$box = $('.applyment-list-box');
+    var ApplymentList__$tbody = ApplymentList__$box.find('tbody');
+
+    var ApplymentList__lastLodedId = 0;
+
+    function ApplymentList__submitModifyForm(form) {
+        if (isNowLoading()) {
+            alert('처리중입니다.');
+            return;
+        }
+
+        form.body.value = form.body.value.trim();
+
+        var id = form.id.value;
+        var body = form.body.value;
+
+        var fileInput1 = form['file__applyment__' + id + '__common__attachment__1'];
+        var fileInput2 = form['file__applyment__' + id + '__common__attachment__2'];
+        var fileInput3 = form['file__applyment__' + id + '__common__attachment__3'];
+
+        var deleteFileInput1 = form["deleteFile__applyment__" + id + "__common__attachment__1"];
+        var deleteFileInput2 = form["deleteFile__applyment__" + id + "__common__attachment__2"];
+        var deleteFileInput3 = form["deleteFile__applyment__" + id + "__common__attachment__3"];
+
+        if (fileInput1 && deleteFileInput1 && deleteFileInput1.checked) {
+            fileInput1.value = '';
+        }
+
+        if (fileInput2 && deleteFileInput2 && deleteFileInput2.checked) {
+            fileInput2.value = '';
+        }
+
+        if (fileInput3 && deleteFileInput3 && deleteFileInput3.checked) {
+            fileInput3.value = '';
+        }
+
+        startLoading();
+
+        // 파일 업로드 시작
+        var startUploadFiles = function() {
+            var needToUpload = false;
+
+            if (needToUpload == false) {
+                needToUpload = fileInput1 && fileInput1.value.length > 0;
+            }
+
+            if (needToUpload == false) {
+                needToUpload = deleteFileInput1 && deleteFileInput1.checked;
+            }
+
+            if (needToUpload == false) {
+                needToUpload = fileInput2 && fileInput2.value.length > 0;
+            }
+
+            if (needToUpload == false) {
+                needToUpload = deleteFileInput2 && deleteFileInput2.checked;
+            }
+
+            if (needToUpload == false) {
+                needToUpload = fileInput3 && fileInput3.value.length > 0;
+            }
+
+            if (needToUpload == false) {
+                needToUpload = deleteFileInput3 && deleteFileInput3.checked;
+            }
+
+            if (needToUpload == false) {
+                onUploadFilesComplete();
+                return;
+            }
+
+            var fileUploadFormData = new FormData(form);
+
+            $.ajax({
+                url : './../file/doUploadAjax',
+                data : fileUploadFormData,
+                processData : false,
+                contentType : false,
+                dataType : "json",
+                type : 'POST',
+                success : onUploadFilesComplete
+            });
+        }
+
+        // 파일 업로드 완료시 실행되는 함수
+        var onUploadFilesComplete = function(data) {
+
+            var fileIdsStr = '';
+            if (data && data.body && data.body.fileIdsStr) {
+                fileIdsStr = data.body.fileIdsStr;
+            }
+
+            startModifyApplyment(fileIdsStr);
+        };
+
+        // 신청 수정 시작
+        var startModifyApplyment = function(fileIdsStr) {
+            $.post('../applyment/doModifyApplymentAjax', {
+                id : id,
+                body : body,
+                fileIdsStr : fileIdsStr
+            }, onModifyApplymentComplete, 'json');
+        };
+
+        // 신청 수정이 완료되면 실행되는 함수
+        var onModifyApplymentComplete = function(data) {
+            if (data.resultCode && data.resultCode.substr(0, 2) == 'S-') {
+                // 성공시에는 기존에 그려진 내용을 수정해야 한다.!!
+                $('.applyment-list-box tbody > tr[data-id="' + id + '"]').data('data-originBody', body);
+                var selector;
+
+                selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .applyment-body'
+                $(selector).empty().append(body);
+
+                selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .video-box'
+                $(selector).empty();
+
+                selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] .img-box';
+                $(selector).empty();
+
+                if (data && data.body && data.body.file__common__attachment) {
+                    for ( var fileNo in data.body.file__common__attachment) {
+                        var file = data.body.file__common__attachment[fileNo];
+
+                        if (file.fileExtTypeCode == 'video') {
+                            var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+                            selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box';
+                            $(selector).append(html);
+                        } else {
+                            var html = '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
+                            selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].img-box';
+                            $(selector).append(html);
+                        }
+                    }
+                }
+            }
+
+            if (data.msg) {
+                alert(data.msg);
+            }
+
+            ApplymentList__hideModifyFormModal();
+            endLoading();
+
+            // 자동 리스트 갱신모드가 아닐 경우 수동으로 이번 한번만 갱신해준다.
+            if (ApplymentList__needToLoadMore == false) {
+                ApplymentList__loadMore();
+            }
+        };
+
+        startUploadFiles();
+    }
+
+    function ApplymentList__toggleItem(el) {
+        var $tr = $(el).closest('tr');
+        var id = $tr.attr('data-id');
+
+        if ($tr.hasClass('hide')) {
+            $.post('/usr/applyment/doSetVisible', {
+                id : id,
+                value : 'show'
+            }, function(data) {
+                $tr.removeClass('hide');
+
+                ApplymentList__hiddenApplymentsCount--;
+                $('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+
+            }, 'json');
+        } else if ($tr.addClass('hide')) {
+            $.post('/usr/applyment/doSetVisible', {
+                id : id,
+                value : 'hide'
+            }, function(data) {
+                $tr.addClass('hide');
+
+                ApplymentList__hiddenApplymentsCount++;
+                $('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+            }, 'json');
+        }
+    }
+
+    function ApplymentList__showModifyFormModal(el) {
+        $('html').addClass('applyment-modify-form-modal-actived');
+        var $tr = $(el).closest('tr');
+        var originBody = $tr.data('data-originBody');
+
+        var id = $tr.attr('data-id');
+
+        var form = $('.applyment-modify-form-modal form').get(0);
+
+        $(form).find('[data-name]').each(function(index, el) {
+            var $el = $(el);
+
+            var name = $el.attr('data-name');
+            name = name.replaceAll('__0__', '__' + id + '__');
+            $el.attr('name', name);
+
+            if ($el.prop('type') == 'file') {
+                $el.val('');
+            } else if ($el.prop('type') == 'checkbox') {
+                $el.prop('checked', false);
+            }
+        });
+
+        for (var fileNo = 1; fileNo <= 3; fileNo++) {
+            $('.applyment-modify-form-modal .video-box-file-' + fileNo).empty();
+
+            var videoName = 'applyment__' + id + '__common__attachment__' + fileNo;
+
+            var $videoBox = $('.applyment-list-box [data-video-name="' + videoName + '"]');
+
+            if ($videoBox.length > 0) {
+                $('.applyment-modify-form-modal .video-box-file-' + fileNo).append($videoBox.html());
+            }
+
+            $('.applyment-modify-form-modal .img-box-file-' + fileNo).empty();
+
+            var imgName = 'applyment__' + id + '__common__attachment__' + fileNo;
+
+            var $imgBox = $('.applyment-list-box [data-img-name="' + imgName + '"]');
+
+            if ($imgBox.length > 0) {
+                $('.applyment-modify-form-modal .img-box-file-' + fileNo).append($imgBox.html());
+            }
+        }
+
+        form.id.value = id;
+        form.body.value = originBody;
+    }
+
+    function ApplymentList__hideModifyFormModal() {
+        $('html').removeClass('applyment-modify-form-modal-actived');
+    }
+
+    // 1초
+    var ApplymentList__loadMoreInterval = 1 * 1000;
+    var ApplymentList__applymentsCount = 0;
+    var ApplymentList__hiddenApplymentsCount = 0;
+
+    function ApplymentList__loadMoreCallback(data) {
+        if (data.body.applyments && data.body.applyments.length > 0) {
+            ApplymentList__lastLodedId = data.body.applyments[data.body.applyments.length - 1].id;
+            ApplymentList__drawApplyments(data.body.applyments);
+        }
+
+        if (ApplymentList__needToLoadMore) {
+            setTimeout(ApplymentList__loadMore, ApplymentList__loadMoreInterval);
+        }
+    }
+
+    function ApplymentList__loadMore() {
+
+        $.get('../applyment/getForPrintApplyments', {
+            recruitmentId : param.id,
+            from : ApplymentList__lastLodedId + 1
+        }, ApplymentList__loadMoreCallback, 'json');
+    }
+
+    function ApplymentList__getMediaHtml(applyment) {
 		var html = '';
-		var trClassStr = '';
-
-		if (applyment.hideStatus) {
-			trClassStr = 'hide';
-			ApplymentList__hiddenApplymentsCount++;
-			$('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
-		}
-		html += '<tr data-id="' + applyment.id + '" class="' + trClassStr + '">';
-		html += '<td>' + applyment.id + '</td>';
-		html += '<td class="visible-on-md-up">' + applyment.regDate + '</td>';
-		html += '<td class="visible-on-md-up">';
-		html += '<div>' + applyment.extra.writer + '</div>';
-		html += '<div>' + applyment.extra.writerRealName + '</div>';
-		html += '<div>' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
-		html += '<div>' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
-		html += '</td>';
-		html += '<td>';
-		html += '<div class="applyment-body">' + applyment.body + '</div>';
-		html += '<div class="visible-on-sm-down">신청일 : ' + applyment.regDate + '</div>';
-		html += '<div class="visible-on-sm-down">신청자 : ' + applyment.extra.writer + '</div>';
-		html += '<div class="visible-on-sm-down">신청자(본명) : ' + applyment.extra.writerRealName + '</div>';
-		html += '<div class="visible-on-sm-down">' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
-		html += '<div class="visible-on-sm-down">' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
-
 		for (var fileNo = 1; fileNo <= 3; fileNo++) {
-			var file = null;
-			if (applyment.extra.file__common__attachment && applyment.extra.file__common__attachment[fileNo]) {
-				file = applyment.extra.file__common__attachment[fileNo];
+            var file = null;
+            if (applyment.extra.file__common__attachment && applyment.extra.file__common__attachment[fileNo]) {
+                file = applyment.extra.file__common__attachment[fileNo];
+            }
+
+            html += '<div class="video-box" data-video-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+
+            if (file && file.fileExtTypeCode == 'video') {
+                html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
+            }
+
+            html += '</div>';
+
+            html += '<div class="img-box img-box-auto" data-img-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+
+            if (file && file.fileExtTypeCode == 'img') {
+                html += '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
+            }
+
+            html += '</div>';
+        }
+
+        return '<div class="media-box">' + html + "</div>";
+	}
+
+    function ApplymentList__drawApplyments(applyments) {
+        for (var i = 0; i < applyments.length; i++) {
+            var applyment = applyments[i];
+            ApplymentList__drawApplyment(applyment);
+        }
+    }
+
+    function ApplymentList__delete(el) {
+        if (isNowLoading()) {
+            alert('처리중입니다.');
+        }
+        
+        if (confirm('삭제 하시겠습니까?') == false) {
+            return;
+        }
+
+        var $tr = $(el).closest('tr');
+
+        var id = $tr.attr('data-id');
+
+        startLoading();
+
+        $.post('./../applyment/doDeleteApplymentAjax', {
+            id : id
+        }, function(data) {
+            if ( data.msg ) {
+                alert(data.msg);
+            }
+
+			if ( data.resultCode.substr(0, 2) == 'S-' ) {
+			    ApplymentList__applymentsCount--;
+	            $('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
+	            $tr.remove();
 			}
+			
+            endLoading();
+        }, 'json');
+    }
 
-			html += '<div class="video-box" data-video-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+    function ApplymentList__drawApplyment(applyment) {
+        ApplymentList__applymentsCount++;
+        $('.applyments-count').text('(' + ApplymentList__applymentsCount + '건)');
 
-			if (file && file.fileExtTypeCode == 'video') {
-				html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
-			}
+        var html = '';
+        var trClassStr = '';
 
-			html += '</div>';
+        if (applyment.hideStatus) {
+            trClassStr = 'hide';
+            ApplymentList__hiddenApplymentsCount++;
+            $('.hidden-applyments-count').text('(' + ApplymentList__hiddenApplymentsCount + '건)');
+        }
+        html += '<tr data-id="' + applyment.id + '" class="' + trClassStr + '">';
+        html += '<td><span class="badge badge-primary bold">' + applyment.id + '</span></td>';
+        html += '<td>' + applyment.regDate + '</td>';
+        html += '<td>';
+        html += '<div><strong>' + applyment.extra.writer + '</strong></div>';
+        html += '<div>' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
+        html += '<div>' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
+        html += '</td>';
+        html += '<td>';
+        html += '<div class="applyment-body">' + applyment.body + '</div>';
 
-			html += '<div class="img-box img-box-auto" data-img-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+        html += ApplymentList__getMediaHtml(applyment);
+        
+        html += '</td>';
+        html += '<td>';
 
-			if (file && file.fileExtTypeCode == 'img') {
-				html += '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
-			}
+        if (applyment.extra.actorCanDelete) {
+            html += '<button class="btn btn-danger" type="button" onclick="ApplymentList__delete(this);">삭제</button>';
+        }
 
-			html += '</div>';
-		}
+        if (applyment.extra.actorCanModify) {
+            html += '<button class="btn btn-info" type="button" onclick="ApplymentList__showModifyFormModal(this);">수정</button>';
+        }
 
-		html += '<div class="visible-on-sm-down margin-top-10">';
+        if (applyment.extra.actorCanToggle) {
+            html += '<button class="btn btn-info btn-toggle-applyment" type="button" onclick="ApplymentList__toggleItem(this);"></button>';
+        }
 
-		if (applyment.extra.actorCanDelete) {
-			html += '<button class="btn btn-danger" type="button" onclick="ApplymentList__delete(this);">삭제</button>';
-		}
+        html += '</td>';
 
-		if (applyment.extra.actorCanModify) {
-			html += '<button class="btn btn-info" type="button" onclick="ApplymentList__showModifyFormModal(this);">수정</button>';
-		}
+        html += '<td class="visible-on-sm-down">';
 
-		if (applyment.extra.actorCanToggle) {
-			html += '<button class="btn btn-info btn-toggle-applyment" type="button" onclick="ApplymentList__toggleItem(this);"></button>';
-		}
-
+		html += '<div class="flex flex-row-wrap flex-ai-c">';
+		html += '<span class="badge badge-primary bold margin-right-10">' + applyment.id + '</span>';
+		html += '<div class="writer">' + applyment.extra.writer + '</div>';
+		html += '&nbsp;|&nbsp;';
+		html += '<div class="reg-date">' + applyment.regDate + '</div>';
+		html += '<div class="width-100p"></div>';
+		html += '<div class="body flex-1-0-0 margin-top-10 applyment-body">' + applyment.forPrintBody + '</div>';
+		html += ApplymentList__getMediaHtml(applyment);
 		html += '</div>';
 
-		html += '</td>';
-		html += '<td class="visible-on-md-up">';
+		html += '<div class="margin-top-10 btn-inline-box">';
 
 		if (applyment.extra.actorCanDelete) {
 			html += '<button class="btn btn-danger" type="button" onclick="ApplymentList__delete(this);">삭제</button>';
@@ -786,17 +810,20 @@
 		}
 
 		if (applyment.extra.actorCanToggle) {
-			html += '<button class="btn btn-info btn-toggle-applyment" type="button" onclick="ApplymentList__toggleItem(this);"></button>';
-		}
+            html += '<button class="btn btn-info btn-toggle-applyment" type="button" onclick="ApplymentList__toggleItem(this);"></button>';
+        }
 
-		html += '</td>';
-		html += '</tr>';
+		html += '</div>';
+        
+        html += '</td>';
+        
+        html += '</tr>';
 
-		var $tr = $(html);
-		$tr.data('data-originBody', applyment.body);
-		ApplymentList__$tbody.prepend($tr);
-	}
+        var $tr = $(html);
+        $tr.data('data-originBody', applyment.body);
+        ApplymentList__$tbody.prepend($tr);
+    }
 
-	ApplymentList__loadMore();
+    ApplymentList__loadMore();
 </script>
 <%@ include file="../part/foot.jspf"%>

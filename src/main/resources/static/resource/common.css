@@ -89,7 +89,7 @@ label[for] {
 }
 
 .height-50 {
-    min-height:50px !important;
+    min-height: 50px !important;
 }
 
 .height-300 {
@@ -109,7 +109,7 @@ label[for] {
 }
 
 .padding-left-10 {
-    padding-left:10px;
+    padding-left: 10px;
 }
 
 .padding-0-10 {
@@ -274,7 +274,7 @@ label[for] {
         padding-bottom: 20px;
     }
     .table-box.table-box-vertical .tr-do>th {
-        display: none;
+        display: none !important;
     }
 }
 
@@ -291,6 +291,18 @@ label[for] {
     }
     .table-box.table-box-data td.visible-on-sm-down a {
         text-decoration: none;
+    }
+    
+    .btn-box > .btn {
+        display: block;
+        width: 100%;
+        margin-left: 0 !important;
+        border-radius: 4px;
+        margin-top:10px !important;
+    }
+    
+    .btn-box > .btn:first-chid {
+        margin-top:0 !important;
     }
 }
 
@@ -379,6 +391,16 @@ label[for] {
     margin-left: 10px;
 }
 
+.btn-inline-box {
+    display: flex;
+}
+
+.btn-inline-box>.btn {
+    display: block;
+    flex-grow: 1;
+    border-radius: 4px;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -404,4 +426,34 @@ label[for] {
 
 .badge-warning {
     background-color: #ffc10;
+}
+
+.te-ww-container .tui-editor-contents {
+    padding-left: 10px !important;
+    padding-right: 10px;
+}
+
+.te-md-container .te-preview {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.tui-md-code-block.CodeMirror-linebackground {
+    left: 10px !important;
+    right: 0 !important;
+}
+
+.tui-editor-defaultUI pre.CodeMirror-line {
+    padding-left: 10px !important;
+    padding-right: 0 !important;
+}
+
+.tui-editor-defaultUI, .code-block-header, .tui-editor-defaultUI pre {
+    word-break: break-all !important;
+    white-space: pre-wrap;
+}
+
+.tui-editor-contents pre {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
 }

@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController {
 	@RequestMapping("/usr/home/main")
 	public String showMain() {
-		return "home/main";
+	    return "redirect:/usr/recruitment/actor-list";
 	}
 	
 	@RequestMapping("/")
 	public String showIndex() {
-		return "redirect:/usr/home/main";
+		return "redirect:/usr/recruitment/actor-list";
 	}
 }

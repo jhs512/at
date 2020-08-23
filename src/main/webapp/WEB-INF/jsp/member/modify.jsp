@@ -4,9 +4,8 @@
 <%@ include file="../part/head.jspf"%>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-sha256/0.9.0/sha256.min.js"></script>
 <script>
-	var MemberModifyForm__submitDone = false;
 	function MemberModifyForm__submit(form) {
-		if (MemberModifyForm__submitDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -103,7 +102,7 @@
 		form.loginPwConfirm.value = '';
 
 		form.submit();
-		MemberModifyForm__submitDone = true;
+		startLoading();
 	}
 </script>
 <form method="POST" class="table-box table-box-vertical con form1" action="doModify" onsubmit="MemberModifyForm__submit(this); return false;">

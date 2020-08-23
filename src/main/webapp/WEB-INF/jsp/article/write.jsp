@@ -6,9 +6,8 @@
 <%@ include file="../part/toastuiEditor.jspf"%>
 
 <script>
-	var ArticleWriteForm__submitDone = false;
 	function ArticleWriteForm__submit(form) {
-		if (ArticleWriteForm__submitDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -87,7 +86,7 @@
 			});
 		}
 
-		ArticleWriteForm__submitDone = true;
+		startLoading();
 		startUploadFiles(function(data) {
 			var fileIdsStr = '';
 
@@ -140,7 +139,7 @@
 아래와 같이 첨부할 수 있습니다.
 
 ```youtube
-https://www.youtube.com/watch?v=LmgWxezH7cc(동영상 주소)
+https://www.youtube.com/watch?v=LmgWxezH7cc
 ```
                         </script>
 						<div data-relTypeCode="artile" data-relId="0" class="toast-editor input-body"></div>

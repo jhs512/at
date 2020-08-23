@@ -11,9 +11,8 @@
 	});
 </script>
 <script>
-	var RecruitmentWriteForm__submitDone = false;
 	function RecruitmentWriteForm__submit(form) {
-		if (RecruitmentWriteForm__submitDone) {
+		if (isNowLoading()) {
 			alert('처리중입니다.');
 			return;
 		}
@@ -86,7 +85,7 @@
 			});
 		}
 
-		RecruitmentWriteForm__submitDone = true;
+		startLoading();
 		startUploadFiles(function(data) {
 			var fileIdsStr = '';
 
