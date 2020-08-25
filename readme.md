@@ -36,10 +36,17 @@ spring:
 - JAVA_HOME 환경변수가 이미 존재해야 합니다.
 - 윈도우 키 + CMD
 - cd C:\work\sts-4.4.0.RELEASE-workspace\at
--   
+- mvnw.cmd tomcat7:redeploy
 
 # 운영환경에서 만들어야 실행해야하는 초기 DB 세팅
 
 # DB 사용자 생성
 
 - GRANT ALL PRIVILEGES ON `at`.\* TO `at`@`localhost` IDENTIFIED BY 'sbs123414';
+
+# 서버쪽 세팅
+
+- 웹앱이나 톰캣 리스타트시 세션 유지
+  - /opt/tomcat/apache-tomcat-9.0.36/conf/context.xml
+    - <Manager pathname=""><saveOnRestart>false</saveOnRestart></Manager>
+      - 추가

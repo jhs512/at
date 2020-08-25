@@ -190,7 +190,7 @@
 				<td>
 					<div class="form-control-box">
 						<script type="text/x-template">${article.body}</script>
-						<div data-relTypeCode="artile" data-relId="${article.id}" class="toast-editor input-body"></div>
+						<div data-relTypeCode="article" data-relId="${article.id}" class="toast-editor input-body"></div>
 					</div>
 				</td>
 			</tr>

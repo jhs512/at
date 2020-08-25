@@ -448,7 +448,7 @@ label[for] {
     padding-right: 0 !important;
 }
 
-.tui-editor-defaultUI, .code-block-header, .tui-editor-defaultUI pre {
+.tui-editor-defaultUI pre {
     word-break: break-all !important;
     white-space: pre-wrap;
 }
