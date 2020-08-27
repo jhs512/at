@@ -763,7 +763,7 @@
         html += '<td>';
         html += '<div><strong>' + applyment.extra.writer + '</strong></div>';
         html += '<div>' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
-        html += '<div>' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
+        html += '<div class="break-all">' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
         html += '</td>';
         html += '<td>';
         html += '<div class="applyment-body">' + applyment.body + '</div>';
@@ -794,6 +794,15 @@
 		html += '<div class="writer">' + applyment.extra.writer + '</div>';
 		html += '&nbsp;|&nbsp;';
 		html += '<div class="reg-date">' + applyment.regDate + '</div>';
+
+		html += '<div class="width-100p"></div>';
+
+		html += '<div>전화번호 : ' + (applyment.extra.writerCellphoneNo ? applyment.extra.writerCellphoneNo : '전화번호없음') + '</div>';
+
+		html += '<div class="width-100p"></div>';
+        
+        html += '<div class="break-all">EMAIL : ' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
+        
 		html += '<div class="width-100p"></div>';
 		html += '<div class="body flex-1-0-0 margin-top-10 applyment-body">' + applyment.forPrintBody + '</div>';
 		html += ApplymentList__getMediaHtml(applyment);

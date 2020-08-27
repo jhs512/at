@@ -2,458 +2,460 @@
 
 /* 노말라이즈 */
 body, ul, li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 a {
-    color: inherit;
+  color: inherit;
 }
 
 label[for] {
-    cursor: pointer;
-    user-select: none;
+  cursor: pointer;
+  user-select: none;
 }
 
 /* 라이브러리 */
+.break-all {
+  word-break: break-all;
+}
+
 .text-overflow-el {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .abs-full {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .relative {
-    position: relative;
+  position: relative;
 }
 
 .ratio-16-9::after {
-    content: "";
-    display: block;
-    padding-top: 56.25%;
+  content: "";
+  display: block;
+  padding-top: 56.25%;
 }
 
 .ratio-1-1::after {
-    content: "";
-    display: block;
-    padding-top: 100%;
+  content: "";
+  display: block;
+  padding-top: 100%;
 }
 
 .img-box.img-box-auto>img {
-    display: block;
-    max-width: 100%;
-    width: auto;
+  display: block;
+  max-width: 100%;
+  width: auto;
 }
 
 .none {
-    display: none !important;
+  display: none !important;
 }
 
 .block {
-    display: block;
+  display: block;
 }
 
 .inline-block {
-    display: inline-block;
+  display: inline-block;
 }
 
 .img-box>img, .img-box>svg {
-    width: 100%;
-    display: block;
+  width: 100%;
+  display: block;
 }
 
 .text-align-center {
-    text-align: center;
+  text-align: center;
 }
 
 .video-box>video {
-    width: 100%;
-    display: block;
+  width: 100%;
+  display: block;
 }
 
 .con {
-    margin-left: auto;
-    margin-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .border-red {
-    border: 10px solid red;
+  border: 10px solid red;
 }
 
 .height-50 {
-    min-height: 50px !important;
+  min-height: 50px !important;
 }
 
 .height-300 {
-    min-height: 300px;
+  min-height: 300px;
 }
 
 .margin-top-10 {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .margin-top-20 {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .margin-top-30 {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .padding-left-10 {
-    padding-left: 10px;
+  padding-left: 10px;
 }
 
 .padding-0-10 {
-    padding-left: 10px;
-    padding-right: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .padding-0-20 {
-    padding-left: 20px;
-    padding-right: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .padding-10-0 {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .padding-20-0 {
-    padding-top: 20px;
-    padding-bottom: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .bg-white {
-    background-color: white;
+  background-color: white;
 }
 
 .padding-10 {
-    padding: 10px;
+  padding: 10px;
 }
 
 .margin-right-10 {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .height-100p {
-    height: 100%;
+  height: 100%;
 }
 
 .width-100p {
-    width: 100%;
+  width: 100%;
 }
 
 .border-box {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .min-width-30 {
-    min-width: 30px;
+  min-width: 30px;
 }
 
 .min-width-50 {
-    min-width: 50px;
+  min-width: 50px;
 }
 
 .min-width-80 {
-    min-width: 80px;
+  min-width: 80px;
 }
 
 .min-width-100 {
-    min-width: 100px;
+  min-width: 100px;
 }
 
 /* flex 관련 */
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .inline-flex {
-    display: inline-flex;
+  display: inline-flex;
 }
 
 .flex-ai-c {
-    align-items: center;
+  align-items: center;
 }
 
 .flex-jc-c {
-    justify-content: center;
+  justify-content: center;
 }
 
 .flex-jc-sb {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .flex-column {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .flex-row-wrap {
-    flex-flow: row wrap;
+  flex-flow: row wrap;
 }
 
 .flex-1-0-0 {
-    flex: 1 0 0;
+  flex: 1 0 0;
 }
 
 /* 테이블 관련 */
 .table-box {
-    border-top: 3px solid black;
-    box-sizing: border-box;
+  border-top: 3px solid black;
+  box-sizing: border-box;
 }
 
 .table-box>table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
 }
 
 .table-box>table thead {
-    border-bottom: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .table-box>table th, .table-box>table td {
-    padding: 10px;
-    text-align: left;
+  padding: 10px;
+  text-align: left;
 }
 
 .table-box>table th:first-child, .table-box>table td:first-child {
-    padding-left: 0;
+  padding-left: 0;
 }
 
 .table-box tr {
-    border-bottom: 1px solid #dfdfdf;
+  border-bottom: 1px solid #dfdfdf;
 }
 
 @media ( max-width :800px ) {
-    .table-box>table>colgroup>col:first-child {
-        width: 100% !important;
-    }
-    .table-box>table>colgroup>col {
-        width: auto !important;
-    }
-    .table-box, .table-box head, .table-box tbody, .table-box tr, .table-box td, .table-box th {
-        display: block;
-    }
-    .table-box tr.flex {
-        display: flex;
-    }
-    .table-box>table th, .table-box>table td {
-        border: 0;
-        padding: 0;
-        text-align: left;
-    }
-    .table-box>table tr {
-        padding-top: 20px;
-    }
+  .table-box>table>colgroup>col:first-child {
+    width: 100% !important;
+  }
+  .table-box>table>colgroup>col {
+    width: auto !important;
+  }
+  .table-box, .table-box head, .table-box tbody, .table-box tr, .table-box td, .table-box th {
+    display: block;
+  }
+  .table-box tr.flex {
+    display: flex;
+  }
+  .table-box>table th, .table-box>table td {
+    border: 0;
+    padding: 0;
+    text-align: left;
+  }
+  .table-box>table tr {
+    padding-top: 20px;
+  }
 }
 
 @media ( max-width :800px ) {
-    .table-box.table-box-vertical>table td {
-        margin-top: 10px;
-    }
-    .table-box.table-box-vertical td>.btn {
-        display: block;
-        width: 100%;
-        margin-left: 0;
-        border-radius: 4px;
-    }
-    .table-box.table-box-vertical td>.btn+.btn {
-        margin-top: 10px;
-    }
-    .table-box.table-box-vertical tr {
-        padding-bottom: 20px;
-    }
-    .table-box.table-box-vertical .tr-do>th {
-        display: none !important;
-    }
+  .table-box.table-box-vertical>table td {
+    margin-top: 10px;
+  }
+  .table-box.table-box-vertical td>.btn {
+    display: block;
+    width: 100%;
+    margin-left: 0;
+    border-radius: 4px;
+  }
+  .table-box.table-box-vertical td>.btn+.btn {
+    margin-top: 10px;
+  }
+  .table-box.table-box-vertical tr {
+    padding-bottom: 20px;
+  }
+  .table-box.table-box-vertical .tr-do>th {
+    display: none !important;
+  }
 }
 
 @media ( max-width :800px ) {
-    .table-box.table-box-data thead, .table-box.table-box-data th, .table-box.table-box-data td {
-        display: none;
-    }
-    .table-box.table-box-data td.visible-on-sm-down {
-        display: block;
-    }
-    .table-box.table-box-data td.visible-on-sm-down {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
-    .table-box.table-box-data td.visible-on-sm-down a {
-        text-decoration: none;
-    }
-    
-    .btn-box > .btn {
-        display: block;
-        width: 100%;
-        margin-left: 0 !important;
-        border-radius: 4px;
-        margin-top:10px !important;
-    }
-    
-    .btn-box > .btn:first-chid {
-        margin-top:0 !important;
-    }
+  .table-box.table-box-data thead, .table-box.table-box-data th, .table-box.table-box-data td {
+    display: none;
+  }
+  .table-box.table-box-data td.visible-on-sm-down {
+    display: block;
+  }
+  .table-box.table-box-data td.visible-on-sm-down {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .table-box.table-box-data td.visible-on-sm-down a {
+    text-decoration: none;
+  }
+  .btn-box>.btn {
+    display: block;
+    width: 100%;
+    margin-left: 0 !important;
+    border-radius: 4px;
+    margin-top: 10px !important;
+  }
+  .btn-box>.btn:first-chid {
+    margin-top: 0 !important;
+  }
 }
 
 /* 폼 관련 */
 .form1 .form-control-box>input, .form1 .form-control-box>textarea {
-    width: 100%;
-    padding: 0;
-    display: block;
-    box-sizing: border-box;
-    padding: 10px;
+  width: 100%;
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .form1 .form-control-box>textarea {
-    min-height: 300px;
-    resize: none;
+  min-height: 300px;
+  resize: none;
 }
 
 .form1 .form-control-box>select {
-    width: 100%;
-    padding: 0;
-    display: block;
-    box-sizing: border-box;
-    padding: 10px;
+  width: 100%;
+  padding: 0;
+  display: block;
+  box-sizing: border-box;
+  padding: 10px;
 }
 
 .form1 .form-row {
-    display: flex;
-    flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .form1 .form-row>.form-control-label {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-weight: bold;
 }
 
 .form1 .form-row>.form-control-box {
-    display: flex;
-    align-items: center;
-    padding: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
 }
 
 .form1 th, .form-control-label {
-    /* `로그인 아이디` 문구가 줄 바꿈 될 때 공백기준으로 줄바꿈 되도록 */
-    word-break: keep-all;
+  /* `로그인 아이디` 문구가 줄 바꿈 될 때 공백기준으로 줄바꿈 되도록 */
+  word-break: keep-all;
 }
 
 /* 버튼관련 */
 .btn {
-    font-size: 1rem;
-    line-height: 1rem;
-    padding: 10px 15px 7px 15px;
-    display: inline-flex;
-    font-weight: bold;
-    border-radius: 10px;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    background-color: #3D94F6;
-    color: #FFFFFF;
-    text-shadow: 1px 1px 20px #000000;
-    text-decoration: none;
-    box-sizing: border-box;
-    justify-content: center;
-    text-align: center;
+  font-size: 1rem;
+  line-height: 1rem;
+  padding: 10px 15px 7px 15px;
+  display: inline-flex;
+  font-weight: bold;
+  border-radius: 10px;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  background-color: #3D94F6;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 20px #000000;
+  text-decoration: none;
+  box-sizing: border-box;
+  justify-content: center;
+  text-align: center;
 }
 
 .btn-success {
-    background-color: #28a745;
+  background-color: #28a745;
 }
 
 .btn-info {
-    background-color: #17a2b8;
+  background-color: #17a2b8;
 }
 
 .btn-danger {
-    background-color: #dc3540;
+  background-color: #dc3540;
 }
 
 .btn-warning {
-    background-color: #ffc10;
+  background-color: #ffc10;
 }
 
 .btn+.btn {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 .btn-inline-box {
-    display: flex;
+  display: flex;
 }
 
 .btn-inline-box>.btn {
-    display: block;
-    flex-grow: 1;
-    border-radius: 4px;
+  display: block;
+  flex-grow: 1;
+  border-radius: 4px;
 }
 
 .bold {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .badge {
-    background-color: #3D94F6;
-    color: #FFFFFF;
-    padding: 0 7px;
-    border-radius: 10px;
+  background-color: #3D94F6;
+  color: #FFFFFF;
+  padding: 0 7px;
+  border-radius: 10px;
 }
 
 .badge-success {
-    background-color: #28a745;
+  background-color: #28a745;
 }
 
 .badge-info {
-    background-color: #17a2b8;
+  background-color: #17a2b8;
 }
 
 .badge-danger {
-    background-color: #dc3540;
+  background-color: #dc3540;
 }
 
 .badge-warning {
-    background-color: #ffc10;
+  background-color: #ffc10;
 }
 
 .te-ww-container .tui-editor-contents {
-    padding-left: 10px !important;
-    padding-right: 10px;
+  padding-left: 10px !important;
+  padding-right: 10px;
 }
 
 .te-md-container .te-preview {
-    padding-left: 10px !important;
-    padding-right: 10px !important;
+  padding-left: 10px !important;
+  padding-right: 10px !important;
 }
 
 .tui-md-code-block.CodeMirror-linebackground {
-    left: 10px !important;
-    right: 0 !important;
+  left: 10px !important;
+  right: 0 !important;
 }
 
 .tui-editor-defaultUI pre.CodeMirror-line {
-    padding-left: 10px !important;
-    padding-right: 0 !important;
+  padding-left: 10px !important;
+  padding-right: 0 !important;
 }
 
 .tui-editor-defaultUI pre {
-    word-break: break-all !important;
-    white-space: pre-wrap;
+  word-break: break-all !important;
+  white-space: pre-wrap;
 }
 
 .tui-editor-contents pre {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
