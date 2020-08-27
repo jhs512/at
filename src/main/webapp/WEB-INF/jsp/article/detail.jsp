@@ -456,7 +456,7 @@
 						var file = data.body.file__common__attachment[fileNo];
 
 						if (file.fileExtTypeCode == 'video') {
-							var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+							var html = '<video preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
 							$('.reply-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box').append(html);
 						} else {
 							var html = '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
@@ -598,7 +598,7 @@
             html += '<div class="video-box" data-video-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
             if (file && file.fileExtTypeCode == 'video') {
-                html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
+                html += '<video  preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
             }
 
             html += '</div>';

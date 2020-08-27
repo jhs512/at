@@ -54,6 +54,10 @@
 	function renderYoutube(wrapperId, youtubeId) {
 		const el = document.querySelector('#' + wrapperId);
 
+        if ( el == null ) {
+            return;
+        }
+
 		var uriParams = getUriParams(youtubeId);
 
 		var width = '100%';
@@ -130,6 +134,10 @@
 	function renderRepl(wrapperId, replUri) {
 		const el = document.querySelector('#' + wrapperId);
 
+		if ( el == null ) {
+            return;
+        }
+
 		var uriParams = getUriParams(replUri);
 
 		var height = 400;
@@ -157,6 +165,10 @@
 
 	function renderCodepen(wrapperId, codepenUri) {
 		const el = document.querySelector('#' + wrapperId);
+
+		if ( el == null ) {
+            return;
+        }
 
 		var uriParams = getUriParams(codepenUri);
 

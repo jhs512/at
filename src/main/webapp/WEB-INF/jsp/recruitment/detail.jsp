@@ -545,7 +545,7 @@
                         var file = data.body.file__common__attachment[fileNo];
 
                         if (file.fileExtTypeCode == 'video') {
-                            var html = '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
+                            var html = '<video preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '">video not supported</video>';
                             selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box';
                             $(selector).append(html);
                         } else {
@@ -689,7 +689,7 @@
             html += '<div class="video-box" data-video-name="applyment__' + applyment.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
             if (file && file.fileExtTypeCode == 'video') {
-                html += '<video controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
+                html += '<video preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
             }
 
             html += '</div>';
@@ -804,7 +804,11 @@
         html += '<div class="break-all">EMAIL : ' + (applyment.extra.writerEmail ? applyment.extra.writerEmail : '이메일없음') + '</div>';
         
 		html += '<div class="width-100p"></div>';
+
 		html += '<div class="body flex-1-0-0 margin-top-10 applyment-body">' + applyment.forPrintBody + '</div>';
+
+		html += '<div class="width-100p"></div>';
+        
 		html += ApplymentList__getMediaHtml(applyment);
 		html += '</div>';
 

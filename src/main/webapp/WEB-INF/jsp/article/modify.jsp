@@ -1,10 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <c:set var="pageTitle" value="${board.name} 게시물 상세내용" />
 <%@ include file="../part/head.jspf"%>
 <%@ include file="../part/toastuiEditor.jspf"%>
-
 <script>
 	function ArticleModifyForm__submit(form) {
 		if (isNowLoading()) {
@@ -160,80 +158,76 @@
 	}
 </script>
 <form class="table-box table-box-vertical con form1" method="POST" action="${board.code}-doModify" onsubmit="ArticleModifyForm__submit(this); return false;">
-	<input type="hidden" name="fileIdsStr" />
-	<input type="hidden" name="body" />
-	<input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=${article.id}" />
-	<input type="hidden" name="id" value="${article.id}" />
-	<table>
-		<colgroup>
-			<col class="table-first-col">
-		</colgroup>
-		<tbody>
-			<tr>
-				<th>번호</th>
-				<td>${article.id}</td>
-			</tr>
-			<tr>
-				<th>날짜</th>
-				<td>${article.regDate}</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>
-					<div class="form-control-box">
-						<input type="text" value="${article.title}" name="title" placeholder="제목을 입력해주세요." />
-					</div>
-				</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>
-					<div class="form-control-box">
-						<script type="text/x-template">${article.body}</script>
-						<div data-relTypeCode="article" data-relId="${article.id}" class="toast-editor input-body"></div>
-					</div>
-				</td>
-			</tr>
-			<c:forEach var="i" begin="1" end="3" step="1">
-				<c:set var="fileNo" value="${String.valueOf(i)}" />
-				<c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
-				<tr>
-					<th>첨부파일 ${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('article', i)}</th>
-					<td>
-						<div class="form-control-box">
-							<input type="file" accept="${appConfig.getAttachemntFileInputAccept('article', i)}" name="file__article__${article.id}__common__attachment__${fileNo}">
-						</div>
-						<c:if test="${file != null && file.fileExtTypeCode == 'video'}">
-							<div class="video-box">
-								<video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
-							</div>
-						</c:if>
-						<c:if test="${file != null && file.fileExtTypeCode == 'img'}">
-							<div class="img-box img-box-auto">
-								<img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
-							</div>
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th>첨부파일 ${fileNo} 삭제</th>
-					<td>
-						<div class="form-control-box">
-							<label>
-								<input type="checkbox" name="deleteFile__article__${article.id}__common__attachment__${fileNo}" value="Y" />
-								삭제
-							</label>
-						</div>
-					</td>
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
-
-	<div class="btn-box margin-top-20">
-		<button type="submit" class="btn btn-primary">수정</button>
-		<a class="btn btn-info" href="${listUrl}">리스트</a>
-	</div>
+    <input type="hidden" name="fileIdsStr" />
+    <input type="hidden" name="body" />
+    <input type="hidden" name="redirectUri" value="/usr/article/${board.code}-detail?id=${article.id}" />
+    <input type="hidden" name="id" value="${article.id}" />
+    <table>
+        <colgroup>
+            <col class="table-first-col">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th>번호</th>
+                <td>${article.id}</td>
+            </tr>
+            <tr>
+                <th>날짜</th>
+                <td>${article.regDate}</td>
+            </tr>
+            <tr>
+                <th>제목</th>
+                <td>
+                    <div class="form-control-box">
+                        <input type="text" value="${article.title}" name="title" placeholder="제목을 입력해주세요." />
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td>
+                    <div class="form-control-box">
+                        <script type="text/x-template">${article.body}</script>
+                        <div data-relTypeCode="article" data-relId="${article.id}" class="toast-editor input-body"></div>
+                    </div>
+                </td>
+            </tr>
+            <c:forEach var="i" begin="1" end="3" step="1">
+                <c:set var="fileNo" value="${String.valueOf(i)}" />
+                <c:set var="file" value="${article.extra.file__common__attachment[fileNo]}" />
+                <tr>
+                    <th>첨부파일 ${fileNo} ${appConfig.getAttachmentFileExtTypeDisplayName('article', i)}</th>
+                    <td>
+                        <div class="form-control-box">
+                            <input type="file" accept="${appConfig.getAttachemntFileInputAccept('article', i)}" name="file__article__${article.id}__common__attachment__${fileNo}">
+                        </div>
+                        <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
+                            <div class="video-box">
+                                <video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
+                            </div>
+                        </c:if>
+                        <c:if test="${file != null && file.fileExtTypeCode == 'img'}">
+                            <div class="img-box img-box-auto">
+                                <img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
+                            </div>
+                        </c:if>
+                    </td>
+                </tr>
+                <tr>
+                    <th>첨부파일 ${fileNo} 삭제</th>
+                    <td>
+                        <div class="form-control-box">
+                            <label> <input type="checkbox" name="deleteFile__article__${article.id}__common__attachment__${fileNo}" value="Y" /> 삭제
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </c:forEach>
+        </tbody>
+    </table>
+    <div class="btn-box margin-top-20">
+        <button type="submit" class="btn btn-primary">수정</button>
+        <a class="btn btn-info" href="${listUrl}">리스트</a>
+    </div>
 </form>
-
 <%@ include file="../part/foot.jspf"%>
