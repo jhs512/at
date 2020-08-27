@@ -46,7 +46,10 @@ spring:
 
 # 서버쪽 세팅
 
-- 웹앱이나 톰캣 리스타트시 세션 유지
-  - /opt/tomcat/apache-tomcat-9.0.36/conf/context.xml
-    - <Manager pathname=""><saveOnRestart>false</saveOnRestart></Manager>
-      - 추가
+- sudo yum install redis
+- sudo systemctl start redis
+- sudo systemctl enable redis
+
+# 개발서버(윈도우) 세팅
+
+- https://github.com/MicrosoftArchive/redis/releases 에서 Redis-x64-xxx.msi 설치
