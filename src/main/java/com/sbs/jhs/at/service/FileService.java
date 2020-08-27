@@ -1,9 +1,11 @@
 package com.sbs.jhs.at.service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,7 @@ public class FileService {
 	@Autowired
 	private FileDao fileDao;
 
-	public int saveFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo,
-			String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, byte[] body,
-			int fileSize) {
+	public int saveFile(String relTypeCode, int relId, String typeCode, String type2Code, int fileNo, String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, byte[] body, int fileSize) {
 
 		Map<String, Object> param = new HashMap();
 		param.put("relTypeCode", relTypeCode);
@@ -43,10 +43,8 @@ public class FileService {
 		fileDao.changeRelId(id, relId);
 	}
 
-	public Map<Integer, File> getFilesMapKeyRelId(String relTypeCode, List<Integer> relIds, String typeCode,
-			String type2Code, int fileNo) {
-		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo(relTypeCode, relIds,
-				typeCode, type2Code, fileNo);
+	public Map<Integer, File> getFilesMapKeyRelId(String relTypeCode, List<Integer> relIds, String typeCode, String type2Code, int fileNo) {
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo(relTypeCode, relIds, typeCode, type2Code, fileNo);
 		Map<Integer, File> map = new HashMap<>();
 
 		for (File file : files) {
@@ -61,6 +59,16 @@ public class FileService {
 		return file.getBody();
 	}
 
+	public void deleteFiles(String fileIdsStr) {
+		if (fileIdsStr != null && fileIdsStr.length() > 0) {
+			List<Integer> fileIds = Arrays.asList(fileIdsStr.split(",")).stream().map(s -> Integer.parseInt(s.trim())).collect(Collectors.toList());
+			
+			for ( int fileId : fileIds ) {
+				deleteFile(fileId);
+			}
+		}
+	}
+
 	public void deleteFiles(String relTypeCode, int relId) {
 		fileDao.deleteFiles(relTypeCode, relId);
 	}
@@ -69,10 +77,8 @@ public class FileService {
 		return fileDao.getFileById(id);
 	}
 
-	public Map<Integer, Map<Integer, File>> getFilesMapKeyRelIdAndFileNo(String relTypeCode, List<Integer> relIds,
-			String typeCode, String type2Code) {
-		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode, relIds, typeCode,
-				type2Code);
+	public Map<Integer, Map<Integer, File>> getFilesMapKeyRelIdAndFileNo(String relTypeCode, List<Integer> relIds, String typeCode, String type2Code) {
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code(relTypeCode, relIds, typeCode, type2Code);
 		Map<Integer, File> map = new HashMap<>();
 
 		Map<Integer, Map<Integer, File>> rs = new LinkedHashMap<>();
@@ -89,8 +95,7 @@ public class FileService {
 	}
 
 	public List<File> getFiles(String relTypeCode, int relId, String typeCode, String type2Code) {
-		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdAndTypeCodeAndType2Code(relTypeCode, relId, typeCode,
-				type2Code);
+		List<File> files = fileDao.getFilesRelTypeCodeAndRelIdAndTypeCodeAndType2Code(relTypeCode, relId, typeCode, type2Code);
 		return files;
 	}
 
@@ -104,8 +109,7 @@ public class FileService {
 		return id;
 	}
 
-	public void updateFile(int id, String originFileName, String fileExtTypeCode, String fileExtType2Code,
-			String fileExt, byte[] fileBytes, int fileSize) {
+	public void updateFile(int id, String originFileName, String fileExtTypeCode, String fileExtType2Code, String fileExt, byte[] fileBytes, int fileSize) {
 
 		Map<String, Object> param = new HashMap();
 		param.put("originFileName", originFileName);
@@ -126,13 +130,13 @@ public class FileService {
 
 	public Map<Integer, File> getFilesMapKeyFileNo(String relTypeCode, int relId, String typeCode, String type2Code) {
 		List<File> files = getFiles(relTypeCode, relId, typeCode, type2Code);
-		
+
 		Map<Integer, File> filesMap = new HashMap<>();
-		
-		for ( File file : files ) {
-			filesMap.put(file.getFileNo(), file);			
+
+		for (File file : files) {
+			filesMap.put(file.getFileNo(), file);
 		}
-		
+
 		return filesMap;
 	}
 

@@ -17,6 +17,7 @@ import com.sbs.jhs.at.dto.Applyment;
 import com.sbs.jhs.at.dto.Member;
 import com.sbs.jhs.at.dto.ResultData;
 import com.sbs.jhs.at.service.ApplymentService;
+import com.sbs.jhs.at.service.FileService;
 import com.sbs.jhs.at.service.RecruitmentService;
 import com.sbs.jhs.at.util.Util;
 
@@ -28,6 +29,8 @@ public class ApplymentController {
 	private RecruitmentService recruitmentService;
 	@Autowired
 	private AppConfig appConfig;
+	@Autowired
+	private FileService fileService;
 
 	@RequestMapping("/usr/applyment/getForPrintApplyments")
 	@ResponseBody
@@ -39,6 +42,10 @@ public class ApplymentController {
 		Util.changeMapKey(param, "recruitmentId", "relId");
 
 		boolean actorIsWriter = recruitmentService.actorIsWriter(loginedMember, Util.getAsInt(param.get("relId")));
+
+		if (actorIsWriter == false) {
+			param.put("memberId", loginedMember.getId());
+		}
 
 		param.put("actor", loginedMember);
 		List<Applyment> applyments = applymentService.getForPrintApplyments(param);
@@ -55,20 +62,18 @@ public class ApplymentController {
 		Member loginedMember = (Member) request.getAttribute("loginedMember");
 		param.put("memberId", request.getAttribute("loginedMemberId"));
 
-		ResultData checkWriteApplymentAvailableResultData = applymentService.checkActorCanWriteApplyment(loginedMember,
-				(String) param.get("relTypeCode"), Util.getAsInt(param.get("relId")));
+		ResultData checkWriteApplymentAvailableResultData = applymentService.checkActorCanWriteApplyment(loginedMember, (String) param.get("relTypeCode"), Util.getAsInt(param.get("relId")));
 
 		if (checkWriteApplymentAvailableResultData.isFail()) {
+			fileService.deleteFiles((String) param.get("fileIdsStr"));
+
 			return checkWriteApplymentAvailableResultData;
 		}
 
 		int newApplymentId = applymentService.writeApplyment(param);
 		rsDataBody.put("applymentId", newApplymentId);
 
-		return new ResultData("S-1",
-				String.format("신청이 완료되었습니다, " + appConfig.getModifyAvailablePerioMinutes() + "분 이내에만 삭제, 수정이 가능합니다.",
-						newApplymentId),
-				rsDataBody);
+		return new ResultData("S-1", String.format("신청이 완료되었습니다, " + appConfig.getModifyAvailablePerioMinutes() + "분 이내에만 삭제, 수정이 가능합니다.", newApplymentId), rsDataBody);
 	}
 
 	@RequestMapping("/usr/applyment/doDeleteApplymentAjax")
@@ -101,7 +106,7 @@ public class ApplymentController {
 
 		return rd;
 	}
-	
+
 	@RequestMapping("/usr/applyment/doSetVisible")
 	@ResponseBody
 	public ResultData doSetVisible(HttpServletRequest req, int id, String value) {

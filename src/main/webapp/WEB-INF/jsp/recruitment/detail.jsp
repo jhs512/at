@@ -244,7 +244,7 @@
 				<col class="table-first-col">
 			</colgroup>
 			<tbody>
-				<tr class="none">
+				<tr>
 					<th>인사말(30자 제한)</th>
 					<td>
 						<div class="form-control-box">
@@ -393,7 +393,7 @@
 								<div style="width: 100%" class="img-box img-box-auto img-box-file-${fileNo}"></div>
 							</td>
 						</tr>
-						<tr>
+						<tr class="none">
 							<th>
 								<div class="form-control-box">첨부${fileNo} 삭제</div>
 							</th>
