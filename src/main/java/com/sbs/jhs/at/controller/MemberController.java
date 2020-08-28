@@ -41,6 +41,35 @@ public class MemberController {
 		return "common/redirect";
 	}
 
+	@RequestMapping("/usr/member/doFindLoginPw")
+	public String doFindLoginPw(String loginId, String email, String redirectUri, Model model, HttpServletRequest req) {
+		Member member = memberService.getMemberByLoginId(loginId);
+
+		if (member == null) {
+			model.addAttribute("historyBack", true);
+			model.addAttribute("msg", "해당 회원이 존재하지 않습니다.");
+			return "common/redirect";
+		}
+
+		if (member.getEmail().equals(email) == false) {
+			model.addAttribute("historyBack", true);
+			model.addAttribute("msg", "이메일이 올바르지 않습니다.");
+			return "common/redirect";
+		}
+
+		ResultData sendTempLoginPwToEmailResultData = memberService.sendTempLoginPwToEmail(member);
+
+		if (sendTempLoginPwToEmailResultData.isFail()) {
+			model.addAttribute("historyBack", true);
+			model.addAttribute("msg", sendTempLoginPwToEmailResultData.getMsg());
+			return "common/redirect";
+		}
+
+		model.addAttribute("redirectUri", redirectUri);
+		model.addAttribute("msg", sendTempLoginPwToEmailResultData.getMsg());
+		return "common/redirect";
+	}
+
 	@RequestMapping("/usr/member/join")
 	public String showWrite() {
 		return "member/join";

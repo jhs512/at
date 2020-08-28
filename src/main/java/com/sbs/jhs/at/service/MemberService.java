@@ -1,11 +1,13 @@
 package com.sbs.jhs.at.service;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.sbs.jhs.at.dao.MemberDao;
 import com.sbs.jhs.at.dto.Member;
@@ -77,11 +79,31 @@ public class MemberService {
 	}
 
 	public void modify(Map<String, Object> param) {
-		memberDao.modify(param);		
+		memberDao.modify(param);
 	}
 
 	public Member getMemberByNameAndEmail(String name, String email) {
 		return memberDao.getMemberByNameAndEmail(name, email);
+	}
+
+	public ResultData sendTempLoginPwToEmail(Member actor) {
+		String title = "[" + siteName + "] 임시 패스워드 발송";
+		String tempPassword = Util.getTempPassword(6);
+		String body = "<h1>임시 패스워드 : " + tempPassword + "</h1>";
+		body += "<a href=\"" + siteMainUri + "/usr/member/login\" target=\"_blank\">로그인 하러가기</a>";
+
+		ResultData sendResultData = mailService.send(actor.getEmail(), title, body);
+
+		if (sendResultData.isFail()) {
+			return sendResultData;
+		}
+
+		Map<String, Object> modifyParam = new HashMap<>();
+		modifyParam.put("id", actor.getId());
+		modifyParam.put("loginPw", Util.sha256(tempPassword));
+		modify(modifyParam);
+
+		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
 	}
 
 }
