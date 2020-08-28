@@ -21,6 +21,26 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 
+	@RequestMapping("/usr/member/findLoginInfo")
+	public String showFindLoginInfo() {
+		return "member/findLoginInfo";
+	}
+
+	@RequestMapping("/usr/member/doFindLoginId")
+	public String doFindLoginId(String name, String email, Model model) {
+		Member member = memberService.getMemberByNameAndEmail(name, email);
+
+		if (member == null) {
+			model.addAttribute("historyBack", true);
+			model.addAttribute("msg", "해당 회원이 존재하지 않습니다.");
+			return "common/redirect";
+		}
+
+		model.addAttribute("historyBack", true);
+		model.addAttribute("msg", String.format("해당 회원의 로그인 아이디는 %s 입니다.", member.getLoginId()));
+		return "common/redirect";
+	}
+
 	@RequestMapping("/usr/member/join")
 	public String showWrite() {
 		return "member/join";

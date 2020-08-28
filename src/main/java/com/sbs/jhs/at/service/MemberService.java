@@ -80,4 +80,8 @@ public class MemberService {
 		memberDao.modify(param);		
 	}
 
+	public Member getMemberByNameAndEmail(String name, String email) {
+		return memberDao.getMemberByNameAndEmail(name, email);
+	}
+
 }
