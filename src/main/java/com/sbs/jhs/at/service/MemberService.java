@@ -80,6 +80,10 @@ public class MemberService {
 
 	public void modify(Map<String, Object> param) {
 		memberDao.modify(param);
+
+		if (param.get("loginPw") != null) {
+			setNotUsingTempPassword(Util.getAsInt(param.get("id")));
+		}
 	}
 
 	public Member getMemberByNameAndEmail(String name, String email) {
@@ -98,12 +102,35 @@ public class MemberService {
 			return sendResultData;
 		}
 
+		setTempPassword(actor, tempPassword);
+
+		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+	}
+
+	private void setTempPassword(Member actor, String tempPassword) {
 		Map<String, Object> modifyParam = new HashMap<>();
 		modifyParam.put("id", actor.getId());
 		modifyParam.put("loginPw", Util.sha256(tempPassword));
 		modify(modifyParam);
 
-		return new ResultData("S-1", "계정의 이메일주소로 임시 패스워드가 발송되었습니다.");
+		setUsingTempPassword(actor.getId());
 	}
 
+	public boolean usingTempPassword(int id) {
+		String value = attrService.getValue("member", id, "extra", "usingTempPassword");
+
+		if (value == null || value.equals("1") == false) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private void setUsingTempPassword(int id) {
+		attrService.setValue("member", id, "extra", "usingTempPassword", "1", null);
+	}
+
+	private void setNotUsingTempPassword(int id) {
+		attrService.remove("member", id, "extra", "usingTempPassword");
+	}
 }

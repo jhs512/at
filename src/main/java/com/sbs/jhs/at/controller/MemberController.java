@@ -152,8 +152,16 @@ public class MemberController {
 			redirectUri = "/usr/home/main";
 		}
 
+		boolean usingTempPassword = memberService.usingTempPassword(member.getId());
+
+		if (usingTempPassword) {
+			redirectUri = "/usr/member/checkPassword?redirectUri=%2Fusr%2Fmember%2Fmodify";
+			model.addAttribute("msg", "현재 임시 패스워드를 사용하고 있습니다. 비밀번호를 변경해주세요.");
+		} else {
+			model.addAttribute("msg", String.format("%s님 반갑습니다.", member.getNickname()));
+		}
+		
 		model.addAttribute("redirectUri", redirectUri);
-		model.addAttribute("msg", String.format("%s님 반갑습니다.", member.getNickname()));
 
 		return "common/redirect";
 	}
