@@ -3,6 +3,11 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sbs.jhs.at.dao.ActingRoleDao">
+	<select id="getArtworks" resultType="Artwork">
+		SELECT *
+		FROM artwork
+	</select>
+
 	<select id="getRoles" resultMap="actingRole">
 		SELECT ACR.*,
 		ARW.name AS
