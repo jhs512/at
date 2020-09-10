@@ -110,7 +110,6 @@
 		<dependency>
 			<groupId>org.springframework.session</groupId>
 			<artifactId>spring-session-data-redis</artifactId>
-			<version>2.3.0.RELEASE</version>
 		</dependency>
 
 	</dependencies>
@@ -122,11 +121,9 @@
 				<artifactId>tomcat7-maven-plugin</artifactId>
 				<version>2.2</version>
 				<configuration>
-					<url>http://at.iu.gy:8080/manager/text</url>
-					<server>TomcatServer</server>
+					<url>http://auditiontree.com:8080/manager/text</url>
+					<server>joa__manager_text</server>
 					<path>/</path>
-					<username>deployer</username>
-					<password>sbsst24002424</password>
 				</configuration>
 			</plugin>
 			<plugin>
