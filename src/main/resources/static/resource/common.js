@@ -30,10 +30,10 @@ function jq_attr($el, attrName, elseValue) {
 }
 
 function isCellphoneNo(str) {
-	if ( str.substr(0, 1) != '0' ) {
+	if (str.substr(0, 1) != '0') {
 		return false;
 	}
-	
+
 	return isNumber(str);
 }
 
@@ -42,7 +42,13 @@ function isNumber(n) {
 }
 
 function getHtmlEncoded(raw) {
-    return raw.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
-        return '&#'+i.charCodeAt(0)+';';
-    });
+	return raw.replace(/[\u00A0-\u9999<>\&]/gim, function(i) {
+		return '&#' + i.charCodeAt(0) + ';';
+	});
+}
+
+function iOS() {
+	return [ 'iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod' ].includes(navigator.platform)
+	// iPad on iOS 13 detection
+	|| (navigator.userAgent.includes("Mac") && "ontouchend" in document)
 }

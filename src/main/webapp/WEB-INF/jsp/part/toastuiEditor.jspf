@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
 <!-- 하이라이트 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/default.min.css">
-
 <!-- 하이라이트 라이브러리, 언어 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/css.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/javascript.min.js"></script>
@@ -11,19 +9,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/php.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/php-template.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/languages/sql.min.js"></script>
-
 <!-- 코드 미러 라이브러리 추가, 토스트 UI 에디터에서 사용됨 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css" />
-
 <!-- 토스트 UI 에디터, 자바스크립트 코어 -->
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
 <!-- 토스트 UI 에디터, 신택스 하이라이트 플러그인 추가 -->
 <script src="https://uicdn.toast.com/editor-plugin-code-syntax-highlight/latest/toastui-editor-plugin-code-syntax-highlight-all.min.js"></script>
-
 <!-- 토스트 UI 에디터, CSS 코어 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-
 <script>
 	function getYouTubeID(uri) {
 		var ID = '';
@@ -54,9 +47,9 @@
 	function renderYoutube(wrapperId, youtubeId) {
 		const el = document.querySelector('#' + wrapperId);
 
-        if ( el == null ) {
-            return;
-        }
+		if (el == null) {
+			return;
+		}
 
 		var uriParams = getUriParams(youtubeId);
 
@@ -134,9 +127,9 @@
 	function renderRepl(wrapperId, replUri) {
 		const el = document.querySelector('#' + wrapperId);
 
-		if ( el == null ) {
-            return;
-        }
+		if (el == null) {
+			return;
+		}
 
 		var uriParams = getUriParams(replUri);
 
@@ -166,9 +159,9 @@
 	function renderCodepen(wrapperId, codepenUri) {
 		const el = document.querySelector('#' + wrapperId);
 
-		if ( el == null ) {
-            return;
-        }
+		if (el == null) {
+			return;
+		}
 
 		var uriParams = getUriParams(codepenUri);
 
@@ -202,6 +195,10 @@
 	}
 
 	function ToastEditor__init() {
+		if (iOS()) {
+			$('html').addClass('device-ios');
+		}
+
 		$('.toast-editor.toast-editor-viewer:not(.toast-editor-loaded)').each(function(index, el) {
 
 			var $el = $(this);
@@ -222,17 +219,22 @@
 		$('.toast-editor:not(.toast-editor-loaded)').each(function(index, el) {
 			var $el = $(this);
 			var relTypeCode = $el.attr('data-relTypeCode');
-			if ( !relTypeCode ) {
+			if (!relTypeCode) {
 				alert('오류로 중단 : `.toast-editoar` 엘리먼트에는 data-relTypeCode, data-relId 속성이 있어야 합니다.');
 				return true;
 			}
 			var relId = $el.attr('data-relId');
-			if ( !relId ) {
+			if (!relId) {
 				relId = 0;
 			}
 			var height = jq_attr($el, 'data-toast-editor-height', 500);
 			height = parseInt(height);
-			var initialEditType = jq_attr($el, 'data-toast-editor-initialEditType', "markdown");
+			var initialEditType = jq_attr($el, 'data-toast-editor-initialEditType', "wysiwyg");
+
+			if (iOS()) {
+				initialEditType = 'wysiwyg';
+			}
+
 			var previewStyle = jq_attr($el, 'data-toast-editor-previewStyle', "vertical");
 			var initialValue = ToastEditor__getBodyFromXTemplate($el.prev());
 
@@ -248,7 +250,11 @@
 				initialValue : initialValue,
 				hooks : {
 					'addImageBlobHook' : function(blob, callback) {
-						var maxSizeMb = 2;
+						if (isNowLoading()) {
+							alert('처리중입니다.');
+						}
+
+						var maxSizeMb = 20;
 						var maxSize = maxSizeMb * 1024 * 1024 //50MB
 						if (blob.size > maxSize) {
 							alert(maxSizeMb + "MB 이하의 이미지를 선택해주세요.");
@@ -256,6 +262,9 @@
 						}
 						var fd = new FormData();
 						fd.append('file__' + relTypeCode + '__' + relId + '__common__inBody__1', blob);
+
+						startLoading();
+
 						$.ajax({
 							type : 'POST',
 							url : '/usr/file/doUploadEditorBlobAjax',
@@ -270,7 +279,7 @@
 									url = window.location.origin + url;
 								}
 
-								if ( !editor.inBodyFileIdsStr ) {
+								if (!editor.inBodyFileIdsStr) {
 									editor.inBodyFileIdsStr = "";
 								}
 
@@ -278,7 +287,14 @@
 
 								callback(url);
 							}
+
+							endLoading();
+						}).fail(function(data, textStatus, errorThrown) {
+							alert("error : " + errorThrown);
+
+							endLoading();
 						});
+						;
 
 						//run callback
 						//callback('Image URL');
@@ -320,3 +336,8 @@
 		ToastEditor__init();
 	});
 </script>
+<style>
+html.device-ios .te-mode-switch-section {
+  display: none !important;
+}
+</style>

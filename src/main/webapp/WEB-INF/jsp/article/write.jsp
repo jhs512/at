@@ -130,17 +130,6 @@
 				<td>
 					<div class="form-control-box">
 						<script type="text/x-template">
-# 제목
-![img](https://placekitten.com/200/287)
-이미지는 이렇게 씁니다.
-
-# 유투브 동영상 첨부
-
-아래와 같이 첨부할 수 있습니다.
-
-```youtube
-https://www.youtube.com/watch?v=LmgWxezH7cc
-```
                         </script>
 						<div data-relTypeCode="article" data-relId="0" class="toast-editor input-body"></div>
 					</div>
