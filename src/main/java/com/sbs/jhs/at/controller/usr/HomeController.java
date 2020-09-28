@@ -1,4 +1,4 @@
-package com.sbs.jhs.at.controller;
+package com.sbs.jhs.at.controller.usr;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

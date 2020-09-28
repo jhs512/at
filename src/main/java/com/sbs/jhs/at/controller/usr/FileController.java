@@ -1,4 +1,4 @@
-package com.sbs.jhs.at.controller;
+package com.sbs.jhs.at.controller.usr;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

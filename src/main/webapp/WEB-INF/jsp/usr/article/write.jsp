@@ -3,7 +3,7 @@
 
 <c:set var="pageTitle" value="${board.name} 게시물 작성" />
 <%@ include file="../part/head.jspf"%>
-<%@ include file="../part/toastuiEditor.jspf"%>
+<%@ include file="../../part/toastuiEditor.jspf"%>
 
 <script>
 	function ArticleWriteForm__submit(form) {

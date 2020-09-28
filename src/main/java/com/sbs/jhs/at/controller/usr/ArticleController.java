@@ -1,4 +1,4 @@
-package com.sbs.jhs.at.controller;
+package com.sbs.jhs.at.controller.usr;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +33,7 @@ public class ArticleController {
 
 		model.addAttribute("articles", articles);
 
-		return "article/list";
+		return "usr/article/list";
 	}
 
 	@RequestMapping("/usr/article/{boardCode}-detail")
@@ -54,7 +54,7 @@ public class ArticleController {
 
 		model.addAttribute("article", article);
 
-		return "article/detail";
+		return "usr/article/detail";
 	}
 	
 	@RequestMapping("/usr/article/{boardCode}-modify")
@@ -71,7 +71,7 @@ public class ArticleController {
 
 		model.addAttribute("article", article);
 
-		return "article/modify";
+		return "usr/article/modify";
 	}
 
 	@RequestMapping("/usr/article/{boardCode}-write")
@@ -83,7 +83,7 @@ public class ArticleController {
 		Board board = articleService.getBoardByCode(boardCode);
 		model.addAttribute("board", board);
 		
-		return "article/write";
+		return "usr/article/write";
 	}
 	
 	@RequestMapping("/usr/article/{boardCode}-doModify")

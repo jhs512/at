@@ -3,7 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <c:set var="pageTitle" value="${job.name} 모집 상세내용" />
 <%@ include file="../part/head.jspf"%>
-<%@ include file="../part/toastuiEditor.jspf"%>
+<%@ include file="../../part/toastuiEditor.jspf"%>
 <script>
     var ApplymentList__needToLoadMore = '${needToLoadMore}' == 'true';
     var actorIsWriter = '${actorIsWriter}' == 'true';

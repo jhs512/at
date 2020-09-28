@@ -1,4 +1,4 @@
-package com.sbs.jhs.at.controller;
+package com.sbs.jhs.at.controller.usr;
 
 import java.util.List;
 import java.util.Map;
@@ -37,13 +37,13 @@ public class RecruitmentController {
 		model.addAttribute("job", job);
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		model.addAttribute("actorCanWrite", appConfig.actorCanWrite("recruitment", loginedMember));
+		model.addAttribute("actorCanWrite", appConfig.actorCanWrite("usr/recruitment", loginedMember));
 
 		List<Recruitment> recruitments = recruitmentService.getForPrintRecruitments();
 
-		model.addAttribute("recruitments", recruitments);
+		model.addAttribute("usr/recruitments", recruitments);
 
-		return "recruitment/list";
+		return "usr/recruitment/list";
 	}
 
 	@RequestMapping("/usr/recruitment/{jobCode}-detail")
@@ -63,14 +63,14 @@ public class RecruitmentController {
 
 		Recruitment recruitment = recruitmentService.getForPrintRecruitmentById(loginedMember, id);
 
-		model.addAttribute("recruitment", recruitment);
+		model.addAttribute("usr/recruitment", recruitment);
 
 		boolean actorIsWriter = recruitment.getMemberId() == loginedMember.getId();
 		model.addAttribute("needToLoadMore", actorIsWriter);
 		model.addAttribute("needToShowApplymentWriteForm", !actorIsWriter);
 		model.addAttribute("actorIsWriter", actorIsWriter);
 
-		return "recruitment/detail";
+		return "usr/recruitment/detail";
 	}
 
 	@RequestMapping("/usr/recruitment/{jobCode}-modify")
@@ -89,9 +89,9 @@ public class RecruitmentController {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		Recruitment recruitment = recruitmentService.getForPrintRecruitmentById(loginedMember, id);
 
-		model.addAttribute("recruitment", recruitment);
+		model.addAttribute("usr/recruitment", recruitment);
 
-		return "recruitment/modify";
+		return "usr/recruitment/modify";
 	}
 
 	@RequestMapping("/usr/recruitment/{jobCode}-write")
@@ -107,13 +107,14 @@ public class RecruitmentController {
 		Job job = recruitmentService.getJobByCode(jobCode);
 		model.addAttribute("job", job);
 
-		return "recruitment/write";
+		return "usr/recruitment/write";
 	}
 
 	@RequestMapping("/usr/recruitment/{jobCode}-doModify")
 	public String doModify(@RequestParam Map<String, Object> param, HttpServletRequest req, int id,
 			@PathVariable("jobCode") String jobCode, Model model) {
-		Map<String, Object> newParam = Util.getNewMapOf(param, "title", "body", "fileIdsStr", "recruitmentId", "id");
+		Map<String, Object> newParam = Util.getNewMapOf(param, "title", "body", "fileIdsStr", "usr/recruitmentId",
+				"id");
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 
 		ResultData checkActorCanModifyResultData = recruitmentService.checkActorCanModify(loginedMember, id);

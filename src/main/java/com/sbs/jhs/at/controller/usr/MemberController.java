@@ -1,4 +1,4 @@
-package com.sbs.jhs.at.controller;
+package com.sbs.jhs.at.controller.usr;
 
 import java.util.Map;
 
@@ -23,7 +23,7 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/findLoginInfo")
 	public String showFindLoginInfo() {
-		return "member/findLoginInfo";
+		return "usr/member/findLoginInfo";
 	}
 
 	@RequestMapping("/usr/member/doFindLoginId")
@@ -72,14 +72,15 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/join")
 	public String showWrite() {
-		return "member/join";
+		return "usr/member/join";
 	}
 
 	@RequestMapping("/usr/member/doJoin")
 	public String doWrite(@RequestParam Map<String, Object> param, Model model) {
 		Util.changeMapKey(param, "loginPwReal", "loginPw");
 
-		ResultData checkLoginIdJoinableResultData = memberService.checkLoginIdJoinable(Util.getAsStr(param.get("loginId")));
+		ResultData checkLoginIdJoinableResultData = memberService
+				.checkLoginIdJoinable(Util.getAsStr(param.get("loginId")));
 
 		if (checkLoginIdJoinableResultData.isFail()) {
 			model.addAttribute("historyBack", true);
@@ -97,12 +98,12 @@ public class MemberController {
 
 	@RequestMapping("/usr/member/login")
 	public String showLogin() {
-		return "member/login";
+		return "usr/member/login";
 	}
 
 	@RequestMapping("/usr/member/checkPassword")
 	public String showCheckPassword() {
-		return "member/checkPassword";
+		return "usr/member/checkPassword";
 	}
 
 	@RequestMapping("/usr/member/doCheckPassword")
@@ -160,7 +161,7 @@ public class MemberController {
 		} else {
 			model.addAttribute("msg", String.format("%s님 반갑습니다.", member.getNickname()));
 		}
-		
+
 		model.addAttribute("redirectUri", redirectUri);
 
 		return "common/redirect";
@@ -181,7 +182,8 @@ public class MemberController {
 	@RequestMapping("/usr/member/modify")
 	public String showModify(HttpSession session, Model model, HttpServletRequest req, String checkPasswordAuthCode) {
 		int loginedMemberId = (int) req.getAttribute("loginedMemberId");
-		ResultData checkValidCheckPasswordAuthCodeResultData = memberService.checkValidCheckPasswordAuthCode(loginedMemberId, checkPasswordAuthCode);
+		ResultData checkValidCheckPasswordAuthCodeResultData = memberService
+				.checkValidCheckPasswordAuthCode(loginedMemberId, checkPasswordAuthCode);
 
 		if (checkPasswordAuthCode == null || checkPasswordAuthCode.length() == 0) {
 			model.addAttribute("historyBack", true);
@@ -195,7 +197,7 @@ public class MemberController {
 			return "common/redirect";
 		}
 
-		return "member/modify";
+		return "usr/member/modify";
 	}
 
 	@RequestMapping("/usr/member/doModify")
