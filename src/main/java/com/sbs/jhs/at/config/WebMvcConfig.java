@@ -20,6 +20,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Qualifier("needToLoginInterceptor")
 	HandlerInterceptor needToLoginInterceptor;
 
+	// needToAdmInterceptor 인터셉터 불러오기
+	@Autowired
+	@Qualifier("needToAdmInterceptor")
+	HandlerInterceptor needToAdmInterceptor;
+
 	// needToLogoutInterceptor 인터셉터 불러오기
 	@Autowired
 	@Qualifier("needToLogoutInterceptor")
@@ -48,11 +53,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
 				.addPathPatterns("/usr/member/doLogin").addPathPatterns("/usr/member/join")
 				.addPathPatterns("/usr/member/doJoin");
 
+		// 관리자 상태에서만 접속할 수 있는 URI 전부 기술
+		registry.addInterceptor(needToAdmInterceptor).addPathPatterns("/adm/**");
+
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/gen/**").addResourceLocations("file:///C:/work/sts-4.8.0.RELEASE-workspace/at-file/")
-				.setCachePeriod(20);
+		registry.addResourceHandler("/gen/**")
+				.addResourceLocations("file:///C:/work/sts-4.8.0.RELEASE-workspace/at-file/").setCachePeriod(20);
 	}
 }

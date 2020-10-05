@@ -1,28 +1,21 @@
 <%@ page import="com.sbs.jhs.at.util.Util"%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>${logoText}-${pageTitle}</title>
 <!-- 모바일에서 사이트가 PC에서의 픽셀크기 기준으로 작동하게 하기(반응형 하려면 필요) -->
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <!-- 구글 폰트 불러오기 -->
 <!-- rotobo(400/700), notosanskr(400/700) -->
-<link
-	href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;700&display=swap"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 <!-- 폰트어썸 불러오기 -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
 <!-- 제이쿼리 불러오기 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- lodash 불러오기 -->
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.20/lodash.min.js"></script>
 <!-- 공통(라이브러리) CSS -->
 <link rel="stylesheet" href="/resource/common.css" />
 <!-- 공통(라이브러리) JS -->
@@ -65,69 +58,95 @@ var param = ${paramJson};
 	</div>
 	<div class="outer-box">
 		<div class="mobile-top-bar visible-on-sm-down flex flex flex-ai-c">
-			<a href="/usr/home/main" class="logo img-box"> <img
-				src="/resource/img/logo_1@3x.png" alt="" />
+			<a href="/usr/home/main" class="logo img-box">
+				<img src="/resource/img/logo_1@3x.png" alt="" />
 			</a>
 			<div class="flex-1-0-0"></div>
 			<c:if test="${isLogined}">
-				<a href="/usr/member/doLogout"> <i class="fas fa-sign-out-alt"></i>
+				<a href="/usr/member/doLogout">
+					<i class="fas fa-sign-out-alt"></i>
 				</a>
 			</c:if>
 			<c:if test="${isLogined == false}">
-				<a href="/usr/member/login"> <i class="fas fa-user"></i>
+				<a href="/usr/member/login">
+					<i class="fas fa-user"></i>
 				</a>
 			</c:if>
-			<a class="btn-toggle-mobile-side-bar"> <i class="fas fa-times"></i>
-				<i class="fas fa-bars"></i>
+			<a class="btn-toggle-mobile-side-bar">
+				<i class="fas fa-times"></i> <i class="fas fa-bars"></i>
 			</a>
 		</div>
 		<div class="mobile-side-bar flex flex-ai-c">
 			<nav class="menu-box-1 flex-1-0-0">
 				<ul>
-					<li><a href="/usr/recruitment/actor-list"
-						class="flex flex-jc-c">배우모집</a></li>
-					<li><a class="flex flex-jc-c" href="/usr/article/free-list">자유
-							게시판</a></li>
+					<c:if test="${isAdmin}">
+						<li>
+							<a href="/adm/actingRole/list" class="flex flex-jc-c">관리자</a>
+						</li>
+					</c:if>
+					<li>
+						<a href="/usr/recruitment/actor-list" class="flex flex-jc-c">배우모집</a>
+					</li>
+					<li>
+						<a class="flex flex-jc-c" href="/usr/article/free-list">자유 게시판</a>
+					</li>
 					<c:if test="${isLogined}">
-						<li><a class="flex flex-jc-c"
-							href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내
-								정보수정</a></li>
-						<li><a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a></li>
+						<li>
+							<a class="flex flex-jc-c" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a>
+						</li>
+						<li>
+							<a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a>
+						</li>
 					</c:if>
 					<c:if test="${isLogined == false}">
-						<li><a class="flex flex-jc-c"
-							href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a></li>
-						<li><a class="flex flex-jc-c" href="/usr/member/join">회원가입</a></li>
-						<li><a class="flex flex-jc-c"
-							href="/usr/member/findLoginInfo">아이디/비번 찾기</a></li>
+						<li>
+							<a class="flex flex-jc-c" href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a>
+						</li>
+						<li>
+							<a class="flex flex-jc-c" href="/usr/member/join">회원가입</a>
+						</li>
+						<li>
+							<a class="flex flex-jc-c" href="/usr/member/findLoginInfo">아이디/비번 찾기</a>
+						</li>
 					</c:if>
 				</ul>
 			</nav>
 		</div>
 		<div class="top-bar con flex flex-ai-c flex-jc-sb visible-on-md-up">
-			<a href="/usr/home/main" class="logo img-box"> <img
-				src="/resource/img/logo_1@3x.png" alt="" />
+			<a href="/usr/home/main" class="logo img-box">
+				<img src="/resource/img/logo_1@3x.png" alt="" />
 			</a>
 			<nav class="menu-box-1">
 				<ul class="flex">
-					<li class="padding-0-10"><a href="/usr/recruitment/actor-list"
-						class="btn btn-primary">배우모집</a></li>
-					<li class="padding-0-10"><a class="btn btn-info"
-						href="/usr/article/free-list">자유 게시판</a></li>
+					<c:if test="${isAdmin}">
+						<li class="padding-0-10">
+							<a class="btn btn-danger" href="/adm/actingRole/list">관리자</a>
+						</li>
+					</c:if>
+					<li class="padding-0-10">
+						<a href="/usr/recruitment/actor-list" class="btn btn-primary">배우모집</a>
+					</li>
+					<li class="padding-0-10">
+						<a class="btn btn-info" href="/usr/article/free-list">자유 게시판</a>
+					</li>
 					<c:if test="${isLogined}">
-						<li class="padding-0-10"><a class="btn btn-info"
-							href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내
-								정보수정</a></li>
-						<li class="padding-0-10"><a class="btn btn-info"
-							href="/usr/member/doLogout">로그아웃</a></li>
+						<li class="padding-0-10">
+							<a class="btn btn-info" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a>
+						</li>
+						<li class="padding-0-10">
+							<a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a>
+						</li>
 					</c:if>
 					<c:if test="${isLogined == false}">
-						<li class="padding-0-10"><a class="btn btn-info"
-							href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a></li>
-						<li class="padding-0-10"><a class="btn btn-info"
-							href="/usr/member/join">회원가입</a></li>
-						<li class="padding-0-10"><a class="btn btn-info"
-							href="/usr/member/findLoginInfo">아이디/비번 찾기</a></li>
+						<li class="padding-0-10">
+							<a class="btn btn-info" href="/usr/member/login?redirectUri=${encodedAfterLoginUri}">로그인</a>
+						</li>
+						<li class="padding-0-10">
+							<a class="btn btn-info" href="/usr/member/join">회원가입</a>
+						</li>
+						<li class="padding-0-10">
+							<a class="btn btn-info" href="/usr/member/findLoginInfo">아이디/비번 찾기</a>
+						</li>
 					</c:if>
 				</ul>
 			</nav>
