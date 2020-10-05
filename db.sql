@@ -556,3 +556,6 @@ VALUES (NOW(), NOW(), 1, '여앵커', '1씬', 1, NULL);
 
 # attr에 만료날짜 추가
 ALTER TABLE `attr` ADD COLUMN `expireDate` DATETIME NULL AFTER `value`;
+
+# file에 fileDir 추가
+ALTER TABLE `file` ADD COLUMN `fileDir` CHAR(20) NOT NULL AFTER `body`; 

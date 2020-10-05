@@ -27,8 +27,8 @@
 			<tr>
 				<th>내용</th>
 				<td>
-				    <script type="text/x-template">${article.body}</script>
-                    <div class="toast-editor toast-editor-viewer"></div>
+					<script type="text/x-template">${article.body}</script>
+					<div class="toast-editor toast-editor-viewer"></div>
 				</td>
 			</tr>
 			<c:forEach var="i" begin="1" end="3" step="1">
@@ -210,17 +210,17 @@
 <h2 class="con">댓글 목록</h2>
 
 <style>
-.reply-list-box .media-box > * {
-    margin-top:10px;    
+.reply-list-box .media-box>* {
+	margin-top: 10px;
 }
 
-.reply-list-box .media-box > *:empty {
-    display:none;
+.reply-list-box .media-box>*:empty {
+	display: none;
 }
 
-.reply-list-box .media-box > :first-chidl {
-    margin-top:10px;
-} 
+.reply-list-box .media-box>:first-chidl {
+	margin-top: 10px;
+}
 </style>
 
 <div class="reply-list-box table-box table-box-data con">
@@ -249,23 +249,23 @@
 
 <style>
 .reply-modify-form-modal-actived, reply-modify-form-modal-actived>body {
-    overflow: hidden;
+	overflow: hidden;
 }
 
 .reply-modify-form-modal {
-    display: none;
+	display: none;
 }
 
 .reply-modify-form-modal-actived .reply-modify-form-modal {
-    display: flex;
+	display: flex;
 }
 
 .reply-modify-form-modal .video-box {
-    width: 100px;
+	width: 100px;
 }
 
 .reply-modify-form-modal .img-box {
-    width: 100px;
+	width: 100px;
 }
 </style>
 
@@ -558,10 +558,10 @@
 	}
 
 	function ReplyList__delete(el) {
-	    if (isNowLoading()) {
-            alert('처리중입니다.');
-        }
-		
+		if (isNowLoading()) {
+			alert('처리중입니다.');
+		}
+
 		if (confirm('삭제 하시겠습니까?') == false) {
 			return;
 		}
@@ -575,11 +575,11 @@
 		$.post('./../reply/doDeleteReplyAjax', {
 			id : id
 		}, function(data) {
-		    if ( data.msg ) {
-                alert(data.msg);
-            }
+			if (data.msg) {
+				alert(data.msg);
+			}
 
-			if ( data.resultCode.substr(0, 2) == 'S-' ) {
+			if (data.resultCode.substr(0, 2) == 'S-') {
 				$tr.remove();
 			}
 
@@ -590,29 +590,29 @@
 	function ReplyList__getMediaHtml(reply) {
 		var html = '';
 		for (var fileNo = 1; fileNo <= 3; fileNo++) {
-            var file = null;
-            if (reply.extra.file__common__attachment && reply.extra.file__common__attachment[fileNo]) {
-                file = reply.extra.file__common__attachment[fileNo];
-            }
+			var file = null;
+			if (reply.extra.file__common__attachment && reply.extra.file__common__attachment[fileNo]) {
+				file = reply.extra.file__common__attachment[fileNo];
+			}
 
-            html += '<div class="video-box" data-video-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+			html += '<div class="video-box" data-video-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
-            if (file && file.fileExtTypeCode == 'video') {
-                html += '<video  preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
-            }
+			if (file && file.fileExtTypeCode == 'video') {
+				html += '<video  preload="none" controls src="/usr/file/streamVideo?id=' + file.id + '&updateDate=' + file.updateDate + '"></video>';
+			}
 
-            html += '</div>';
+			html += '</div>';
 
-            html += '<div class="img-box img-box-auto" data-img-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
+			html += '<div class="img-box img-box-auto" data-img-name="reply__' + reply.id + '__common__attachment__' + fileNo + '" data-file-no="' + fileNo + '">';
 
-            if (file && file.fileExtTypeCode == 'img') {
-                html += '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
-            }
+			if (file && file.fileExtTypeCode == 'img') {
+				html += '<img src="/usr/file/img?id=' + file.id + '&updateDate=' + file.updateDate + '">';
+			}
 
-            html += '</div>';
-        }
+			html += '</div>';
+		}
 
-        return '<div class="media-box">' + html + "</div>";
+		return '<div class="media-box">' + html + "</div>";
 	}
 
 	function ReplyList__drawReply(reply) {
@@ -641,38 +641,37 @@
 
 		html += '<td class="visible-on-sm-down">';
 
+		html += '<div class="flex flex-row-wrap flex-ai-c">';
+		html += '<span class="badge badge-primary bold margin-right-10">' + reply.id + '</span>';
+		html += '<div class="writer">' + reply.extra.writer + '</div>';
+		html += '&nbsp;|&nbsp;';
+		html += '<div class="reg-date">' + reply.regDate + '</div>';
+		html += '<div class="width-100p"></div>';
+		html += '<div class="body flex-1-0-0 margin-top-10 reply-body">' + reply.forPrintBody + '</div>';
+		html += ReplyList__getMediaHtml(reply);
+		html += '</div>';
 
-    html += '<div class="flex flex-row-wrap flex-ai-c">';
-        html += '<span class="badge badge-primary bold margin-right-10">' + reply.id + '</span>';
-        html += '<div class="writer">' + reply.extra.writer + '</div>';
-        html += '&nbsp;|&nbsp;';
-        html += '<div class="reg-date">' + reply.regDate + '</div>';
-        html += '<div class="width-100p"></div>';
-        html += '<div class="body flex-1-0-0 margin-top-10 reply-body">' + reply.forPrintBody + '</div>';
-        html += ReplyList__getMediaHtml(reply);
-        html += '</div>';
+		html += '<div class="margin-top-10 btn-inline-box">';
 
-        html += '<div class="margin-top-10 btn-inline-box">';
+		if (reply.extra.actorCanDelete) {
+			html += '<button class="btn btn-danger" type="button" onclick="ReplyList__delete(this);">삭제</button>';
+		}
 
-        if (reply.extra.actorCanDelete) {
-            html += '<button class="btn btn-danger" type="button" onclick="ReplyList__delete(this);">삭제</button>';
-        }
+		if (reply.extra.actorCanModify) {
+			html += '<button class="btn btn-info" type="button" onclick="ReplyList__showModifyFormModal(this);">수정</button>';
+		}
 
-        if (reply.extra.actorCanModify) {
-            html += '<button class="btn btn-info" type="button" onclick="ReplyList__showModifyFormModal(this);">수정</button>';
-        }
+		html += '</div>';
 
-        html += '</div>';
+		html += '</td>';
+		html += '</tr>';
 
-        html += '</td>';
-        html += '</tr>';
+		var $tr = $(html);
+		$tr.data('data-originBody', reply.body);
+		ReplyList__$tbody.prepend($tr);
+	}
 
-        var $tr = $(html);
-        $tr.data('data-originBody', reply.body);
-        ReplyList__$tbody.prepend($tr);
-    }
-
-    ReplyList__loadMore();
+	ReplyList__loadMore();
 </script>
 
 <%@ include file="../part/foot.jspf"%>

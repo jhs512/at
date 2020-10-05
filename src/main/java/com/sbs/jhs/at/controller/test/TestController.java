@@ -31,13 +31,6 @@ public class TestController {
 		IOUtils.copy(in, response.getOutputStream());
 	}
 
-	@RequestMapping(value = "/test/img2", method = RequestMethod.GET)
-	public void showImg2(HttpServletResponse response) throws IOException {
-		InputStream in = new ByteArrayInputStream(fileService.getFileBodyById(1));
-		response.setContentType(MediaType.IMAGE_JPEG_VALUE);
-		IOUtils.copy(in, response.getOutputStream());
-	}
-
 	@RequestMapping(value = "/test/getAttr", method = RequestMethod.GET)
 	@ResponseBody
 	public String getAttr(HttpServletResponse response) throws IOException {

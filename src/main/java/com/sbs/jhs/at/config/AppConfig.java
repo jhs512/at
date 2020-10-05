@@ -45,7 +45,7 @@ public class AppConfig {
 		case "img":
 			return "image/gif,image/jpeg,image/png";
 		default:
-			return "video/mp4,video/quicktime";
+			return "video/mp4,video/quicktime,video/x-msvideo";
 		}
 	}
 

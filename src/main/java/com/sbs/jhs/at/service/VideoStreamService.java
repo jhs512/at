@@ -1,6 +1,5 @@
 package com.sbs.jhs.at.service;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,12 +31,14 @@ public class VideoStreamService {
 	private String getContentTypeDetail(String fileExt) {
 		if (fileExt.equals("mp4")) {
 			return "mp4";
+		} else if (fileExt.equals("avi")) {
+			return "x-msvideo";
 		}
 
 		return "quicktime";
 	}
 
-	public ResponseEntity<byte[]> prepareContent(ByteArrayInputStream is, int fileSize, String fileType, String range) {
+	public ResponseEntity<byte[]> prepareContent(InputStream is, int fileSize, String fileType, String range) {
 		long rangeStart = 0;
 		long rangeEnd;
 		byte[] data;

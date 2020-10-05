@@ -17,11 +17,12 @@
 		typeCode = #{typeCode},
 		type2Code = #{type2Code},
 		fileSize = #{fileSize},
-		fileExtTypeCode = #{fileExtTypeCode},
+		fileDir = #{fileDir},
+		fileExtTypeCode =
+		#{fileExtTypeCode},
 		fileExtType2Code = #{fileExtType2Code},
-		fileNo = #{fileNo},
-		`body` =
-		#{body}
+		fileNo =
+		#{fileNo}
 	</insert>
 
 	<update id="update">
@@ -29,11 +30,11 @@
 		<set>
 			updateDate = NOW(),
 			<if test="originFileName != null">originFileName = #{originFileName},</if>
+			<if test="fileDir != null">fileDir = #{fileDir},</if>
 			<if test="fileExt != null">fileExt = #{fileExt},</if>
 			<if test="fileSize != null">fileSize = #{fileSize},</if>
 			<if test="fileExtTypeCode != null">fileExtTypeCode = #{fileExtTypeCode},</if>
 			<if test="fileExtType2Code != null">fileExtType2Code = #{fileExtType2Code},</if>
-			<if test="body != null">body = #{body},</if>
 		</set>
 		WHERE id = #{id}
 	</update>
@@ -41,9 +42,7 @@
 	<select
 		id="getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2CodeAndFileNo"
 		resultType="File">
-		SELECT id, regDate, updateDate, relTypeCode, relId, originFileName,
-		fileExt, typeCode, type2Code, fileExtTypeCode, fileExtType2Code,
-		fileNo, fileSize
+		SELECT *
 		FROM file
 		WHERE 1
 		AND relId IN
@@ -61,9 +60,7 @@
 
 	<select id="getFilesRelTypeCodeAndRelIdsAndTypeCodeAndType2Code"
 		resultType="File">
-		SELECT id, regDate, updateDate, relTypeCode, relId, originFileName,
-		fileExt, typeCode, type2Code, fileExtTypeCode, fileExtType2Code,
-		fileNo, fileSize
+		SELECT *
 		FROM file
 		WHERE 1
 		AND relId IN
@@ -80,15 +77,12 @@
 
 	<select id="getFilesRelTypeCodeAndRelIdAndTypeCodeAndType2Code"
 		resultType="File">
-		SELECT id, regDate, updateDate, relTypeCode, relId,
-		originFileName,
-		fileExt, typeCode, type2Code, fileExtTypeCode,
-		fileExtType2Code,
-		fileNo, fileSize
+		SELECT *
 		FROM file
 		WHERE 1
 		AND relId = #{relId}
-		AND relTypeCode = #{relTypeCode}
+		AND relTypeCode
+		= #{relTypeCode}
 		AND typeCode = #{typeCode}
 		AND
 		type2Code = #{type2Code}
@@ -96,14 +90,11 @@
 	</select>
 
 	<select id="getFileById" resultType="File">
-		SELECT id, regDate,
-		updateDate, relTypeCode, relId, originFileName, fileExt,
-		typeCode,
-		type2Code, fileExtTypeCode, fileExtType2Code, fileNo, body,
-		fileSize
+		SELECT *
 		FROM file
 		WHERE 1
-		AND id = #{id}
+		AND
+		id = #{id}
 	</select>
 
 	<update id="changeRelId">

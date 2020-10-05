@@ -463,4 +463,12 @@ public class Util {
 
 		return dateStr;
 	}
+
+	public static String getNowYearMonthDateStr() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy_MM");
+
+		String dateStr = format1.format(System.currentTimeMillis());
+
+		return dateStr;
+	}
 }

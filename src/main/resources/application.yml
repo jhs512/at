@@ -50,6 +50,7 @@ custom:
   logoText: 오디션 트리
   emailFrom: no-reply@audiotiontree.com
   emailFromName: 오디션 트리
+  genFileDirPath: C:/work/sts-4.8.0.RELEASE-workspace/at-file
   logging:
     dir: log
     level: info
@@ -74,6 +75,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3306/at?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull
 custom:
+  genFileDirPath: /opt/tomcat/apache-tomcat-9.0.37/auditiontree.com-file
   logging:
     dir: /tmp/at-log
     level: info
