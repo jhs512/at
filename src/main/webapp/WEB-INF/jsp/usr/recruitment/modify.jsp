@@ -245,12 +245,12 @@
                         </div>
                         <c:if test="${file != null && file.fileExtTypeCode == 'video'}">
                             <div class="video-box">
-                                <video controls src="/usr/file/streamVideo?id=${file.id}&updateDate=${file.updateDate}"></video>
+                                <video preload="auto" controls src="${file.forPrintGenUrl}"></video>
                             </div>
                         </c:if>
                         <c:if test="${file != null && file.fileExtTypeCode == 'img'}">
                             <div class="img-box img-box-auto">
-                                <img src="/usr/file/img?id=${file.id}&updateDate=${file.updateDate}">
+                                <img src="${file.forPrintGenUrl}">
                             </div>
                         </c:if>
                     </td>

@@ -2,6 +2,8 @@ package com.sbs.jhs.at.dto;
 
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,11 +32,21 @@ public class File {
 	private String originFileName;
 	private Map<String, Object> extra;
 	
+	@JsonIgnore
 	public String getFilePath(String genFileDirPath) {
-		return genFileDirPath + "/" + relTypeCode + "/" + fileDir + "/" + getFileName();
+		return genFileDirPath + getBaseFileUri();
+	}
+	
+	@JsonIgnore
+	public String getBaseFileUri() {
+		return "/" + relTypeCode + "/" + fileDir + "/" + getFileName();
 	}
 
 	private String getFileName() {
 		return id + "." + fileExt;
+	}
+	
+	public String getForPrintGenUrl() {
+		return "/gen" + getBaseFileUri() + "?updateDate=" + updateDate;
 	}
 }
