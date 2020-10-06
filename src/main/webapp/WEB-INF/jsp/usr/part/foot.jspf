@@ -3,7 +3,7 @@
 
 <c:if test="${activeProfile == 'production'}">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-175900757-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179726983-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
 		function gtag() {
@@ -11,7 +11,7 @@
 		}
 		gtag('js', new Date());
 
-		gtag('config', 'UA-175900757-1');
+		gtag('config', 'UA-179726983-1');
 	</script>
 </c:if>
 </div>

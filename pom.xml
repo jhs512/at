@@ -123,7 +123,7 @@
 				<configuration>
 					<url>http://auditiontree.com:8080/manager/text</url>
 					<server>joa__manager_text</server>
-					<path>/ROOT##5</path>
+					<path>/ROOT##6</path>
 				</configuration>
 			</plugin>
 			<plugin>

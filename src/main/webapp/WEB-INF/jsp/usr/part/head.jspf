@@ -42,6 +42,12 @@ var param = ${paramJson};
 	});
 </script>
 
+<!-- 구글 웹 마스터 인증코드 -->
+<meta name="google-site-verification" content="f18pCJNXQZFxWyHdwR1NI63OBAIGqNcL-ZywOncwNIM" />
+
+<!-- 애드센스 인증용 코드 -->
+<script data-ad-client="ca-pub-1005451568380744" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
 </head>
 <body>
 	<div class="loading-box flex-ai-c flex-jc-c">
