@@ -7,6 +7,63 @@
 		SELECT *
 		FROM artwork
 	</select>
+	
+	<select id="getForPrintArtworkById" resultType="Artwork">
+		SELECT *
+		FROM artwork
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="writeArtwork" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO artwork
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		name = #{name},
+		productionName = #{productionName},
+		directorName = #{directorName},
+		etc = #{etc}
+	</insert>
+	
+	<update id="modifyArtwork">
+		UPDATE artwork
+		<set>
+			updateDate = NOW(),
+			<if test="name != null">
+				name = #{name},
+			</if>
+
+			<if test="productionName != null">
+				productionName = #{productionName},
+			</if>
+
+			<if test="directorName != null">
+				directorName = #{directorName},
+			</if>
+
+			<if test="etc != null">
+				etc = #{etc}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteArtwork">
+		DELETE FROM artwork WHERE id = #{id}
+	</delete>
+	
+	<select id="getForPrintActingRoleById" resultMap="actingRole">
+		SELECT ACR.*,
+		ARW.name AS
+		extra__artworkName,
+		ARW.directorName AS extra__directorName
+		FROM
+		actingRole AS
+		ACR
+		INNER JOIN artwork AS ARW
+		ON ACR.artworkId = ARW.id
+		WHERE ACR.id = #{id}
+	</select>
 
 	<select id="getRoles" resultMap="actingRole">
 		SELECT ACR.*,
@@ -21,6 +78,77 @@
 		ORDER BY
 		ARW.name, ARW.directorName, ACR.name ASC
 	</select>
+
+	<insert id="write" useGeneratedKeys="true" keyProperty="id">
+		INSERT
+		INTO actingRole
+		SET regDate = NOW(),
+		updateDate = NOW(),
+		artworkId =
+		#{artworkId},
+		name = #{name},
+		age = #{age},
+		gender = #{gender},
+		`character` = #{character},
+		scenesCount = #{scenesCount},
+		scriptStatus =
+		#{scriptStatus},
+		auditionStatus = #{auditionStatus},
+		shootingsCount =
+		#{shootingsCount},
+		etc = #{etc}
+	</insert>
+	
+	<delete id="delete">
+		DELETE FROM actingRole WHERE id = #{id}
+	</delete>
+
+	<update id="modify">
+		UPDATE actingRole
+		<set>
+			updateDate = NOW(),
+			<if test="artworkId != null">
+				artworkId = #{artworkId},
+			</if>
+
+			<if test="name != null">
+				name = #{name},
+			</if>
+
+			<if test="age != null">
+				age = #{age},
+			</if>
+
+			<if test="gender != null">
+				gender = #{gender},
+			</if>
+
+			<if test="character != null">
+				`character` = #{character},
+			</if>
+
+			<if test="scenesCount != null">
+				scenesCount = #{scenesCount},
+			</if>
+
+			<if test="scriptStatus != null">
+				scriptStatus = #{scriptStatus},
+			</if>
+
+			<if test="auditionStatus != null">
+				auditionStatus = #{auditionStatus},
+			</if>
+
+			<if test="shootingsCount != null">
+				shootingsCount = #{shootingsCount},
+			</if>
+
+			<if test="etc != null">
+				etc = #{etc}
+			</if>
+		</set>
+		WHERE id = #{id}
+	</update>
 
 	<resultMap type="ActingRole" id="actingRole">
 		<id property="id" column="id" />

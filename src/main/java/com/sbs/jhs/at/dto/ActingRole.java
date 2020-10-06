@@ -19,6 +19,7 @@ public class ActingRole {
 	private String pay;
 	private String age;
 	private boolean scriptStatus;
+	private boolean auditionStatus;
 	private String gender;
 	private String scenesCount;
 	private String shootingsCount;

@@ -72,7 +72,7 @@ var param = ${paramJson};
                         <li><a class="flex flex-jc-c" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a></li>
                         <li><a class="flex flex-jc-c" href="/usr/member/doLogout">로그아웃</a></li>
                     </c:if>
-                    <li><a class="flex flex-jc-c" href="/usr/home/main">사용자페이지</a></li>
+                    <li><a class="flex flex-jc-c" href="/adm/actingRole/artworkList">작품리스트</a></li>
                 </ul>
             </nav>
         </div>
@@ -86,7 +86,8 @@ var param = ${paramJson};
                         <li class="padding-0-10"><a class="btn btn-info" href="/usr/member/checkPassword?redirectUri=${Util.getUriEncoded('/usr/member/modify')}">내 정보수정</a></li>
                         <li class="padding-0-10"><a class="btn btn-info" href="/usr/member/doLogout">로그아웃</a></li>
                     </c:if>
-                    <li class="padding-0-10"><a class="btn btn-info" href="/usr/home/main">사용자페이지</a></li>
+                    <li class="padding-0-10"><a class="btn btn-info" href="/adm/actingRole/list">배역리스트</a></li>
+                    <li class="padding-0-10"><a class="btn btn-info" href="/adm/actingRole/artworkList">작품리스트</a></li>
                 </ul>
             </nav>
         </div>

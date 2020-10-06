@@ -37,7 +37,7 @@ public class RecruitmentController {
 		model.addAttribute("job", job);
 
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
-		model.addAttribute("actorCanWrite", appConfig.actorCanWrite("usr/recruitment", loginedMember));
+		model.addAttribute("actorCanWrite", appConfig.actorCanWrite("recruitment", loginedMember));
 
 		List<Recruitment> recruitments = recruitmentService.getForPrintRecruitments();
 

@@ -61,7 +61,7 @@
 		<a class="btn btn-info" href="${board.code}-modify?id=${article.id}&listUrl=${Util.getUriEncoded(listUrl)}">수정</a>
 	</c:if>
 	<c:if test="${article.extra.actorCanDelete}">
-		<a class="btn btn-danger" href="${board.code}-doDelete?id=${article.id}" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
+		<a class="btn btn-danger" href="${board.code}-doDelete?id=${article.id}&listUrl=${Util.getUriEncoded(listUrl)" onclick="if ( confirm('삭제하시겠습니까?') == false ) return false;">삭제</a>
 	</c:if>
 
 	<a href="${listUrl}" class="btn btn-info">목록</a>
