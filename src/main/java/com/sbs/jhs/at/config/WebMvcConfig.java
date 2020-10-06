@@ -2,6 +2,7 @@ package com.sbs.jhs.at.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -10,6 +11,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+	@Value("${custom.genFileDirPath}")
+	private String genFileDirPath;
+	
 	// beforeActionInterceptor 인터셉터 불러오기
 	@Autowired
 	@Qualifier("beforeActionInterceptor")
@@ -61,6 +65,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/gen/**")
-				.addResourceLocations("file:///C:/work/sts-4.8.0.RELEASE-workspace/at-file/").setCachePeriod(20);
+				.addResourceLocations("file:///" + genFileDirPath + "/").setCachePeriod(20);
 	}
 }
