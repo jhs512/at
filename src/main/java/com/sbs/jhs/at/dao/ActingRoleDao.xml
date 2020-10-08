@@ -163,6 +163,7 @@
 		<id property="gender" column="gender" />
 		<id property="scenesCount" column="scenesCount" />
 		<id property="shootingsCount" column="shootingsCount" />
+		<id property="auditionStatus" column="auditionStatus" />
 		<id property="character" column="character" />
 		<id property="etc" column="etc" />
 		<association property="extra" javaType="map">
