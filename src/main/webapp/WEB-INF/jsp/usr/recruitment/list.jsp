@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="${job.name} 모집 리스트" />
+<c:set var="pageTitle" value="신규 오디션 리스트" />
 <%@ include file="../part/head.jspf"%>
 <!-- PC용 -->
 <div class="table-box table-box-data con">

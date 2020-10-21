@@ -1,7 +1,7 @@
 <%@ page import="com.sbs.jhs.at.util.Util"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<c:set var="pageTitle" value="${job.name} 모집 상세내용" />
+<c:set var="pageTitle" value="신규 오디션 상세내용" />
 <%@ include file="../part/head.jspf"%>
 <%@ include file="../../part/toastuiEditor.jspf"%>
 <script>
@@ -85,7 +85,7 @@
 				<td>${recruitment.extra.actingRolePay}</td>
 			</tr>
 			<tr>
-				<th>특이 사항</th>
+				<th>상세내용</th>
 				<td>
 					<script type="text/x-template">${recruitment.body}</script>
 					<div class="toast-editor toast-editor-viewer"></div>

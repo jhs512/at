@@ -25,7 +25,7 @@
 
 		if (body.length == 0) {
 			bodyEditor.focus();
-			alert('특이사항을 입력해주세요.');
+			alert('상세내용을 입력해주세요.');
 
 			return;
 		}
@@ -136,7 +136,7 @@
 				</td>
 			</tr>
 			<tr>
-				<th>특이 사항</th>
+				<th>상세내용</th>
 				<td>
 					<div class="form-control-box">
 						<script type="text/x-template">
