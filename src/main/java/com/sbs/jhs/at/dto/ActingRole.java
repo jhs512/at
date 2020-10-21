@@ -35,11 +35,11 @@ public class ActingRole {
 
 		return title;
 	}
-	
+
 	public String getDetailLink() {
 		return "./detail?id=" + id;
 	}
-	
+
 	public String getForPrintTitle() {
 		return getTitle();
 	}

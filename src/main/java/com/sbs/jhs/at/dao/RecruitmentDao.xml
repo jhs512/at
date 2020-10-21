@@ -10,21 +10,28 @@
 		ACR.gender AS extra__actingRoleGender,
 		ACR.age AS extra__actingRoleAge,
 		ACR.job AS extra__actingRoleJob,
-		ACR.scriptStatus AS extra__actingScriptStatus,
-		ACR.scenesCount AS extra__actingRoleScenesCount,
-		ACR.shootingsCount AS extra__actingRoleShootingsCount,
-		ACR.character AS extra__actingRoleCharacter,
+		ACR.scriptStatus AS
+		extra__actingScriptStatus,
+		ACR.scenesCount AS
+		extra__actingRoleScenesCount,
+		ACR.shootingsCount AS
+		extra__actingRoleShootingsCount,
+		ACR.character AS
+		extra__actingRoleCharacter,
 		ACR.pay AS extra__actingRolePay,
-		ARW.name AS extra__artworkName,
+		ARW.name AS
+		extra__artworkName,
 		ARW.directorName AS extra__directorName,
 		ARW.productionName AS extra__productionName
 		FROM recruitment AS REC
 		INNER JOIN member AS M
 		ON REC.memberId = M.id
-		INNER JOIN actingRole AS ACR
+		INNER JOIN actingRole AS
+		ACR
 		ON REC.roleTypeCode = 'actingRole'
 		AND REC.roleId = ACR.id
-		INNER JOIN artwork AS ARW
+		INNER JOIN
+		artwork AS ARW
 		ON ACR.artworkId = ARW.id
 		WHERE REC.displayStatus = 1
 		ORDER BY REC.id DESC
@@ -37,24 +44,32 @@
 		ACR.gender AS extra__actingRoleGender,
 		ACR.age AS extra__actingRoleAge,
 		ACR.job AS extra__actingRoleJob,
-		ACR.scriptStatus AS extra__actingScriptStatus,
-		ACR.scenesCount AS extra__actingRoleScenesCount,
-		ACR.shootingsCount AS extra__actingRoleShootingsCount,
-		ACR.character AS extra__actingRoleCharacter,
+		ACR.scriptStatus AS
+		extra__actingScriptStatus,
+		ACR.scenesCount AS
+		extra__actingRoleScenesCount,
+		ACR.shootingsCount AS
+		extra__actingRoleShootingsCount,
+		ACR.character AS
+		extra__actingRoleCharacter,
 		ACR.pay AS extra__actingRolePay,
-		ARW.name AS extra__artworkName,
+		ARW.name AS
+		extra__artworkName,
 		ARW.directorName AS extra__directorName,
 		ARW.productionName AS extra__productionName
 		FROM recruitment AS REC
 		INNER JOIN member AS M
 		ON REC.memberId = M.id
-		INNER JOIN actingRole AS ACR
+		INNER JOIN actingRole AS
+		ACR
 		ON REC.roleTypeCode = 'actingRole'
 		AND REC.roleId = ACR.id
-		INNER JOIN artwork AS ARW
+		INNER JOIN
+		artwork AS ARW
 		ON ACR.artworkId = ARW.id
 		WHERE REC.displayStatus = 1
-		AND REC.id = #{id}
+		AND
+		REC.id = #{id}
 	</select>
 
 	<select id="getRecruitmentById" resultType="Recruitment">
@@ -70,7 +85,8 @@
 		FROM
 		job
 		WHERE
-		`code` = #{code}
+		`code`
+		= #{code}
 	</select>
 
 	<insert id="write" useGeneratedKeys="true" keyProperty="id">
@@ -78,10 +94,12 @@
 		INTO recruitment
 		SET regDate = NOW(),
 		updateDate = NOW(),
-		title = #{title},
+		title =
+		#{title},
 		body = #{body},
 		roleTypeCode = #{roleTypeCode},
-		roleId = #{roleId},
+		roleId =
+		#{roleId},
 		memberId = #{memberId},
 		jobId = #{jobId},
 		displayStatus = 1

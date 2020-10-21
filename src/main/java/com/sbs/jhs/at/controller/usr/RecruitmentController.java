@@ -41,7 +41,7 @@ public class RecruitmentController {
 
 		List<Recruitment> recruitments = recruitmentService.getForPrintRecruitments();
 
-		model.addAttribute("usr/recruitments", recruitments);
+		model.addAttribute("recruitments", recruitments);
 
 		return "usr/recruitment/list";
 	}
@@ -63,7 +63,7 @@ public class RecruitmentController {
 
 		Recruitment recruitment = recruitmentService.getForPrintRecruitmentById(loginedMember, id);
 
-		model.addAttribute("usr/recruitment", recruitment);
+		model.addAttribute("recruitment", recruitment);
 
 		boolean actorIsWriter = recruitment.getMemberId() == loginedMember.getId();
 		model.addAttribute("needToLoadMore", actorIsWriter);
@@ -89,7 +89,7 @@ public class RecruitmentController {
 		Member loginedMember = (Member) req.getAttribute("loginedMember");
 		Recruitment recruitment = recruitmentService.getForPrintRecruitmentById(loginedMember, id);
 
-		model.addAttribute("usr/recruitment", recruitment);
+		model.addAttribute("recruitment", recruitment);
 
 		return "usr/recruitment/modify";
 	}
