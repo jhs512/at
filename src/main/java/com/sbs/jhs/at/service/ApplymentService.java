@@ -151,7 +151,7 @@ public class ApplymentService {
 
 		param.put("file__common__attachment", applyment.getExtra().get("file__common__attachment"));
 
-		return new ResultData("S-1", String.format("%d번 댓글을 수정하였습니다.", Util.getAsInt(param.get("id"))), param);
+		return new ResultData("S-1", String.format("%d번 신청을 수정하였습니다.", Util.getAsInt(param.get("id"))), param);
 	}
 
 	public void deleteApplymentsByRelId(String relTypeCode, int relId) {

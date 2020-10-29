@@ -545,7 +545,7 @@
                         var file = data.body.file__common__attachment[fileNo];
 
                         if (file.fileExtTypeCode == 'video') {
-                            var html = '<video preload="auto" controls src="' + file.forPrintGenUrl + ">video not supported</video>';
+                            var html = '<video preload="auto" controls src="' + file.forPrintGenUrl + '">video not supported</video>';
                             selector = '.applyment-list-box tbody > tr[data-id="' + id + '"] [data-file-no="' + fileNo + '"].video-box';
                             $(selector).append(html);
                         } else {
